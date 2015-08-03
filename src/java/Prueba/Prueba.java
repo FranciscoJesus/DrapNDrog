@@ -84,5 +84,7 @@ public class Prueba extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    public String hola(){
+        return "hola";
+    }
 }

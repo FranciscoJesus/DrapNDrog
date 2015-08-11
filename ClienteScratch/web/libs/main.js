@@ -28,10 +28,17 @@ $(document).ready(function(){
          }
      });
      
+    $("#bin-panel").droppable({
+        accept: ".dragOut",
+        drop: function(ev, ui) {
+            $(ui.draggable).remove();
+        }
+    });
+     
     var zIndex = 0;
     function make_draggable(elements){	
             elements.draggable({
-                    containment:'parent',
+                    //containment:'parent'
                     start:function(e,ui){ ui.helper.css('z-index',++zIndex); },
                     stop:function(e,ui){}
             });

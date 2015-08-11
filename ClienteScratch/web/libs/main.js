@@ -11,19 +11,18 @@ $(document).ready(function(){
         start: function() { counts[0]++; }
     });
 
-    $(".dragOut").draggable({
-        helper:'original'
-    });
+//    $(".dragOut").draggable({
+//        helper:'original'
+//    });
     
     $("#content-panel").droppable({
-         accept:".dragIn",
+         accept:".dragIn , .dragOut",
          drop: function(ev,ui){
              var droppedItem = $(ui.draggable).clone();
              droppedItem.addClass("item-"+counts[0]);                
              droppedItem.addClass("dragOut");
              droppedItem.removeClass("dragIn");
              $("#content-panel").append(droppedItem);
-             
              make_draggable(droppedItem);
          }
      });
@@ -31,9 +30,9 @@ $(document).ready(function(){
     var zIndex = 0;
     function make_draggable(elements){	
             elements.draggable({
-                    containment:'parent',
+                    //containment:'parent',
                     start:function(e,ui){ ui.helper.css('z-index',++zIndex); },
-                    stop:function(e,ui){}
+//                    stop:function(e,ui){}
             });
     }
 });

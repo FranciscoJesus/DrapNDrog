@@ -68,10 +68,20 @@
                         </div>
                     </div>
                     
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Bin</h3>
+                        </div>
+
+                        <div id="bin-panel" class="panel-body">
+                            <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin.png"/>
+                        </div>
+                    </div>
+
+                    
                 </div>
                 
             </div>
         
-
     </body>
 </html>

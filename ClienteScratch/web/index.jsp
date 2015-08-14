@@ -18,6 +18,7 @@
         
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
         <script type="text/javascript" src="libs/main.js"></script>
         
         <!-- Bootstrap -->
@@ -29,6 +30,7 @@
     
     </head>
     <body>
+        
         <div class="container">
             <div class="page-header">
                 <h1>Drag & Drop</h1>
@@ -44,7 +46,11 @@
                             <h3 class="panel-title">Builder panel</h3>
                         </div>
 
-                        <div id="content-panel" class="panel-body"></div>
+                        <div id="content-panel" class="panel-body">
+                            <div id="bin-panel" class="pull-right pull-down">
+                                <img id="bin-image" class="img-thumbnail" src="images/bin.png"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
@@ -68,6 +74,7 @@
                         </div>
                     </div>
                     
+                    <!--
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Bin</h3>
@@ -77,7 +84,7 @@
                             <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin.png"/>
                         </div>
                     </div>
-
+                    -->
                     
                 </div>
                 

@@ -24,7 +24,9 @@ $(document).ready(function(){
              droppedItem.removeClass("dragIn");
              $("#content-panel").append(droppedItem);
              
+             add_menu(droppedItem);
              make_draggable(droppedItem);
+             
          }
      });
      
@@ -43,4 +45,30 @@ $(document).ready(function(){
                     stop:function(e,ui){}
             });
     }
+    
+    function add_menu(element){
+        alert(element.objectName);
+        element.contextmenu({
+            selector: '.dragOut',
+            items: {
+                label: {type: "myType", customName: "Foo Bar"}
+            }
+        });
+    }
+    
+    $(".dragOut").contextmenu({
+        delegate: ".hasmenu",
+        menu: [
+            {title: "Copy", cmd: "copy", uiIcon: "ui-icon-copy"},
+            {title: "----"},
+            {title: "More", children: [
+                    {title: "Sub 1", cmd: "sub1"},
+                    {title: "Sub 2", cmd: "sub1"}
+                ]}
+        ],
+        select: function(event, ui) {
+            alert("select " + ui.cmd + " on " + ui.target.text());
+        }
+    });
+    
 });

@@ -16,10 +16,10 @@ $(document).ready(function(){
 //    });
     
     $("#content-panel").droppable({
-         accept:".dragIn , .dragOut",
+         accept:".dragIn",
          drop: function(ev,ui){
              var droppedItem = $(ui.draggable).clone();
-             droppedItem.addClass("item-"+counts[0]);                
+             //droppedItem.addClass("item-"+counts[0]);                
              droppedItem.addClass("dragOut");
              droppedItem.removeClass("dragIn");
              $("#content-panel").append(droppedItem);
@@ -37,7 +37,8 @@ $(document).ready(function(){
     var zIndex = 0;
     function make_draggable(elements){	
             elements.draggable({
-                    //containment:'parent'
+                
+                    containment:'#content-panel',                    
                     start:function(e,ui){ ui.helper.css('z-index',++zIndex); }
 //                    stop:function(e,ui){}
             });

@@ -6,12 +6,16 @@
 
 $(document).ready(function(){
     var counts = [0];
+    var currentParent;
+    
     $(".dragIn").draggable({
+        revert: 'invalid',
         helper:'clone',
-        start: function() { counts[0]++; }
+        start: function() { counts[0]++;}
     });
 
     $(".dragOut").draggable({
+        revert: 'invalid',
         helper:'original'
     });
     
@@ -23,23 +27,27 @@ $(document).ready(function(){
              droppedItem.addClass("dragOut");
              droppedItem.removeClass("dragIn");
              $("#content-panel").append(droppedItem);
-             
              make_draggable(droppedItem);
+             
          }
+      
      });
-     
+    
+    
     $("#bin-panel").droppable({
-        accept: ".dragOut",
+        accept: ".dragOut, .dragIn",
         drop: function(ev, ui) {
             $(ui.draggable).remove();
         }
     });
-     
+    
+
+    
     var zIndex = 0;
     function make_draggable(elements){	
-            elements.draggable({
-                    //containment:'parent'
-                    start:function(e,ui){ ui.helper.css('z-index',++zIndex); },
+            elements.draggable({ 
+                    containment:'#content-panel , #bin-panel',
+                    start:function(e,ui){ui.helper.css('z-index',++zIndex);},
                     stop:function(e,ui){}
             });
     }

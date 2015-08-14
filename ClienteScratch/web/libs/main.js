@@ -57,9 +57,17 @@ $(document).ready(function(){
                     start:function(e,ui){ 
                         ui.helper.css('z-index',++zIndex);
                         currentParent = $(this).parent().attr('id');
+                       
                     },
                     stop:function(e,ui){}
             });
     }
-    
+   // function ordenar(elements){
+     //   elements.draggable.sortable();
+       // elements.draggable.disableSelection();
+    //}
+    //$(function(){
+     //   $(".#dragOut , .#dragIn").sortable();
+      //  $(".#dragOut , .#dragIn").disableSelection();
+    //});
 });

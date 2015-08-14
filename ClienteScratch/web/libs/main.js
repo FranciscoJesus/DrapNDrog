@@ -7,7 +7,7 @@
 $(document).ready(function(){
     var counts = [0];
     $(".dragIn").draggable({
-        helper:'clone',
+      
         start: function() { counts[0]++; }
     });
 

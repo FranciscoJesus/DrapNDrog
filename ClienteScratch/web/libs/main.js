@@ -25,7 +25,14 @@ $(document).ready(function(){
             alert("currentParent: " + currentParent);
         }
     });
-    
+    $(".dragOut").sortable();
+       //placeholder: "ui-state-highlight" 
+        
+    //});
+     $(".dragIn").sortable();
+       //placeholder: "ui-state-highlight" 
+        
+    //});
     $("#content-panel").droppable({
          accept:".dragIn",
          drop: function(ev,ui){
@@ -62,12 +69,5 @@ $(document).ready(function(){
                     stop:function(e,ui){}
             });
     }
-   // function ordenar(elements){
-     //   elements.draggable.sortable();
-       // elements.draggable.disableSelection();
-    //}
-    //$(function(){
-     //   $(".#dragOut , .#dragIn").sortable();
-      //  $(".#dragOut , .#dragIn").disableSelection();
-    //});
+   
 });

@@ -6,21 +6,17 @@
 
 $(document).ready(function(){
     var counts = [0];
-    var currentParent;
-    
     $(".dragIn").draggable({
-        revert: 'invalid',
         helper:'clone',
-        start: function() { counts[0]++;}
+        start: function() { counts[0]++; }
     });
 
-    $(".dragOut").draggable({
-        revert: 'invalid',
-        helper:'original'
-    });
+//    $(".dragOut").draggable({
+//        helper:'original'
+//    });
     
     $("#content-panel").droppable({
-         accept:".dragIn",
+         accept:".dragIn , .dragOut",
          drop: function(ev,ui){
              var droppedItem = $(ui.draggable).clone();
              droppedItem.addClass("item-"+counts[0]);                
@@ -28,27 +24,22 @@ $(document).ready(function(){
              droppedItem.removeClass("dragIn");
              $("#content-panel").append(droppedItem);
              make_draggable(droppedItem);
-             
          }
-      
      });
-    
-    
+     
     $("#bin-panel").droppable({
-        accept: ".dragOut, .dragIn",
+        accept: ".dragOut",
         drop: function(ev, ui) {
             $(ui.draggable).remove();
         }
     });
-    
-
-    
+     
     var zIndex = 0;
     function make_draggable(elements){	
-            elements.draggable({ 
-                    containment:'#content-panel , #bin-panel',
-                    start:function(e,ui){ui.helper.css('z-index',++zIndex);},
-                    stop:function(e,ui){}
+            elements.draggable({
+                    //containment:'parent'
+                    start:function(e,ui){ ui.helper.css('z-index',++zIndex); }
+//                    stop:function(e,ui){}
             });
     }
 });

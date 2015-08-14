@@ -18,7 +18,7 @@
         
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+        <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
         <script type="text/javascript" src="libs/main.js"></script>
         
         <!-- Bootstrap -->
@@ -40,16 +40,17 @@
             <div class="row">
                 
                 <div class="col-md-9">
-                    
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Builder panel</h3>
                         </div>
 
                         <div id="content-panel" class="panel-body">
-                            <div id="bin-panel" class="pull-right pull-down">
+                            
+                            <!-- <div id="bin-panel" class="pull-right pull-down">
                                 <img id="bin-image" class="img-thumbnail" src="images/bin.png"/>
-                            </div>
+                            </div> -->
+                            
                         </div>
                     </div>
                 </div>
@@ -61,7 +62,6 @@
                         </div>
 
                         <div id="pieces-panel" class="panel-body">
-                            
                             <div class="piece piece-1 dragIn">
                                 <p>Pieza 1 <input type="text" name="pieza1"/></p>
                             </div>
@@ -74,21 +74,20 @@
                         </div>
                     </div>
                     
-                    <!--
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Bin</h3>
                         </div>
 
                         <div id="bin-panel" class="panel-body">
-                            <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin.png"/>
+                            <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin-original.png"/>
                         </div>
                     </div>
-                    -->
-                    
+                                        
                 </div>
                 
             </div>
+        </div>
         
     </body>
 </html>

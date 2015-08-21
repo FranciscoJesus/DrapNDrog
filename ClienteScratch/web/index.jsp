@@ -45,15 +45,9 @@
                             <h3 class="panel-title">Builder panel</h3>
                         </div>
 
-                        <div id="content-panel" class="panel-body">
-                            <ul id="sortable-1">
-                                <li>prueba</li>
-                                
-                            </ul> 
-                            <!-- <div id="bin-panel" class="pull-right pull-down">
-                                <img id="bin-image" class="img-thumbnail" src="images/bin.png"/>
-                            </div> -->
-                            
+                        <div id="content-panel" class="panel-body grid">
+                            <ul id="sortable">
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -71,6 +65,10 @@
                             
                             <div class="piece piece-2 dragIn">
                                 <p>Pieza 2 <input type="text" name="pieza2"/></p>
+                            </div>
+                             <div class="piece piece-3 dragIn">
+                                 <div>hola cabesa</div>
+                                <p>Pieza 3 <input type="text" name="pieza3"/></p>
                             </div>
                             
                             <!-- <img id="drag1" class="img-responsive" src="ModelSakilaClient.png"  /> -->
@@ -91,6 +89,8 @@
                 
             </div>
         </div>
+        
+         <button id="finalizar">Finalizar</button> 
         
     </body>
 </html>

@@ -6,40 +6,34 @@
 
 $(document).ready(function(){
     var counts = [0];
-    var currentParent;
+    //var currentParent;
+    var zIndex = 0;
     
     $(".dragIn").draggable({
         helper:'clone',
         start: function(){ 
             counts[0]++;
-            currentParent = $(this).parent().attr('id');
-            //alert("currentParent: " + currentParent);
         }
     });
 
     $(".dragOut").draggable({
         helper:'original',
-        containment: 'parent',
-        //revert: 'invalid',
-        start: function(){ 
-            alert("currentParent: " + currentParent);
-        }
+        containment: 'parent'
     });
     
     $("#content-panel").droppable({
-         accept:".dragIn",
-         drop: function(ev,ui){
+        accept: ".dragIn, .dragOut",
+        drop: function(ev, ui) {
+            if (!ui.draggable.hasClass("dragOut")) {
+                var droppedItem = $(ui.draggable).clone();
+                droppedItem.addClass("item-" + counts[0]);
+                droppedItem.addClass("dragOut");
+                droppedItem.removeClass("dragIn");
 
-             var droppedItem = $(ui.draggable).clone();
-             droppedItem.addClass("item-"+counts[0]);                
-             droppedItem.addClass("dragOut");
-             droppedItem.removeClass("dragIn");
-             $("#content-panel").append(droppedItem);
-             
-             make_draggable(droppedItem);
-             
-         }
-     });
+                $("#sortable").append(droppedItem);
+            }
+        }
+    });
      
     $("#bin-panel").droppable({
         accept: ".dragOut",
@@ -47,19 +41,14 @@ $(document).ready(function(){
             $(ui.draggable).remove();
         }
     });
-     
-    var zIndex = 0;
-    function make_draggable(elements){	
-            elements.draggable({
-                    //containment:'parent'
-                    revert: 'invalid',
-                    helper:'original',
-                    start:function(e,ui){ 
-                        ui.helper.css('z-index',++zIndex);
-                        currentParent = $(this).parent().attr('id');
-                    },
-                    stop:function(e,ui){}
-            });
-    }
     
+    $("#sortable").sortable();
+    
+    /*
+    $("#finalizar").click(
+        function (ev, ui){
+           console.log($("#sortable").get());
+       }
+    );
+    */
 });

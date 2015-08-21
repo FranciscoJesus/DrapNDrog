@@ -45,12 +45,9 @@
                             <h3 class="panel-title">Builder panel</h3>
                         </div>
 
-                        <div id="content-panel" class="panel-body">
-                            
-                            <!-- <div id="bin-panel" class="pull-right pull-down">
-                                <img id="bin-image" class="img-thumbnail" src="images/bin.png"/>
-                            </div> -->
-                            
+                        <div id="content-panel" class="panel-body grid">
+                            <ul id="sortable">
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -88,6 +85,8 @@
                 
             </div>
         </div>
+        
+        <!-- <button id="finalizar">Finalizar</button> -->
         
     </body>
 </html>

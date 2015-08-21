@@ -14,6 +14,9 @@ and open the template in the editor.
     min-height:500px;
 
 }
+#sortable-1 {
+   margin: 0; padding: 0; 
+}
 
 .piece-1{
     background: #E1F5A9;

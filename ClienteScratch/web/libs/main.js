@@ -19,35 +19,27 @@ $(document).ready(function(){
 
     $(".dragOut").draggable({
         helper:'original',
-        containment: 'parent',
-        //revert: 'invalid',
-        start: function(){ 
-            alert("currentParent: " + currentParent);
-        }
+        containment: 'parent'
     });
-    $(".dragOut").sortable();
-       //placeholder: "ui-state-highlight" 
-        
-    //});
-     $(".dragIn").sortable();
-       //placeholder: "ui-state-highlight" 
-        
-    //});
-    $("#content-panel").droppable({
-         accept:".dragIn",
+    $("#sortable-1").sortable({
+       placeholder:"ui-state-highlight",
+       helper:'clone',
+       forceHelperSize: true
+    });
+    
+    $("#sortable-1").droppable({
+         accept:".dragIn , .dragOut",
          drop: function(ev,ui){
 
              var droppedItem = $(ui.draggable).clone();
              droppedItem.addClass("item-"+counts[0]);                
              droppedItem.addClass("dragOut");
              droppedItem.removeClass("dragIn");
-             $("#content-panel").append(droppedItem);
-             
-             make_draggable(droppedItem);
-             
+             $("#sortable-1").append(droppedItem);
+                       
          }
      });
-     
+    
     $("#bin-panel").droppable({
         accept: ".dragOut",
         drop: function(ev, ui) {
@@ -55,19 +47,5 @@ $(document).ready(function(){
         }
     });
      
-    var zIndex = 0;
-    function make_draggable(elements){	
-            elements.draggable({
-                    //containment:'parent'
-                    revert: 'invalid',
-                    helper:'original',
-                    start:function(e,ui){ 
-                        ui.helper.css('z-index',++zIndex);
-                        currentParent = $(this).parent().attr('id');
-                       
-                    },
-                    stop:function(e,ui){}
-            });
-    }
    
 });

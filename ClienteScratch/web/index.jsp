@@ -46,7 +46,10 @@
                         </div>
 
                         <div id="content-panel" class="panel-body">
-                            
+                            <ul id="sortable-1">
+                                <li>prueba</li>
+                                
+                            </ul> 
                             <!-- <div id="bin-panel" class="pull-right pull-down">
                                 <img id="bin-image" class="img-thumbnail" src="images/bin.png"/>
                             </div> -->

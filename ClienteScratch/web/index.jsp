@@ -86,7 +86,7 @@
             </div>
         </div>
         
-        <!-- <button id="finalizar">Finalizar</button> -->
+        <button id="finalizar">Finalizar</button>
         
     </body>
 </html>

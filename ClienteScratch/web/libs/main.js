@@ -29,8 +29,12 @@ $(document).ready(function(){
                 droppedItem.addClass("item-" + counts[0]);
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
-
-                $("#sortable").append(droppedItem);
+                //droppedItem.wrap("<li></li>");
+                var li = document.createElement("li");
+                li.append(droppedItem);
+                $("#sortable").append(li);
+                //$("#sortable").append(droppedItem);
+                
             }
         }
     });
@@ -44,11 +48,9 @@ $(document).ready(function(){
     
     $("#sortable").sortable();
     
-    /*
     $("#finalizar").click(
         function (ev, ui){
-           console.log($("#sortable").get());
+           console.log($("#sortable").get(1));
        }
     );
-    */
 });

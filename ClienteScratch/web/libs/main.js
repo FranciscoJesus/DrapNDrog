@@ -6,9 +6,8 @@
 
 $(document).ready(function(){
     var counts = [0];
-    //var currentParent;
-    var zIndex = 0;
-    
+    var item={ };
+    var json;
     $(".dragIn").draggable({
         helper:'clone',
         start: function(){ 
@@ -29,12 +28,7 @@ $(document).ready(function(){
                 droppedItem.addClass("item-" + counts[0]);
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
-                //droppedItem.wrap("<li></li>");
-                var li = document.createElement("li");
-                li.append(droppedItem);
-                $("#sortable").append(li);
-                //$("#sortable").append(droppedItem);
-                
+                $("#sortable").append(droppedItem);
             }
         }
     });
@@ -48,9 +42,16 @@ $(document).ready(function(){
     
     $("#sortable").sortable();
     
+    
     $("#finalizar").click(
         function (ev, ui){
-           console.log($("#sortable").get(1));
+           item=$("#sortable").find('.piece').map(function(){
+               item.id=this.value;
+               
+                json=JSON.stringify(item);
+           });
+            console.log(item);
        }
     );
+    
 });

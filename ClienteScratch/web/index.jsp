@@ -66,6 +66,10 @@
                             <div class="piece piece-2 dragIn">
                                 <p>Pieza 2 <input type="text" name="pieza2"/></p>
                             </div>
+                             <div class="piece piece-3 dragIn">
+                                 <div>hola cabesa</div>
+                                <p>Pieza 3 <input type="text" name="pieza3"/></p>
+                            </div>
                             
                             <!-- <img id="drag1" class="img-responsive" src="ModelSakilaClient.png"  /> -->
                         </div>
@@ -86,7 +90,7 @@
             </div>
         </div>
         
-        <button id="finalizar">Finalizar</button>
+         <button id="finalizar">Finalizar</button> 
         
     </body>
 </html>

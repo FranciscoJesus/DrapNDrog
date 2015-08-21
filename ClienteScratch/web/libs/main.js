@@ -6,9 +6,8 @@
 
 $(document).ready(function(){
     var counts = [0];
-    //var currentParent;
-    var zIndex = 0;
-    
+    var item={ };
+    var json;
     $(".dragIn").draggable({
         helper:'clone',
         start: function(){ 
@@ -29,7 +28,6 @@ $(document).ready(function(){
                 droppedItem.addClass("item-" + counts[0]);
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
-
                 $("#sortable").append(droppedItem);
             }
         }
@@ -44,11 +42,16 @@ $(document).ready(function(){
     
     $("#sortable").sortable();
     
-    /*
+    
     $("#finalizar").click(
         function (ev, ui){
-           console.log($("#sortable").get());
+           item=$("#sortable").find('.piece').map(function(){
+               item.id=this.value;
+               
+                json=JSON.stringify(item);
+           });
+            console.log(item);
        }
     );
-    */
+    
 });

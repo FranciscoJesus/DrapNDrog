@@ -9,7 +9,9 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import java.util.ArrayList;
 import javax.ws.rs.BeanParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -20,7 +22,7 @@ import org.bson.Document;
  *
  * @author FranciscoJesús
  */
-@Path("Prueba")
+@Path("Profesor")
 public class ServicioPrueba {
     
     @GET
@@ -29,25 +31,28 @@ public class ServicioPrueba {
         return "Hello";
     }
     
-    @GET
-    @Path("insertar")
+    @POST
+    @Path("insertarProblema")
+    @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Nombre insertar(@BeanParam Nombre n){
-        MongoClient mongoClient = new MongoClient( "localhost" );
-        //accedemos a la base de datos específica
-        MongoDatabase mongoDB = mongoClient.getDatabase("Prueba");
-        //Accedemos a la tabla
-        MongoCollection<Document> nombres = mongoDB.getCollection("Nombres");
-        //creamos la query
-        BasicDBObject query = new BasicDBObject("Nombre",n.nombre);        
-        Document res = nombres.find(query).first();
-        if(res==null){
-            //Creamos un objeto
-            res = new Document("Nombre", n.nombre);
-            //Lo insertamos
-            nombres.insertOne(res);
-        }       
-        Nombre nombre = new Nombre(res.getString("Nombre"));
-        return nombre;
+    public Problema insertar(Problema n){
+//        MongoClient mongoClient = new MongoClient( "localhost" );
+//        //accedemos a la base de datos específica
+//        MongoDatabase mongoDB = mongoClient.getDatabase("Prueba");
+//        //Accedemos a la tabla
+//        MongoCollection<Document> nombres = mongoDB.getCollection("Nombres");
+//        //creamos la query
+//        BasicDBObject query = new BasicDBObject("Nombre",n.nombre);        
+//        Document res = nombres.find(query).first();
+//        if(res==null){
+//            //Creamos un objeto
+//            res = new Document("Nombre", n.nombre);
+//            
+//            //Lo insertamos
+//            nombres.insertOne(res);
+//        }       
+//        Solucion nombre = new Solucion(res.getString("Nombre"));
+//        return nombre;
+        return n;
     }
 }

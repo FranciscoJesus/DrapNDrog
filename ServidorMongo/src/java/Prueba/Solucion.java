@@ -5,6 +5,7 @@
  */
 package Prueba;
 
+import java.util.ArrayList;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,14 +15,18 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Nombre {
+public class Solucion {
     
     @QueryParam("nombre")
     public String nombre;
     
-    public Nombre(){};
+    @QueryParam("piezas")
+    public ArrayList<Pieza> piezas = new ArrayList<>();
     
-    public Nombre(String n){
+    public Solucion(){};
+    
+    public Solucion(String n,ArrayList<Pieza> p){
         nombre = n;
+        piezas = p;
     }
 }

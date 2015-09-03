@@ -6,7 +6,6 @@
 
 $(document).ready(function(){
     var counts = [0];
-    var item={ };
     var json;
     $(".dragIn").draggable({
         helper:'clone',
@@ -45,13 +44,23 @@ $(document).ready(function(){
     
     $("#finalizar").click(
         function (ev, ui){
-           item=$("#sortable").find('.piece').map(function(){
-               item.id=this.value;
+           var items=$("#sortable").find('.piece').map(function(){
                
-                json=JSON.stringify(item);
+              
+               return item;
+                   
+            
+               
+              
+                 
+              
+              
+            
            });
-            console.log(item);
+           json=JSON.stringify(items);
+            console.log(items);
        }
     );
     
+   
 });

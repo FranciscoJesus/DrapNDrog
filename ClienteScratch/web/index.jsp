@@ -60,7 +60,7 @@
 
                         <div id="pieces-panel" class="panel-body">
                             <div class="piece piece-1 dragIn">
-                                <p>Pieza 1 <input type="text" name="pieza1"/></p>
+                                <p>Pieza 1 <input type="text" id="valor" name="pieza1"/></p>
                             </div>
                             
                             <div class="piece piece-2 dragIn">

@@ -5,20 +5,38 @@
  */
 package Prueba;
 
+import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
 @XmlRootElement
-class Pieza {
- 
+class Pieza { 
+    public int id;
     @QueryParam("tipo")
     public ArrayList<Input> inputs = new ArrayList<>();
     
     public Pieza(){}
+    
+    /**
+     * Método que se encarga de convertir un objeto Pieza en un objeto JSON
+     * @return 
+     */
+    public Document converADocument(){
+        
+        Document res = new Document();
+        BasicDBList input = new BasicDBList();
+        for(Input i : inputs){
+            input.add(i.converADocument());
+        }
+        res.append("inputs", input);
+                
+        return res;
+    }
     
 }

@@ -5,7 +5,9 @@
  */
 package Prueba;
 
+import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.bson.Document;
 
 /**
  *
@@ -13,6 +15,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 class Input {
+    
     public String type;
-    public Object Value;
+    public ArrayList<String> value;
+    
+    public Input(){
+        
+    }
+    
+    /**
+     * Metodo que convierte un objeto input a un objeto JSON
+     * @return 
+     */
+    public Document converADocument(){
+        //creamos el objeto que vamos a devolver
+        Document res = new Document();
+        //añadimos los campos       
+        res.append("type", type);
+        res.append("value", value);       
+        
+        //devolvemos el objeto
+        return res;
+    }
 }

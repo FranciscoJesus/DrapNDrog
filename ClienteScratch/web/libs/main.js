@@ -41,7 +41,7 @@ $(document).ready(function() {
     });
 
     $("#sortable").sortable();
-<<<<<<< HEAD
+
 
     $("#finalizar").click(
             function(ev, ui) {
@@ -102,32 +102,5 @@ $(document).ready(function() {
         //console.log(object);
     }
 
-=======
-    
-    $("#finalizar").click(
-        function (){
-            console.log($("#sortable").children());
-            //console.log(JSON.stringify($("#sortable")));
-/*
-            var item = {};
-           var items = $("#sortable").find('.piece').map(function(){
-               item = JSON.stringify(this);
-               console.log("**- " + item);
-               return item;
-               //console.log(this);
-               //item = this;
-               ////item.id = this.value;
-               //json=JSON.stringify(item);
-               //return item;
-           });
-*/           
-           //console.log(items);
-           //var json = JSON.stringify(items);
-           //console.log(items);
-           
-       }
-    );
-    
->>>>>>> 2756cbbaa8ae192a804dcdd8a1c88559a9144b6b
 });
 

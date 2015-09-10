@@ -6,6 +6,7 @@
 
 $(document).ready(function() {
     var counts = [0];
+    var json;
 
     $(".dragIn").draggable({
         helper: 'clone',
@@ -101,3 +102,4 @@ $(document).ready(function() {
     }
 
 });
+

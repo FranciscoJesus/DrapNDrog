@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Prueba;
+package Entities;
 
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -14,7 +14,7 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-class Input {
+public class Input {
     
     public String type;
     public ArrayList<String> value;

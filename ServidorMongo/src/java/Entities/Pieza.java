@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Prueba;
+package Entities;
 
+import Entities.Input;
 import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import javax.ws.rs.QueryParam;
@@ -16,7 +17,7 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-class Pieza { 
+public class Pieza { 
     public int id;
     @QueryParam("tipo")
     public ArrayList<Input> inputs = new ArrayList<>();

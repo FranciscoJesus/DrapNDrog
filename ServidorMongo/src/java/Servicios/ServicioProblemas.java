@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Prueba;
+package Servicios;
 
+import Entities.Problema;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
@@ -22,7 +23,7 @@ import org.bson.types.ObjectId;
  *
  * @author FranciscoJesús
  */
-@Path("Profesor")
+@Path("Problema")
 public class ServicioProblemas {
 
     MongoClient mongoClient;
@@ -87,6 +88,7 @@ public class ServicioProblemas {
         //Devolvemos el JSON del objeto Document
         return res.toJson();
     }
+    
 
     /**
      * Método que se utiliza para abrir conexión con la base de datos

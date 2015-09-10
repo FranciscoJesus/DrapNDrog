@@ -3,17 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Prueba;
+package Entities;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
+import java.util.List;
 
 /**
  *
  * @author FranciscoJesús
  */
+public class Alumno {
 
-@ApplicationPath("API")
-public class ApplicationConfig extends Application{
+    public String Nombre;
+    public String Apellido;
+    public String DNI;
+    public int idUsuario;
+    public List<String> idProfesores;
     
+    public Alumno() {
+    }
+
 }

@@ -6,7 +6,6 @@
 
 $(document).ready(function(){
     var counts = [0];
-    var item={ };
     var json;
     $(".dragIn").draggable({
         helper:'clone',
@@ -42,15 +41,27 @@ $(document).ready(function(){
     
     $("#sortable").sortable();
     
-    
     $("#finalizar").click(
-        function (ev, ui){
-           item=$("#sortable").find('.piece').map(function(){
-               item.id=this.value;
-               
-                json=JSON.stringify(item);
+        function (){
+            console.log($("#sortable").children());
+            //console.log(JSON.stringify($("#sortable")));
+/*
+            var item = {};
+           var items = $("#sortable").find('.piece').map(function(){
+               item = JSON.stringify(this);
+               console.log("**- " + item);
+               return item;
+               //console.log(this);
+               //item = this;
+               ////item.id = this.value;
+               //json=JSON.stringify(item);
+               //return item;
            });
-            console.log(item);
+*/           
+           //console.log(items);
+           //var json = JSON.stringify(items);
+           //console.log(items);
+           
        }
     );
     

@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ *
+ * @author Javier Ordoñez Martín
+ */
 
 $(document).ready(function() {
     var counts = [0];
-    var json;
-
+    
     $(".dragIn").draggable({
         helper: 'clone',
         start: function() {
@@ -45,62 +48,48 @@ $(document).ready(function() {
 
     $("#finalizar").click(
             function(ev, ui) {
+                var json;
                 
-                var initElement = $("#sortable");
-                
-                json = mapDOM(initElement, true);
+                json= mapDOM();
                 console.log(json);
-
+                var ob=JSON.parse(json);
+                console.log(ob);
+                $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
             });
 
-
-    function mapDOM(element, json) {
-        var treeObject = {};
-        
-        treeHTML(element, treeObject);
-
-        return (json) ? JSON.stringify(treeObject) : treeObject;
-    }
-
-    function treeHTML(element, object) {
-        object["type"] = element.nodeName;
-
-        
+      function mapDOM(){
         var list = $("#sortable").find(".piece ");
-        for ( var i = 0 , len = list.length; i < len; i++){ 
-           
-            var piece = list[i];
-            console.log(list[i]);
+        var listaPiezas = "{\"idAlumno\": \"Waticontella29\",\"idProblema\":\"55eecca002e2d107e0a53cff\", \"piezas\": [";
         
-        
+        if (list != null) {    
+            for (var i = 0, len = list.length; i < len; i++) {
+                listaPiezas += "{ \"inputs \": [";
+                
+                for(var r= 0,  tam =list[i].children.length; r<tam ;r++){
+                   
+                    if(list[i].children[r].nodeName == "P"){
+                        listaPiezas += "{\"type\": \"label\",\"value\": \""+list[i].children[r].innerHTML+"\"}";
+                    }else if(list[i].children[r].nodeName == "INPUT") {
+                            listaPiezas +="{\"type\": \"text\",\"value\": \""+list[i].children[r].value+"\"}";
+                        }else if( list[i].children[r].nodeName == "SELECT") {
+                            listaPiezas +="{\"type\": \"select\",\"value\": \""+list[i].children[r].value+"\"}"
+                        }
+                        
+                    if(r+1 < tam){
+                        listaPiezas+=",";
+                    }
+                }
+                
+                listaPiezas += "]}"
+                if(i+1<len){
+                        listaPiezas+=",";
+                    }
+            }
         }
-
-        /*
-         if (list != null) {
-         
-         if (list.length) {
-         object["content"] = [];
-         for (var i = 0; i < list.length; i++) {
-         if (list[i].nodeType == 3) {
-         object["content"].push(list[i].nodeValue);
-         } else {
-         object["content"].push({});
-         treeHTML(list[i], object["content"][object["content"].length - 1]);
-         }
-         }
-         }
-         }
-         if (element.attributes != null) {
-         if (element.attributes.length) {
-         object["attributes"] = {};
-         for (var i = 0; i < element.attributes.length; i++) {
-         object["attributes"][element.attributes[i].nodeName] = element.attributes[i].nodeValue;
-         }
-         }
-         }
-         */
-        //console.log(object);
-    }
-
+        listaPiezas = listaPiezas + "]}";
+        return listaPiezas;
+      }
+    
+    
 });
 

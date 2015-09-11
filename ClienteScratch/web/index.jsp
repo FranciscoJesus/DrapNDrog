@@ -1,8 +1,3 @@
-<%-- 
-    Document   : index
-    Created on : Aug 3, 2015, 2:07:08 PM
-    Author     : FranciscoJesús
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -12,13 +7,11 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
-        <!-- Librerias jQuery online
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
+        
         
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-        <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
+        
         <script type="text/javascript" src="libs/main.js"></script>
         
         <!-- Bootstrap -->
@@ -60,15 +53,22 @@
 
                         <div id="pieces-panel" class="panel-body">
                             <div class="piece piece-1 dragIn">
-                                <p>Pieza 1 <input type="text" name="pieza1"/></p>
+                                <p clase="cold-md-5">Pieza 1 </p>
+                                    <input type="text" clase="form-control input-text-piece col-md-3" type="text"/>
                             </div>
                             
                             <div class="piece piece-2 dragIn">
-                                <p>Pieza 2 <input type="text" name="pieza2"/></p>
+                                <select class="col-md-11">
+                                        <option>op1</option>
+                                        <option>op2</option>
+                                        <option>op3</option>
+                                        </select>
                             </div>
                              <div class="piece piece-3 dragIn">
-                                 <div>hola cabesa</div>
-                                <p>Pieza 3 <input type="text" name="pieza3"/></p>
+                                 
+                                <p clase="cold-md-5">Pieza 3 </p>
+                                    <input type="text" clase="form-control input-text-piece col-md-3" type="text"/>
+                                 <p clase="cold-md-5">ok </p>   
                             </div>
                             
                             <!-- <img id="drag1" class="img-responsive" src="ModelSakilaClient.png"  /> -->

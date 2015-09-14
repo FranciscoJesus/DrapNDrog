@@ -26,7 +26,7 @@ public class ServicioSoluciones {
 
     @POST
     @Path("insertarSolucion")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json","application/xml"})
     @Produces("application/json")
     public Solucion insertarSolucion(Solucion sol) {
         try {

@@ -18,7 +18,6 @@ import org.bson.Document;
  */
 @XmlRootElement
 public class Pieza { 
-    public int id;
     @QueryParam("tipo")
     public ArrayList<Input> inputs = new ArrayList<>();
     

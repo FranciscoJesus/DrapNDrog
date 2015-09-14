@@ -139,6 +139,52 @@ $(document).ready(function(){
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
     
+    $("#finalizar").click( function(ev, ui) {
+                var json;
+
+                json = mapDOM();
+                //console.log(json);
+                var ob = JSON.parse(json);
+                console.log(ob);
+                /*
+                $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
+                */
+            }
+    );
+
+    function mapDOM() {
+        var list = $("#sortable").find(".piece ");
+        var listaPiezas = "{\"idAlumno\": \"Waticontella29\",\"idProblema\":\"55eecca002e2d107e0a53cff\", \"piezas\": [";
+
+        if (list != null) {
+            for (var i = 0, len = list.length; i < len; i++) {
+                listaPiezas += "{ \"inputs \": [";
+
+                for (var r = 0, tam = list[i].children.length; r < tam; r++) {
+
+                    if (list[i].children[r].nodeName == "P") {
+                        listaPiezas += "{\"type\": \"label\",\"value\": \"" + list[i].children[r].innerHTML + "\"}";
+                    } else if (list[i].children[r].nodeName == "INPUT") {
+                        listaPiezas += "{\"type\": \"text\",\"value\": \"" + list[i].children[r].value + "\"}";
+                    } else if (list[i].children[r].nodeName == "SELECT") {
+                        listaPiezas += "{\"type\": \"select\",\"value\": \"" + list[i].children[r].value + "\"}";
+                    }
+
+                    if (r + 1 < tam) {
+                        listaPiezas += ",";
+                    }
+                }
+
+                listaPiezas += "]}"
+                if (i + 1 < len) {
+                    listaPiezas += ",";
+                }
+            }
+        }
+        listaPiezas = listaPiezas + "]}";
+        return listaPiezas;
+    }
+    
     /* Funcion para dar color a las piezas de forma aleatoria */
     var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
     var index = 0;

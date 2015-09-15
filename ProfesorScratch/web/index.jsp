@@ -68,7 +68,7 @@
                         
                     </div>
                     <div class="row">
-                        <div class="col-md-offset-5">
+                        <div class="col-md-offset-5 col-sm-offset-5">
                             <button id="finalizar" type="button" class="btn btn-success button-send">Finalizar</button>
                         </div>
                     </div>

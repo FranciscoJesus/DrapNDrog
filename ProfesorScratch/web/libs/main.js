@@ -6,7 +6,7 @@
 
 $(document).ready(function(){
     var counts = [0];
-    var json;
+    var jsonPiezas = "";
     
     $(".dragIn").draggable({
         helper:'clone',
@@ -96,6 +96,7 @@ $(document).ready(function(){
     }
     
     function buildPieces(f){
+        jsonPiezas = f;
         var o = JSON.parse( f );
         
         cleanPieces(f);
@@ -139,50 +140,55 @@ $(document).ready(function(){
 
     document.getElementById('files').addEventListener('change', handleFileSelect, false);
     
-    $("#finalizar").click( function(ev, ui) {
-                var json;
+    function getEnunciado(){
+        return $('#enunciado').val();
+    }
+    
+    $("#finalizar").click(function(ev, ui) {
+        var json;
+        var enunciado = getEnunciado();
+        var solucion = getSolucion();
+        
+        json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + "," + solucion + "}";
+        alert(json);
+        var ob = JSON.parse(json);
+        
+        /*
+         $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
+         */
+    });
 
-                json = mapDOM();
-                //console.log(json);
-                var ob = JSON.parse(json);
-                console.log(ob);
-                /*
-                $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
-                */
-            }
-    );
-
-    function mapDOM() {
+    function getSolucion() {
         var list = $("#sortable").find(".piece ");
-        var listaPiezas = "{\"idAlumno\": \"Waticontella29\",\"idProblema\":\"55eecca002e2d107e0a53cff\", \"piezas\": [";
+        var piezas = "\"solucion\": [";
 
         if (list != null) {
             for (var i = 0, len = list.length; i < len; i++) {
-                listaPiezas += "{ \"inputs \": [";
+                piezas += "{ \"inputs \": [";
 
                 for (var r = 0, tam = list[i].children.length; r < tam; r++) {
 
                     if (list[i].children[r].nodeName == "P") {
-                        listaPiezas += "{\"type\": \"label\",\"value\": \"" + list[i].children[r].innerHTML + "\"}";
+                        piezas += "{\"type\": \"label\",\"value\": \"" + list[i].children[r].innerHTML + "\"}";
                     } else if (list[i].children[r].nodeName == "INPUT") {
-                        listaPiezas += "{\"type\": \"text\",\"value\": \"" + list[i].children[r].value + "\"}";
+                        piezas += "{\"type\": \"text\",\"value\": \"" + list[i].children[r].value + "\"}";
                     } else if (list[i].children[r].nodeName == "SELECT") {
-                        listaPiezas += "{\"type\": \"select\",\"value\": \"" + list[i].children[r].value + "\"}";
+                        piezas += "{\"type\": \"select\",\"value\": \"" + list[i].children[r].value + "\"}";
                     }
 
                     if (r + 1 < tam) {
-                        listaPiezas += ",";
+                        piezas += ",";
                     }
                 }
 
-                listaPiezas += "]}"
+                piezas += "]}";
                 if (i + 1 < len) {
-                    listaPiezas += ",";
+                    piezas += ",";
                 }
             }
         }
-        listaPiezas = listaPiezas + "]}";
-        return listaPiezas;
+        piezas = piezas + "]";
+        return piezas;
     }
     
     /* Funcion para dar color a las piezas de forma aleatoria */

@@ -48,13 +48,21 @@ $(document).ready(function() {
 
     $("#finalizar").click(
             function(ev, ui) {
+                
                 var json;
                 
                 json= mapDOM();
-                console.log(json);
-                var ob=JSON.parse(json);
-                console.log(ob);
-                $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
+                 $.ajax({
+                    type: 'POST',
+                    url: "http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion",
+                    data: json,
+                    contentType: "application/json",
+                    dataType: 'jsonp',
+                    success: function (data, textStatus, jqXHR)
+                    {
+                        console.log(data);
+                    }
+                });
             });
 
       function mapDOM(){
@@ -63,7 +71,7 @@ $(document).ready(function() {
         
         if (list != null) {    
             for (var i = 0, len = list.length; i < len; i++) {
-                listaPiezas += "{ \"inputs \": [";
+                listaPiezas += "{ \"inputs\": [";
                 
                 for(var r= 0,  tam =list[i].children.length; r<tam ;r++){
                    

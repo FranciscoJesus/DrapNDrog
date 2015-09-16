@@ -19,6 +19,7 @@ and open the template in the editor.
     border-radius: 10px;
     border:1px solid #ddd;
     margin: 0;
+    padding: 0.8em;
 }
 
 .dragIn{

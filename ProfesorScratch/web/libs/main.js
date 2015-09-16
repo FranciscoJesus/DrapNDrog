@@ -52,6 +52,7 @@ $(document).ready(function(){
     $("#sortable").sortable();
     
     function cleanPieces(f){
+        index = 0;
         $(".piece").remove();
     }
     
@@ -168,17 +169,27 @@ $(document).ready(function(){
         
         /* @todo - Control de errores */
         json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + "}";
-        var ob = JSON.parse(json);
+        //var ob = JSON.parse(json);
+        console.log(json);
         
-        /*
-         $.post("http://localhost:8080/ServidorMongo/API/Solucion/insertarSolucion", ob);
-         */
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+            data: json,
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(data, textStatus, jqXHR){
+                console.log(data);
+            }
+        });
+         
     });
 
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
-        var piezas = "[";
-
+        //var piezas = "[";
+        var piezas = "{\"piezas\":[";
+        
         if (list != null) {
             for (var i = 0, len = list.length; i < len; i++) {
                 piezas += "{\"inputs\":[";
@@ -201,7 +212,7 @@ $(document).ready(function(){
                 
             }
         }
-        piezas = piezas + "]";
+       piezas = piezas + "]}";
         return piezas;
     }
     

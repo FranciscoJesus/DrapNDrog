@@ -7,6 +7,8 @@
 $(document).ready(function(){
     var counts = [0];
     var jsonPiezas = "";
+    var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
+    var index = 0;
     
     $(".dragIn").draggable({
         helper:'clone',
@@ -69,9 +71,15 @@ $(document).ready(function(){
                 break;
                 
             case "text":
+                /**
+                 * $.wrapper = $('<div/>');
+                 * $.wrapper.addClass("col-md-5");
+                 */
                 $.content = $('<input/>').attr({ type: 'text'});
                 $.content.addClass("form-control");
                 $.content.addClass("input-text-piece");
+                
+                //$.content = $.wrapper.append($.content);
                 break;
                 
             case "select":
@@ -86,15 +94,11 @@ $(document).ready(function(){
         return $.content;
     }
     
-    function calcular_ancho_pieza(numInputs){
-        var width = 0;
-        var max = 11;
-        
-        width = Math.floor(max / numInputs);
-        
-        return width;
-    }
-    
+    /**
+     * Función para construir las piezas en HTML
+     * @param {type} f
+     * @returns {undefined}
+     */
     function buildPieces(f){
         jsonPiezas = f;
         var o = JSON.parse( f );
@@ -112,7 +116,7 @@ $(document).ready(function(){
             pieces.inputs.forEach(function(entry){
                 $.input = buildPieceField(entry);
                 
-                $.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
+                //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
                 pieza.append($.input);
             });
             
@@ -123,7 +127,12 @@ $(document).ready(function(){
         });
     }
     
-    function handleFileSelect(evt) {
+    /**
+     * Funcion que procesa un fichero en tiempo de ejecución para generar las piezas
+     * @param {type} evt
+     * @returns {undefined}
+     */
+    function leerFichero(evt) {
         var f = evt.target.files[0];
         
         if (f.type.match('text.*')) {
@@ -131,26 +140,34 @@ $(document).ready(function(){
 
             reader.onload = (function(theFile) {
                 return function(e) {
-                    buildPieces(e.target.result);
+                    buildPieces(e.target.result);   //Construir piezas
                 };
             })(f);
             reader.readAsText(f);
         }
     }
 
-    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+    document.getElementById('files').addEventListener('change', leerFichero, false);
     
+    /**
+     * Función que recoge el enunciado y devuelve el contenido.
+     * @returns {jQuery}
+     */
     function getEnunciado(){
         return $('#enunciado').val();
     }
     
+    /**
+     * Función que controla el botón de finalizar
+     * Se encarga de recoger el enunciado, las piezas utilizadas y la solución planteada para enviarlas al servidor.
+     */
     $("#finalizar").click(function(ev, ui) {
         var json;
-        var enunciado = getEnunciado();
-        var solucion = getSolucion();
+        var enunciado = getEnunciado(); //Obtenemos el enunciado
+        var solucion = getSolucion();   //Obtemenos la solución planteada
         
-        json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + "," + solucion + "}";
-        alert(json);
+        /* @todo - Control de errores */
+        json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + "}";
         var ob = JSON.parse(json);
         
         /*
@@ -160,40 +177,52 @@ $(document).ready(function(){
 
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
-        var piezas = "\"solucion\": [";
+        var piezas = "[";
 
         if (list != null) {
             for (var i = 0, len = list.length; i < len; i++) {
-                piezas += "{ \"inputs \": [";
+                piezas += "{\"inputs\":[";
 
                 for (var r = 0, tam = list[i].children.length; r < tam; r++) {
 
                     if (list[i].children[r].nodeName == "P") {
-                        piezas += "{\"type\": \"label\",\"value\": \"" + list[i].children[r].innerHTML + "\"}";
+                        piezas += "{\"type\":\"label\",\"value\":\"" + list[i].children[r].innerHTML + "\"}";
                     } else if (list[i].children[r].nodeName == "INPUT") {
-                        piezas += "{\"type\": \"text\",\"value\": \"" + list[i].children[r].value + "\"}";
+                        piezas += "{\"type\":\"text\",\"value\": \"" + list[i].children[r].value + "\"}";
                     } else if (list[i].children[r].nodeName == "SELECT") {
-                        piezas += "{\"type\": \"select\",\"value\": \"" + list[i].children[r].value + "\"}";
+                        piezas += "{\"type\":\"select\",\"value\":\"" + list[i].children[r].value + "\"}";
                     }
 
-                    if (r + 1 < tam) {
-                        piezas += ",";
-                    }
+                    if (r + 1 < tam) piezas += ",";
                 }
 
                 piezas += "]}";
-                if (i + 1 < len) {
-                    piezas += ",";
-                }
+                if (i + 1 < len) piezas += ",";
+                
             }
         }
         piezas = piezas + "]";
         return piezas;
     }
     
-    /* Funcion para dar color a las piezas de forma aleatoria */
-    var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
-    var index = 0;
+    /**
+     * 
+     * @param {type} numInputs
+     * @returns {Number}
+     */
+    function calcular_ancho_pieza(numInputs){
+        var width = 0;
+        var max = 11;
+        
+        width = Math.floor(max / numInputs);
+        
+        return width;
+    }
+        
+    /**
+     * 
+     * @returns {String}
+     */
     function color_piezas(){
         index = (index + 1)%4;
         return estilo_piezas[index];

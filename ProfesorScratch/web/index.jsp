@@ -61,14 +61,13 @@
                         </div>
 
                         <div id="content-panel" class="panel-body grid">
-                            <!-- <output id="list"></output> -->
                             <ul id="sortable">
                             </ul>
                         </div>
                         
                     </div>
                     <div class="row">
-                        <div class="col-md-offset-5 col-sm-offset-5">
+                        <div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 col-xs-offset-4">
                             <button id="finalizar" type="button" class="btn btn-success button-send">Finalizar</button>
                         </div>
                     </div>
@@ -81,8 +80,11 @@
                             <h3 class="panel-title">Pieces panel</h3>
                         </div>
 
-                        <div id="pieces-panel" class="panel-body row">
-                            <input type="file" id="files" class="filestyle" name="files"/>
+                        <div id="pieces-panel-content" class="panel-body row">
+                            <div id="input-file" class="col-md-6 col-sm-6 col-lg-6 col-xs-6 col-xs-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-offset-3">
+                                <input type="file" id="files" class="filestyle" data-input="false" data-badge="false" name="files" />
+                            </div>
+                            <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
                     </div>
                     

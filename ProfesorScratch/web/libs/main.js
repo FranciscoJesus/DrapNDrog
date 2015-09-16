@@ -163,6 +163,7 @@ $(document).ready(function(){
      * Se encarga de recoger el enunciado, las piezas utilizadas y la solución planteada para enviarlas al servidor.
      */
     $("#finalizar").click(function(ev, ui) {
+        throw_alert("info","hola");
         var json;
         var enunciado = getEnunciado(); //Obtenemos el enunciado
         var solucion = getSolucion();   //Obtemenos la solución planteada
@@ -188,7 +189,7 @@ $(document).ready(function(){
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
         //var piezas = "[";
-        var piezas = "{\"piezas\":[";
+        var piezas = "[";
         
         if (list != null) {
             for (var i = 0, len = list.length; i < len; i++) {
@@ -212,7 +213,7 @@ $(document).ready(function(){
                 
             }
         }
-       piezas = piezas + "]}";
+       piezas = piezas + "]";
         return piezas;
     }
     
@@ -229,7 +230,42 @@ $(document).ready(function(){
         
         return width;
     }
+    
+    function throw_alert(type, message){
+        var span = "";
         
+        switch(type){
+            case "warning": span = "<strong>Warning!</strong>";
+            break;
+            
+            case "danger": span = "<strong>Danger!</strong>";
+            break;
+            
+            case "success": span = "<strong>Success!</strong>";
+            break;
+            
+            case "info": span = "<strong>Info!</strong>";
+            break;
+        }
+        
+        $.alert = $("<div/>");
+        $.alert.addClass('alert alert-' + type);
+        $.alert.append("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>");
+        $.alert.append( span +  " " + message );
+        
+        $("#alert_placeholder").append($.alert);
+        
+        /*
+        $("#alert_placeholder").html("\n\
+            <div class='alert alert-" + type + "'>\n\
+                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>\n\
+                " + span +  " " + message + ".\n\
+            </div>");        
+                            */
+                           
+                           
+    }
+    
     /**
      * 
      * @returns {String}

@@ -31,12 +31,13 @@
 
     </head>
     <body>
-        
         <div class="container">
             <div class="page-header">
                 <h1>Drag & Drop</h1>
                 <p class="lead">Arrastra, mueve, construye y destruye!</p>
             </div>
+            
+            <div id="alert_placeholder"></div>
             
             <div class="row">
                 <div class="col-md-12">
@@ -102,6 +103,23 @@
                 
             </div>
         </div>
+
+        <!------
+        
+        <input type = "button" id = "clickme" value="Click me!"/>
+        <div id = "alert_placeholder"></div>
+        <script>
+        bootstrap_alert = function() {}
+        bootstrap_alert.warning = function(message) {
+            $('#alert_placeholder').html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
+        }
+
+$('#clickme').on('click', function() {
+            bootstrap_alert.warning('Your text goes here');
+});
+        </script>
+
+        ----->
                 
     </body>
 </html>

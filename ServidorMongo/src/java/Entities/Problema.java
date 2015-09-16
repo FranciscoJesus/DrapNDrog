@@ -22,7 +22,7 @@ public class Problema {
     public String idProfesor;
     public String enunciado;
     public ArrayList<Pieza> piezas = new ArrayList<>();
-    public Solucion solucion;
+    public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {
     }
@@ -48,7 +48,11 @@ public class Problema {
         //añadimos las piezas
         res.append("piezas", pieza);
         //añadimos la solución
-        res.append("solucion", solucion.converADocument());
+        pieza = new BasicDBList();
+        for (Pieza i : solucion) {
+            pieza.add(i.converADocument());
+        }
+        res.append("solucion", pieza);
 
         return res;
     }

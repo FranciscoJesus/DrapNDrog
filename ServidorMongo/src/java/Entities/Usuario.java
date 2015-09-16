@@ -44,7 +44,7 @@ public class Usuario {
      * Método que se utiliza para la encriptación del campos "password"
      * @return 
      */
-    private String Encriptar() {
+    public String Encriptar() {
         String sha1 = "";
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");

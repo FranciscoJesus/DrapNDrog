@@ -19,7 +19,7 @@ public class Profesor {
     public String nombre;
     public String apellido;
     public String idUsuario;
-    public List<String> asignatura = new ArrayList<>();
+    public List<String> asignaturas = new ArrayList<>();
 
     public Profesor() {
 
@@ -33,10 +33,10 @@ public class Profesor {
         res.append("apellido", apellido);
         res.append("idUsuario", idUsuario);
         BasicDBList input = new BasicDBList();
-        for (String i : asignatura) {
+        for (String i : asignaturas) {
             input.add(i);
         }
-        res.append("asignatura", input);
+        res.append("asignaturas", input);
         
         return res;
     }

@@ -18,7 +18,8 @@ import org.bson.Document;
 @XmlRootElement
 public class Problema {
 
-    public int idProfesor;
+    public String id;
+    public String idProfesor;
     public String enunciado;
     public ArrayList<Pieza> piezas = new ArrayList<>();
     public Solucion solucion;
@@ -35,11 +36,12 @@ public class Problema {
         
         //inicializacion de la variable a devolver
         Document res = new Document();
+        
+        res.append("idProfesor", idProfesor);
         //añadimos el enunciado
         res.append("enunciado", enunciado);
         //creamos un array donde vamos a almacenar la lista de piezas
         BasicDBList pieza = new BasicDBList();
-
         for (Pieza i : piezas) {
             pieza.add(i.converADocument());
         }

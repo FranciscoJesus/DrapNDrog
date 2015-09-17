@@ -15,7 +15,6 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import org.bson.BasicBSONObject;
 import org.bson.Document;
 
 /**
@@ -48,27 +47,41 @@ public class ServicioUsuario {
     @POST
     @Path("Login")
     @Consumes({"application/xml", "application/json"})
+    @Produces("application/json")
     public String Login(Usuario u) {
         Document res = new Document();
         try {
             abrirConexion();
             //Accedemos a la tabla
             MongoCollection<Document> problemas = mongoDB.getCollection("Usuarios");
-            MongoCollection<Document> profesores = mongoDB.getCollection("Profesor");
             //buscamos un usuario y contraseña que concuerden
-            BasicDBObject user = new BasicDBObject("usuario",u.usuario);
-            user.append("rol",u.rol);
-            user.append("password",u.Encriptar());
+            BasicDBObject user = new BasicDBObject("usuario", u.usuario);
+            user.append("password", u.Encriptar());
+            user.append("rol", u.rol);
             res = problemas.find(user).first();
-            if(u.rol==2){
-                profesores.find(new BasicDBObject("id",res.getString("id")));
+            /*si el resultado es nulo significa que no existe ningun usuario con
+             esa contraseña*/
+
+            if (res != null) {
+
+                int rol = res.getInteger("rol");
+
+                if (rol == 2) {
+                    MongoCollection<Document> profesores = mongoDB.getCollection("Profesor");
+                    res = profesores.find(new BasicDBObject("id", res.getString("id"))).first();
+                } else if (rol == 1) {
+                    MongoCollection<Document> alumnos = mongoDB.getCollection("Alumno");
+                    res = alumnos.find(new BasicDBObject("id", res.getString("id"))).first();
+                }
+            } else {
+                //si el resultado es nulo devolvemos un mensaje en el
+                res = new Document("salida", "no existe este usuario");
             }
-            res.getString("");
             //cerramos conexión
             cerrarConexion();
-            
+
             return res.toJson();
-            
+
         } catch (Exception e) {
             return new Document("salida", e.toString()).toJson();
         }

@@ -1,4 +1,7 @@
-
+<%-- 
+    Document   : index
+    Author     : JavierOrdoñezMartín
+--%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -34,6 +37,10 @@
                 
                 <div class="col-md-9">
                     <div class="panel panel-default">
+                        <div class="panel-enunciado">
+                            <h1>Enunciado</h1>
+                            <textarea class="panel-enunciado-ejercicio" id="enunciado" readonly> Hola!</textarea>
+                        </div>
                         <div class="panel-heading">
                             <h3 class="panel-title">Builder panel</h3>
                         </div>
@@ -89,8 +96,6 @@
                 
             </div>
         </div>
-        
          <button id="finalizar">Finalizar</button> 
-        
     </body>
 </html>

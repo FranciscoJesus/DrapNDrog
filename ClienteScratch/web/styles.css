@@ -1,4 +1,7 @@
-
+/*
+    Document   : ListaEnunciados
+    Author     : JavierOrdoñezMartin
+*/
 
 #content-panel {
     max-width:100%;
@@ -6,6 +9,13 @@
     min-height:500px;    
 }
 
+textarea{
+    border:1px solid #999999;
+    width:100%;
+    margin:5px 0;
+    padding:3px;
+    resize: none;
+}
 .piece-1{
     background: #E1F5A9;
 }
@@ -15,7 +25,6 @@
 }
 
 .piece{
-    //float: left;
     cursor:default;
     padding: 0.8em 0 0 0.8em;
     border-radius: 10px;

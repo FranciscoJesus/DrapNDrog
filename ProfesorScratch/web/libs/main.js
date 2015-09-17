@@ -63,7 +63,14 @@ $(document).ready(function(){
      */
     function buildPieceField(f){
 
-        $.content = "";
+        //$.content = "";
+        
+        // Comprobamos que tenemos un tipo de pieza para poder identificarlo
+        if(f.type === undefined ){
+            throw_alert("warning","No se encuentra el tipo de componente en una pieza");
+            return ;
+        }
+        
         switch(f.type){
             
             case "label":
@@ -89,6 +96,10 @@ $(document).ready(function(){
                     $.content.append("<option>" + option + "</option>");
                 });
                 break;
+            
+            default: 
+                $.content = "";
+                break;
         }
         
         //console.log($.content);
@@ -106,24 +117,38 @@ $(document).ready(function(){
         
         cleanPieces(f);
         
+        //Comprobamos que tenemos un array
+        if(o.length === undefined || o.length <= 0){
+            throw_alert("warning","No se encuentran piezas en el fichero");
+            return;
+        }
+        
         o.forEach(function(pieces) {
-                        
-            var pieza = $('<div/>', {
-                //id: 'div',
-                title: 'Piece',
-                class: "row piece dragIn ui-draggable ui-draggable-handle"
-            });
             
-            pieces.inputs.forEach(function(entry){
-                $.input = buildPieceField(entry);
+            // Comprobamos que tenemos inputs
+            if (pieces.inputs !== undefined){
                 
-                //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
-                pieza.append($.input);
-            });
-            
-            make_draggable(pieza);
-            pieza.css({"background-color":color_piezas()});
-            $("#pieces-panel").append(pieza, null);
+                var pieza = $('<div/>', {
+                    //id: 'div',
+                    title: 'Piece',
+                    class: "row piece dragIn ui-draggable ui-draggable-handle"
+                });
+
+                pieces.inputs.forEach(function(entry) {
+                    $.input = buildPieceField(entry);
+
+                    //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
+                    pieza.append($.input);
+                });
+
+                make_draggable(pieza);
+                pieza.css({"background-color": color_piezas()});
+                $("#pieces-panel").append(pieza, null);
+                
+            } else {
+                throw_alert("warning","No se encuentran piezas en el fichero");
+                return;
+            }
             
         });
     }
@@ -141,11 +166,14 @@ $(document).ready(function(){
 
             reader.onload = (function(theFile) {
                 return function(e) {
-                    buildPieces(e.target.result);   //Construir piezas
+                    var json = e.target.result;
+                    
+                    if( isValidJson(json)) buildPieces(json);   //Construir piezas
+                    else throw_alert("danger","El fichero <strong>" + f.name + "</strong> introducido no tiene un formato válido.");
                 };
             })(f);
             reader.readAsText(f);
-        }
+        }else throw_alert("danger","El fichero <strong>" + f.name + "</strong> introducido no es un fichero válido");
     }
 
     document.getElementById('files').addEventListener('change', leerFichero, false);
@@ -163,7 +191,7 @@ $(document).ready(function(){
      * Se encarga de recoger el enunciado, las piezas utilizadas y la solución planteada para enviarlas al servidor.
      */
     $("#finalizar").click(function(ev, ui) {
-        throw_alert("info","hola");
+        
         var json;
         var enunciado = getEnunciado(); //Obtenemos el enunciado
         var solucion = getSolucion();   //Obtemenos la solución planteada
@@ -274,4 +302,14 @@ $(document).ready(function(){
         index = (index + 1)%4;
         return estilo_piezas[index];
     }
+    
+    function isValidJson(json) {
+        try {
+            JSON.parse(json);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+    
 });

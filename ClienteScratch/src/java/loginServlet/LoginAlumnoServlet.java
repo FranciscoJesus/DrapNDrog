@@ -6,13 +6,17 @@
 
 package loginServlet;
 
+import Entities.Alumno;
+import Entities.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -75,9 +79,30 @@ public class LoginAlumnoServlet extends HttpServlet {
             throws ServletException, IOException {
        
         
-        String usuario = request.getParameter("usuario");
+        String nombre = request.getParameter("usuario");
         String password = request.getParameter("password");
         int rol =1;
+        
+        Usuario user = new Usuario();
+        user.usuario=nombre;
+        user.password= password;
+        user.rol=rol;
+        
+        
+        if (user == null) {
+            out.println("El usuario o contraseña introducidos son incorrectos");
+        } else {
+            Alumno alu ;
+            
+            HttpSession miSesion = request.getSession(true);
+            Object currentUser = miSesion.getAttribute("usuario");
+
+            if (currentUser != null) {
+                miSesion.invalidate();
+            }
+
+            miSesion.setAttribute("Alumno", alu);
+        }
     }
 
     /**

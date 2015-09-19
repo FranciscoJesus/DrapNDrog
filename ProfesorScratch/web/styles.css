@@ -18,8 +18,12 @@ and open the template in the editor.
     cursor:default;
     border-radius: 10px;
     border:1px solid #ddd;
-    //width: auto;
     margin: 0;
+    padding: 0.8em;
+}
+
+.dragIn{
+    margin-bottom: 0.8em;
 }
 
 #bin-image{
@@ -40,10 +44,16 @@ and open the template in the editor.
     margin: 0;
     padding: 0;
 }
-/*
-.input-text-piece{
-    height: auto;
-    width: auto;
-    padding: 0px;
+
+#input-file{
+    margin-bottom: 0.8em;
 }
-*/
+
+.button-send{
+    margin-bottom: 1em;
+}
+
+.button-submit{
+    margin: 0;
+    text-align: center;
+}

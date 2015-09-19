@@ -22,11 +22,18 @@
         <div id="container">
             <div id="container-login">
                 <h1>Login:</h1>
-                Usuario:
-                <div class="entradas"><input type="text" name="usrname"  value=""> </div><br>
-                Contraseña: 
-                <div class="entradas"><input type="password" name="usrpass"  value=""></div><br>
-                <button id="enviar">Enviar</button>  
+                <form method="post" action="LoginUsuario">
+                    <label for="usuario">Usuario:</label><br>
+                <!--<div class="entradas"><input type="text" name="usrname"  value=""> </div>
+                     <div class="entradas"><input type="password" name="usrpass"  value=""></div><br>
+                    <br>-->
+                    <input type="text" name="usuario"><br>
+            
+                     <label for="contraseña">Contraseña:</label><br>
+                     <input type="password" name="password"><br>
+               
+                       <input type="submit" value="Entrar">
+                  </form>
             </div>
         </div>
     </body>

@@ -51,11 +51,11 @@
                             <form action="LoginServlet" method="post">
 
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="usr" placeholder="Nombre de usuario">
+                                    <input type="text" class="form-control" id="usr" name="user" placeholder="Nombre de usuario">
                                 </div>
 
                                 <div class="form-group">
-                                    <input type="password" class="form-control" id="pwd" placeholder="Contraseña">
+                                    <input type="password" class="form-control" id="pwd" name="pass" placeholder="Contraseña">
                                 </div>
 
                                 <div class="form-group button-submit">

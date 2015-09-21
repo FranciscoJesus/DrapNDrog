@@ -6,15 +6,13 @@
 package Servicios;
 
 import Entities.Alumno;
-import static Servicios.MongoDB.abrirConexion;
-import static Servicios.MongoDB.cerrarConexion;
-import static Servicios.MongoDB.mongoDB;
-import com.mongodb.client.MongoCollection;
+import Entities.EntityMongo;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import org.bson.Document;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -30,16 +28,20 @@ public class ServicioAlumno {
     public Alumno insertarUsuario(Alumno a) {
 
         try {
-            abrirConexion();
-            //Accedemos a la tabla
-            MongoCollection<Document> problemas = mongoDB.getCollection("Alumno");
-            //insertamos el problema
-            problemas.insertOne(a.converADocument());
-            //cerramos conexión
-            cerrarConexion();
+            MongoDB.insert(a, "Alumnos");
         } catch (Exception e) {
-            return null;
+            a.nombre = "error";
+            return a;
         }
         return a;
+    }
+
+    @GET
+    @Path("buscarAlumno")
+    @Produces("application/json")
+    public EntityMongo buscarAlumno(@QueryParam("id") String id) {
+
+        return new Alumno(MongoDB.findById(id, "Alumnos"));
+
     }
 }

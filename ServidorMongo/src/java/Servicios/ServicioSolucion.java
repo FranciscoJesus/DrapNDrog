@@ -6,42 +6,40 @@
 package Servicios;
 
 import Entities.EntityMongo;
-import Entities.Profesor;
+import Entities.Solucion;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
-@Path("Profesor")
-public class ServicioProfesor {
+@Path("Solucion")
+public class ServicioSolucion {
 
     @POST
-    @Path("insertarProfesor")
-    @Consumes({"application/xml", "application/json"})
+    @Path("insertarSolucion")
+    @Consumes({"application/json", "application/xml"})
     @Produces("application/json")
-    public Profesor insertarProfesor(Profesor p) {
-
+    public Solucion insertarSolucion(Solucion sol) {
         try {
-            MongoDB.insert(p, "Profesores");
+            MongoDB.insert(sol, "Soluciones");
         } catch (Exception e) {
             return null;
         }
-        return p;
+        return sol;
     }
 
     @GET
-    @Path("buscarProfesor")
+    @Path("buscarSolucion")
     @Produces("application/json")
-    public Profesor leerProfesor(@QueryParam("id") String id) {
+    public EntityMongo buscarSolucion(@QueryParam("id") String id) {
 
-        //return MongoDB.findById(id, "Profesor").toJson();
-        return new Profesor(MongoDB.findById(id, "Profesor"));
+        return new Solucion(MongoDB.findById(id, "Soluciones"));
     }
+
 }

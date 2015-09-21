@@ -31,6 +31,10 @@
 
     </head>
     <body>
+        <% 
+            HttpSession sesion = request.getSession();
+            out.println(sesion.getAttribute("usuario")); 
+        %>
         <div class="container">
             <div class="page-header">
                 <h1>Drag & Drop</h1>

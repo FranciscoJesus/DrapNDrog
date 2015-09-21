@@ -6,6 +6,7 @@
 package Entities;
 
 import com.mongodb.BasicDBList;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 
@@ -13,16 +14,17 @@ import org.bson.Document;
  *
  * @author FranciscoJesús
  */
-public class Alumno {
+public class Alumno implements EntityMongo{
 
     public String id;
     public String nombre;
     public String apellido;
     public String dni;
     public String idUsuario;
-    public List<String> idAsignaturas;
+    public List<String> idAsignaturas = new ArrayList<>();
     
     public Alumno() {
+        
     }
     
      /**
@@ -30,10 +32,11 @@ public class Alumno {
      * Mongo
      * @return 
      */
+    @Override
     public Document converADocument() {
+        
         Document res = new Document();
-
-        res.append("id", id);
+        
         res.append("nombre", nombre);
         res.append("apellido", apellido);
         res.append("dni", dni);
@@ -45,5 +48,10 @@ public class Alumno {
         res.append("idAsignaturas", asignaturas);
 
         return res;
+    }
+
+    
+    public Alumno(Document object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -17,16 +17,19 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Pieza { 
-    @QueryParam("tipo")
+public class Pieza implements EntityMongo{ 
+    
     public ArrayList<Input> inputs = new ArrayList<>();
     
-    public Pieza(){}
+    public Pieza(){
+    
+    }
     
     /**
      * Método que se encarga de convertir un objeto Pieza en un objeto JSON
      * @return 
      */
+    @Override
     public Document converADocument(){
         
         Document res = new Document();
@@ -37,6 +40,11 @@ public class Pieza {
         res.append("inputs", input);
                 
         return res;
+    }
+
+
+    public EntityMongo converAObjeto(Document object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

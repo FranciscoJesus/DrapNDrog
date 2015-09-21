@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entities.Profesor;
 import Entities.Usuario;
 import static Servicios.MongoDB.abrirConexion;
 import static Servicios.MongoDB.cerrarConexion;
@@ -31,13 +32,7 @@ public class ServicioUsuario {
     public Usuario insertarUsuario(Usuario u) {
 
         try {
-            abrirConexion();
-            //Accedemos a la tabla
-            MongoCollection<Document> problemas = mongoDB.getCollection("Usuarios");
-            //insertamos el problema
-            problemas.insertOne(u.converADocument());
-            //cerramos conexión
-            cerrarConexion();
+            MongoDB.insert(u, "Usuarios");
         } catch (Exception e) {
             return null;
         }
@@ -48,8 +43,8 @@ public class ServicioUsuario {
     @Path("Login")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public String Login(Usuario u) {
-        Document res = new Document();
+    public Profesor Login(Usuario u) {
+        Document res;
         try {
             abrirConexion();
             //Accedemos a la tabla
@@ -80,10 +75,11 @@ public class ServicioUsuario {
             //cerramos conexión
             cerrarConexion();
 
-            return res.toJson();
-
+            //return res.toJson();
+            return new Profesor(res);
         } catch (Exception e) {
-            return new Document("salida", e.toString()).toJson();
+            //return new Document("salida", e.toString()).toJson();
+            return null;
         }
     }
 }

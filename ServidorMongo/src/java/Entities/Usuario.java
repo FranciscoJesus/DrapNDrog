@@ -9,26 +9,31 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
-public class Usuario {
-    
+@XmlRootElement
+public class Usuario implements EntityMongo {
+
     public String id;
-
     public String usuario;
-
     public String password;
-
     public int rol;
 
     public Usuario() {
 
     }
-
+    
+     /**
+     * Método que se encarga de convertir un objeto Usuario en un objeto JSON
+     *
+     * @return
+     */
+    @Override
     public Document converADocument() {
         Document res = new Document();
 
@@ -42,7 +47,8 @@ public class Usuario {
 
     /**
      * Método que se utiliza para la encriptación del campos "password"
-     * @return 
+     *
+     * @return
      */
     public String Encriptar() {
         String sha1 = "";
@@ -57,10 +63,11 @@ public class Usuario {
     }
 
     /**
-     * Método que sirve para pasar los byte de la password ya encriptada
-     * a String
+     * Método que sirve para pasar los byte de la password ya encriptada a
+     * String
+     *
      * @param hash
-     * @return 
+     * @return
      */
     private static String byteToHex(final byte[] hash) {
         String result;

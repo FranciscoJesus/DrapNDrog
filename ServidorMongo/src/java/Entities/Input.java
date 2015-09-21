@@ -14,7 +14,7 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Input {
+public class Input implements EntityMongo{
     
     public String type;
     public ArrayList<String> value;
@@ -27,6 +27,7 @@ public class Input {
      * Metodo que convierte un objeto input a un objeto JSON
      * @return 
      */
+    @Override
     public Document converADocument(){
         //creamos el objeto que vamos a devolver
         Document res = new Document();
@@ -36,5 +37,10 @@ public class Input {
         
         //devolvemos el objeto
         return res;
+    }
+
+    
+    public EntityMongo converAObjeto(Document object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

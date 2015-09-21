@@ -6,42 +6,52 @@
 package Servicios;
 
 import Entities.EntityMongo;
-import Entities.Profesor;
+import Entities.Problema;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
-@Path("Profesor")
-public class ServicioProfesor {
+@Path("Problema")
+public class ServicioProblema {
 
+    /**
+     * Método que inserta un problema en la base de datos
+     *
+     * @param n
+     * @return
+     */
     @POST
-    @Path("insertarProfesor")
+    @Path("insertarProblema")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Profesor insertarProfesor(Profesor p) {
+    public Problema insertar(Problema n) {
 
         try {
-            MongoDB.insert(p, "Profesores");
+            MongoDB.insert(n, "Problemas");
         } catch (Exception e) {
             return null;
         }
-        return p;
+        return n;
     }
 
+    /**
+     * Servicio el cual a partir de un id se devuelve un problema específico
+     *
+     * @param id
+     * @return
+     */
     @GET
-    @Path("buscarProfesor")
+    @Path("buscarProblema")
     @Produces("application/json")
-    public Profesor leerProfesor(@QueryParam("id") String id) {
+    public EntityMongo leerProblema(@QueryParam("id") String id) {
 
-        //return MongoDB.findById(id, "Profesor").toJson();
-        return new Profesor(MongoDB.findById(id, "Profesor"));
+        return new Problema(MongoDB.findById(id, "Problemas"));
     }
 }

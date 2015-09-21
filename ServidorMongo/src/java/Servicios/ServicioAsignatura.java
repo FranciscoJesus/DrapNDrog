@@ -5,43 +5,42 @@
  */
 package Servicios;
 
+import Entities.Asignatura;
 import Entities.EntityMongo;
-import Entities.Profesor;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
-@Path("Profesor")
-public class ServicioProfesor {
+@Path("Asignatura")
+public class ServicioAsignatura {
 
     @POST
-    @Path("insertarProfesor")
+    @Path("insertarAsignatura")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Profesor insertarProfesor(Profesor p) {
+    public Asignatura insertarAsignatura(Asignatura a) {
 
         try {
-            MongoDB.insert(p, "Profesores");
+            MongoDB.insert(a, "Asignaturas");
         } catch (Exception e) {
             return null;
         }
-        return p;
+        return a;
     }
 
     @GET
-    @Path("buscarProfesor")
+    @Path("buscarAsignatura")
     @Produces("application/json")
-    public Profesor leerProfesor(@QueryParam("id") String id) {
+    public EntityMongo buscarAsignatura(@QueryParam("id") String id) {
 
-        //return MongoDB.findById(id, "Profesor").toJson();
-        return new Profesor(MongoDB.findById(id, "Profesor"));
+        return new Asignatura(MongoDB.findById(id, "Asignaturas"));
     }
+
 }

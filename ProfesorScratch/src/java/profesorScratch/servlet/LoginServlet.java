@@ -6,6 +6,7 @@
 
 package profesorScratch.servlet;
 
+import Entities.Profesor;
 import Entities.Usuario;
 import com.profesorScratch.service.LoginJerseyClient;
 import java.io.IOException;
@@ -51,15 +52,20 @@ public class LoginServlet extends HttpServlet {
         u.password = pass;
         u.rol = 2;
         
-        String mongoResponse = service.Login_JSON(u);
+        Profesor mongoResponse = (Profesor)service.Login_JSON(u,Profesor.class);
         
-        // @todo - Comprobar que los datos devueltos del servicio RESTFull son correctos  
-        // @todo - Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
-        sesion.setAttribute("usuario", mongoResponse);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-        dispatcher.forward(request, response);
-                
-        //response.sendRedirect("main.jsp");
+        // Comprobar que los datos devueltos del servicio RESTFull son correctos  
+        if(mongoResponse != null){
+            // Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
+            sesion.setAttribute("usuario", mongoResponse);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+            dispatcher.forward(request, response);
+        }else{
+            // @todo - generar alerta en bootstrap mediante js
+            request.setAttribute("loginState", "0");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        }
         
     }
 

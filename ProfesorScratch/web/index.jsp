@@ -27,6 +27,9 @@
     </head>
     
     <body>
+        <% if( ("0").equals(request.getAttribute("loginState")) ){ %>
+            <script type="text/javascript">throw_alert("danger","Usuario o contraseña incorrectos");</script>
+        <% } %>
         <div class="container">
             
             <div class="page-header">

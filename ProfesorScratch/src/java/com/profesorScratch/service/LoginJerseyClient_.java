@@ -22,12 +22,12 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author Sobremesa
  */
-public class LoginJerseyClient {
+public class LoginJerseyClient_ {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/ServidorMongo/API";
 
-    public LoginJerseyClient() {
+    public LoginJerseyClient_() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("Usuario");
     }

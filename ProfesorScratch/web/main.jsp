@@ -4,6 +4,7 @@
     Author     : EdgarPerezFerrando
 --%>
 
+<%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,9 @@
     <body>
         <% 
             HttpSession sesion = request.getSession();
-            out.println(sesion.getAttribute("usuario")); 
+            Profesor p = null;
+            p = (Profesor)sesion.getAttribute("usuario");
+            out.println(p.nombre + " " + p.apellido); 
         %>
         <div class="container">
             <div class="page-header">

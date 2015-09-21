@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package profesorScratch.servlet;
+package java.profesorScratch.servlet;
 
-import Entities.Usuario;
+import java.Entities.Usuario;
 import com.profesorScratch.service.LoginJerseyClient;
 import java.io.IOException;
 import java.io.PrintWriter;

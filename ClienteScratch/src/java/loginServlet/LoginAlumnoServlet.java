@@ -92,7 +92,7 @@ public class LoginAlumnoServlet extends HttpServlet {
         if (user == null) {
             out.println("El usuario o contraseña introducidos son incorrectos");
         } else {
-            Alumno alu ;
+            Alumno alu= null ;
             
             HttpSession miSesion = request.getSession(true);
             Object currentUser = miSesion.getAttribute("usuario");

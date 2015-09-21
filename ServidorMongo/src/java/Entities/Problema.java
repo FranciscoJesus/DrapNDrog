@@ -16,7 +16,7 @@ import org.bson.Document;
  */
 
 @XmlRootElement
-public class Problema {
+public class Problema implements EntityMongo{
 
     public String id;
     public String idProfesor;
@@ -25,6 +25,7 @@ public class Problema {
     public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {
+        
     }
     
     /**
@@ -32,6 +33,7 @@ public class Problema {
      * (Document)
      * @return 
      */
+    @Override
     public Document converADocument() {
         
         //inicializacion de la variable a devolver
@@ -55,5 +57,10 @@ public class Problema {
         res.append("solucion", pieza);
 
         return res;
+    }
+
+   
+    public Problema(Document object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -16,34 +16,31 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Solucion {
+public class Solucion implements EntityMongo {
 
     public String idAlumno;
-    
     public String idProblema;
-
-    @QueryParam("nombre")
     public String nombre;
-
-    @QueryParam("piezas")
     public ArrayList<Pieza> piezas = new ArrayList<>();
 
     public Solucion() {
-    }
-
-    public Solucion(String n, ArrayList<Pieza> p) {
-        nombre = n;
-        piezas = p;
+        
     }
     
+    public Solucion(Document object){
+        
+    }
+
     /**
      * Método que se encarga de convertir un objeto Solucion en un objeto JSON
-     * @return 
+     *
+     * @return
      */
+    @Override
     public Document converADocument() {
 
         Document res = new Document();
-        
+
         res.append("idAlumno", idAlumno);
         res.append("idProblema", idProblema);
         BasicDBList pieza = new BasicDBList();

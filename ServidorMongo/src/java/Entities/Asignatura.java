@@ -13,7 +13,7 @@ import org.bson.Document;
  *
  * @author FranciscoJesús
  */
-public class Asignatura {
+public class Asignatura implements EntityMongo{
 
     public String id;
     public String nombre;
@@ -29,6 +29,7 @@ public class Asignatura {
      * Mongo
      * @return 
      */
+    @Override
     public Document converADocument() {
         Document res = new Document();
 
@@ -42,5 +43,10 @@ public class Asignatura {
         res.append("idAlumnos", alumnos);
 
         return res;
+    }
+
+   
+    public Asignatura(Document object) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

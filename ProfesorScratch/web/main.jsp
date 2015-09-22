@@ -1,9 +1,10 @@
 <%-- 
-    Document   : index
+    Document   : main.jsp
     Created on : Sept 3, 2015
-    Author     : EdgarPerezFerrando
+    Author     : Edgar Perez Ferrando
 --%>
 
+<%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -31,6 +32,29 @@
 
     </head>
     <body>
+        <% 
+            HttpSession sesion = request.getSession();
+            Profesor p = null;
+            p = (Profesor)sesion.getAttribute("usuario");
+        %>    
+        
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= p.nombre + " " + p.apellido %><span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="LogoutServlet">Cerrar sesión</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        
         <div class="container">
             <div class="page-header">
                 <h1>Drag & Drop</h1>

@@ -4,17 +4,20 @@
  * and open the template in the editor.
  */
 
-package java.profesorScratch.servlet;
+package profesorScratch.servlet;
 
-import java.Entities.Usuario;
+import Entities.Profesor;
+import Entities.Usuario;
 import com.profesorScratch.service.LoginJerseyClient;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,6 +37,9 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession sesion = request.getSession();
+        
         response.setContentType("text/html;charset=UTF-8");
         
         Usuario u = new Usuario();
@@ -46,20 +52,21 @@ public class LoginServlet extends HttpServlet {
         u.password = pass;
         u.rol = 2;
         
-        String mongoResponse = service.Login_JSON(u);
-                
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
-            out.println(mongoResponse);
-            out.println("</body>");
-            out.println("</html>");
+        Profesor mongoResponse = (Profesor)service.Login_JSON(u,Profesor.class);
+        
+        // Comprobar que los datos devueltos del servicio RESTFull son correctos  
+        if(mongoResponse != null){
+            // Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
+            sesion.setAttribute("usuario", mongoResponse);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+            dispatcher.forward(request, response);
+        }else{
+            // @todo - generar alerta en bootstrap mediante js
+            request.setAttribute("loginState", "0");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

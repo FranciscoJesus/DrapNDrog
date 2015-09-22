@@ -1,6 +1,6 @@
 <%-- 
-    Document   : login
-    Author     : JavierOrdonezMartin
+    Document   : index.jsp
+    Author     : Edgar Pérez Ferrando
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -27,6 +27,10 @@
     </head>
     
     <body>
+        <!-- @todo Finalizar sesion -->
+        <% if( ("0").equals(request.getAttribute("loginState")) ){ %>
+            <script type="text/javascript">throw_alert("danger","Usuario o contraseña incorrectos");</script>
+        <% } %>
         <div class="container">
             
             <div class="page-header">

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.profesorScratch.service;
+package service;
 
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;

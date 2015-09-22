@@ -10,13 +10,15 @@ $(document).ready(function(){
     var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
     var index = 0;
     
+    /*
     $(".dragIn").draggable({
         helper:'clone',
         start: function(){ 
             counts[0]++;
         }
     });
-    
+    */
+   
     /**
      * Funcion que convierte un elementos como arrastable
      * 
@@ -63,7 +65,7 @@ $(document).ready(function(){
      */
     function buildPieceField(f){
 
-        //$.content = "";
+        $.content = "";
         
         // Comprobamos que tenemos un tipo de pieza para poder identificarlo
         if(f.type === undefined ){
@@ -79,15 +81,9 @@ $(document).ready(function(){
                 break;
                 
             case "text":
-                /**
-                 * $.wrapper = $('<div/>');
-                 * $.wrapper.addClass("col-md-5");
-                 */
                 $.content = $('<input/>').attr({ type: 'text'});
                 $.content.addClass("form-control");
                 $.content.addClass("input-text-piece");
-                
-                //$.content = $.wrapper.append($.content);
                 break;
                 
             case "select":
@@ -101,8 +97,6 @@ $(document).ready(function(){
                 $.content = "";
                 break;
         }
-        
-        //console.log($.content);
         return $.content;
     }
     
@@ -216,7 +210,6 @@ $(document).ready(function(){
 
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
-        //var piezas = "[";
         var piezas = "[";
         
         if (list != null) {
@@ -232,10 +225,8 @@ $(document).ready(function(){
                     } else if (list[i].children[r].nodeName == "SELECT") {
                         piezas += "{\"type\":\"select\",\"value\":\"" + list[i].children[r].value + "\"}";
                     }
-
                     if (r + 1 < tam) piezas += ",";
                 }
-
                 piezas += "]}";
                 if (i + 1 < len) piezas += ",";
                 
@@ -281,17 +272,7 @@ $(document).ready(function(){
         $.alert.append("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>");
         $.alert.append( span +  " " + message );
         
-        $("#alert_placeholder").append($.alert);
-        
-        /*
-        $("#alert_placeholder").html("\n\
-            <div class='alert alert-" + type + "'>\n\
-                <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>\n\
-                " + span +  " " + message + ".\n\
-            </div>");        
-                            */
-                           
-                           
+        $("#alert_placeholder").append($.alert);                  
     }
     
     /**

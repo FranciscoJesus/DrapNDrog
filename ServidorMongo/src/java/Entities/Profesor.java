@@ -18,6 +18,7 @@ import org.bson.Document;
 @XmlRootElement
 public class Profesor implements EntityMongo {
 
+    public String id;
     public String nombre;
     public String apellido;
     public String idUsuario;
@@ -56,6 +57,7 @@ public class Profesor implements EntityMongo {
      */
     public Profesor(Document object) {
 
+        id = object.getObjectId("_id").toString();
         nombre = object.getString("nombre");
         apellido = object.getString("apellido");
         idUsuario = object.getString("idUsuario");

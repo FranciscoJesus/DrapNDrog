@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package loginServlet;
 
 import Entities.Alumno;
@@ -42,7 +41,7 @@ public class LoginAlumnoServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginAlumnoServlet</title>");            
+            out.println("<title>Servlet LoginAlumnoServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginAlumnoServlet at " + request.getContextPath() + "</h1>");
@@ -77,23 +76,21 @@ public class LoginAlumnoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
-        
+
         String nombre = request.getParameter("usuario");
         String password = request.getParameter("password");
-        int rol =1;
-        
+        int rol = 1;
+
         Usuario user = new Usuario();
-        user.usuario=nombre;
-        user.password= password;
-        user.rol=rol;
-        
-        
+        user.usuario = nombre;
+        user.password = password;
+        user.rol = rol;
+
         if (user == null) {
             out.println("El usuario o contraseña introducidos son incorrectos");
         } else {
-            Alumno alu ;
-            
+            Alumno alu = null;
+
             HttpSession miSesion = request.getSession(true);
             Object currentUser = miSesion.getAttribute("usuario");
 

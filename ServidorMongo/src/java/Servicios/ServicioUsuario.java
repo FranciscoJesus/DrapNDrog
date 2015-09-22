@@ -5,6 +5,8 @@
  */
 package Servicios;
 
+import Entities.Alumno;
+import Entities.EntityMongo;
 import Entities.Profesor;
 import Entities.Usuario;
 import static Servicios.MongoDB.abrirConexion;
@@ -43,8 +45,9 @@ public class ServicioUsuario {
     @Path("Login")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Profesor Login(Usuario u) {
+    public EntityMongo Login(Usuario u) {
         Document res;
+        EntityMongo resObject = null;
         try {
             abrirConexion();
             //Accedemos a la tabla
@@ -64,19 +67,20 @@ public class ServicioUsuario {
                 if (rol == 2) {
                     MongoCollection<Document> profesores = mongoDB.getCollection("Profesor");
                     res = profesores.find(new BasicDBObject("id", res.getString("id"))).first();
+                    resObject = new Profesor(res);
                 } else if (rol == 1) {
                     MongoCollection<Document> alumnos = mongoDB.getCollection("Alumno");
                     res = alumnos.find(new BasicDBObject("id", res.getString("id"))).first();
+                    resObject = new Alumno(res);
                 }
             } else {
                 //si el resultado es nulo devolvemos un mensaje en el
-                res = new Document("salida", "no existe este usuario");
             }
             //cerramos conexión
             cerrarConexion();
 
             //return res.toJson();
-            return new Profesor(res);
+            return resObject;
         } catch (Exception e) {
             //return new Document("salida", e.toString()).toJson();
             return null;

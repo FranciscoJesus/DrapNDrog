@@ -8,12 +8,14 @@ package Entities;
 import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import java.util.List;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
+@XmlRootElement
 public class Alumno implements EntityMongo{
 
     public String id;

@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
  * Jersey REST client generated for REST resource:ServicioUsuario [Usuario]<br>
  * USAGE:
  * <pre>
- *        LoginJerseyClient client = new LoginJerseyClient();
+ *        LoginJerseyClient2 client = new LoginJerseyClient2();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -32,12 +32,12 @@ public class LoginJerseyClient {
         webTarget = client.target(BASE_URI).path("Usuario");
     }
 
-    public String Login_XML(Object requestEntity) throws ClientErrorException {
-        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML), String.class);
+    public <T> T Login_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML), responseType);
     }
 
-    public String Login_JSON(Object requestEntity) throws ClientErrorException {
-        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), String.class);
+    public <T> T Login_JSON(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
     public <T> T insertarUsuario_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {

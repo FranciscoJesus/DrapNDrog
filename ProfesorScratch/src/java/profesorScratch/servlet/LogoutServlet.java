@@ -6,9 +6,6 @@
 
 package profesorScratch.servlet;
 
-import Entities.Profesor;
-import Entities.Usuario;
-import com.profesorScratch.service.LoginJerseyClient;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -23,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Sobremesa
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/LogoutServlet"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,35 +34,13 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        HttpSession sesion = request.getSession();
-        
         response.setContentType("text/html;charset=UTF-8");
         
-        Usuario u = new Usuario();
-        LoginJerseyClient service = new LoginJerseyClient();
+        HttpSession sesion = request.getSession(false);
+        if( sesion != null) sesion.invalidate();
         
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        
-        u.usuario = user;
-        u.password = pass;
-        u.rol = 2;
-        
-        Profesor mongoResponse = (Profesor)service.Login_JSON(u,Profesor.class);
-        
-        // Comprobar que los datos devueltos del servicio RESTFull son correctos  
-        if(mongoResponse != null){
-            // Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
-            sesion.setAttribute("usuario", mongoResponse);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-            dispatcher.forward(request, response);
-        }else{
-            // @todo - generar alerta en bootstrap mediante js
-            request.setAttribute("loginState", "0");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.forward(request, response);
-        }
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+        dispatcher.forward(request, response);
         
     }
 

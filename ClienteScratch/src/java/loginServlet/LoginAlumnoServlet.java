@@ -6,10 +6,13 @@
 package loginServlet;
 
 import Entities.Alumno;
+import Entities.Problema;
 import Entities.Usuario;
+import service.LoginAluJerseyClient;
 import java.io.IOException;
 import java.io.PrintWriter;
-import static java.lang.System.out;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,18 +39,7 @@ public class LoginAlumnoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginAlumnoServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginAlumnoServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+      
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,6 +55,18 @@ public class LoginAlumnoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LoginUsuarioServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LoginUsuarioServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     /**
@@ -76,7 +80,8 @@ public class LoginAlumnoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
+        
         String nombre = request.getParameter("usuario");
         String password = request.getParameter("password");
         int rol = 1;
@@ -85,20 +90,31 @@ public class LoginAlumnoServlet extends HttpServlet {
         user.usuario = nombre;
         user.password = password;
         user.rol = rol;
-
-        if (user == null) {
-            out.println("El usuario o contraseña introducidos son incorrectos");
+        
+        LoginAluJerseyClient servicio = new LoginAluJerseyClient();
+        Alumno alu= (Alumno) servicio.LoginAlumno_JSON(user, Alumno.class);
+        
+        HttpSession miSesion = request.getSession(true);
+        
+        if (alu == null) {
+           miSesion.setAttribute("Log","error");
+           RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+           dispatcher.forward(request, response);
         } else {
-            Alumno alu = null;
+            
+            Object currentUser = miSesion.getAttribute("alumno");
 
-            HttpSession miSesion = request.getSession(true);
-            Object currentUser = miSesion.getAttribute("usuario");
 
             if (currentUser != null) {
                 miSesion.invalidate();
             }
-
-            miSesion.setAttribute("Alumno", alu);
+            
+            miSesion.setAttribute("alumno", alu);
+            List<Problema> listproblemas=null;
+         //   List<Problema>  listproblemas = (List<Problema>) servicio.LoginAlumno_JSON(, null);
+            //miSesion.setAttribute("listaProblemas",listproblemas);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("listaEnunciados.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

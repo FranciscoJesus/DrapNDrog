@@ -3,6 +3,7 @@
     Author     : JavierOrdonezMartin
 --%>
 
+<%@page import="Entities.Alumno"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -20,21 +21,36 @@
     </head>
     <body>
         <div id="container">
+           <% 
+            HttpSession miSesion = request.getSession(false);
+            String log =(String) miSesion.getAttribute("Log");
+            Alumno alu= (Alumno) miSesion.getAttribute("alumno");
+            if(alu!=null){
+           %>
+           <a href="LoginAlumnoServlet">Cerrar Sesion</a>
+           <% }else{ %>
             <div id="container-login">
                 <h1>Login:</h1>
-                <form method="post" action="LoginUsuario">
+                <form method="post" action="LoginAlumnoServlet">
                     <label for="usuario">Usuario:</label><br>
-                <!--<div class="entradas"><input type="text" name="usrname"  value=""> </div>
-                     <div class="entradas"><input type="password" name="usrpass"  value=""></div><br>
-                    <br>-->
                     <input type="text" name="usuario"><br>
-            
-                     <label for="contraseña">Contraseña:</label><br>
+                     
+                    <label for="contraseña">Contraseña:</label><br>
                      <input type="password" name="password"><br>
-               
-                       <input type="submit" value="Entrar">
+                     
+                     <input type="submit" value="Entrar">
                   </form>
+            <%
+                if(log=="error"){ 
+           
+            %>
+           <div id="mensajeError">
+               <strong>¡Error!</strong> Usuario o contraseña incorrectos
+           </div>
+            
+            <% }%>
             </div>
+            <% } %>
         </div>
     </body>
 </html>

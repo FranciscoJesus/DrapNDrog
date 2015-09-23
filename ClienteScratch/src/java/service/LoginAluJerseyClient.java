@@ -14,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
  * Jersey REST client generated for REST resource:ServicioUsuario [Usuario]<br>
  * USAGE:
  * <pre>
- *        LoginJerseyClient client = new LoginJerseyClient();
+ *        LoginAluJerseyClient client = new LoginAluJerseyClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -22,12 +22,12 @@ import javax.ws.rs.client.WebTarget;
  *
  * @author Pulgy
  */
-public class LoginJerseyClient {
+public class LoginAluJerseyClient {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/ServidorMongo/API";
 
-    public LoginJerseyClient() {
+    public LoginAluJerseyClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("Usuario");
     }

@@ -42,6 +42,7 @@ public class ServicioProfesor {
     public Profesor leerProfesor(@QueryParam("id") String id) {
 
         //return MongoDB.findById(id, "Profesor").toJson();
-        return new Profesor(MongoDB.findById(id, "Profesor"));
+        Document res = MongoDB.findById(id, "Profesor");
+        return res!=null?new Profesor(res):null;
     }
 }

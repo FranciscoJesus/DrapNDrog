@@ -5,6 +5,8 @@
  */
 package Servicios;
 
+import Entities.Alumno;
+import Entities.EntityMongo;
 import Entities.Profesor;
 import Entities.Usuario;
 import static Servicios.MongoDB.abrirConexion;
@@ -40,11 +42,54 @@ public class ServicioUsuario {
     }
 
     @POST
-    @Path("Login")
+    @Path("LoginAlumno")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Profesor Login(Usuario u) {
+    public Alumno LoginAlumno(Usuario u) {
         Document res;
+        Alumno resObject = null;
+        try {
+            abrirConexion();
+            //Accedemos a la tabla
+            MongoCollection<Document> problemas = mongoDB.getCollection("Usuarios");
+            //buscamos un usuario y contraseña que concuerden
+            BasicDBObject user = new BasicDBObject("usuario", u.usuario);
+            user.append("password", u.Encriptar());
+            user.append("rol", u.rol);
+            res = problemas.find(user).first();
+            /*si el resultado es nulo significa que no existe ningun usuario con
+             esa contraseña*/
+
+            if (res != null) {
+
+                int rol = res.getInteger("rol");
+
+                if (rol == 1) {
+                    MongoCollection<Document> alumnos = mongoDB.getCollection("Alumno");
+                    res = alumnos.find(new BasicDBObject("id", res.getString("id"))).first();
+                    resObject = new Alumno(res);
+                }
+            } else {
+                //si el resultado es nulo devolvemos un mensaje en el
+            }
+            //cerramos conexión
+            cerrarConexion();
+
+            //return res.toJson();
+            return resObject;
+        } catch (Exception e) {
+            //return new Document("salida", e.toString()).toJson();
+            return null;
+        }
+    }
+    
+    @POST
+    @Path("LoginProfesor")
+    @Consumes({"application/xml", "application/json"})
+    @Produces("application/json")
+    public Profesor LoginProfesor(Usuario u) {
+        Document res;
+        Profesor resObject = null;
         try {
             abrirConexion();
             //Accedemos a la tabla
@@ -62,21 +107,18 @@ public class ServicioUsuario {
                 int rol = res.getInteger("rol");
 
                 if (rol == 2) {
-                    MongoCollection<Document> profesores = mongoDB.getCollection("Profesor");
-                    res = profesores.find(new BasicDBObject("id", res.getString("id"))).first();
-                } else if (rol == 1) {
                     MongoCollection<Document> alumnos = mongoDB.getCollection("Alumno");
                     res = alumnos.find(new BasicDBObject("id", res.getString("id"))).first();
+                    resObject = new Profesor(res);
                 }
             } else {
                 //si el resultado es nulo devolvemos un mensaje en el
-                res = new Document("salida", "no existe este usuario");
             }
             //cerramos conexión
             cerrarConexion();
 
             //return res.toJson();
-            return new Profesor(res);
+            return resObject;
         } catch (Exception e) {
             //return new Document("salida", e.toString()).toJson();
             return null;

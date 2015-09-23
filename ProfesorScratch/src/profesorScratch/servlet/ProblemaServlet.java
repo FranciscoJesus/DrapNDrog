@@ -7,26 +7,22 @@
 package profesorScratch.servlet;
 
 import Entities.Problema;
-import Entities.Profesor;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import service.ProblemasJerseyClient;
+import service.ProblemaJerseyClient;
 
 /**
  *
  * @author Sobremesa
  */
-@WebServlet(name = "ListaProblemasServlet", urlPatterns = {"/ListaProblemasServlet"})
-public class ListaProblemasServlet extends HttpServlet {
+@WebServlet(name = "ProblemaServlet", urlPatterns = {"/ProblemaServlet"})
+public class ProblemaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,23 +35,16 @@ public class ListaProblemasServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
         response.setContentType("text/html;charset=UTF-8");
+        String id = (String)request.getParameter("id");
         
-        // @todo - Obtener todos los probelmas realizados por el profesor
+        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        Problema t = (Problema)service.leerProblema(Problema.class, id);
         
-        HttpSession sesion = request.getSession();
-        Profesor p = (Profesor)sesion.getAttribute("usuario");
-        
-        // @todo - control de errores
-        if( p != null ){
-            List<Problema> list = new ArrayList<Problema>();
-            ProblemasJerseyClient servicio = new ProblemasJerseyClient();
-            list = servicio.getProblemasProfesor(p.id);
-            
-            request.setAttribute("problemas", list);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("listadoProblemas.jsp");
-            dispatcher.forward(request, response);
-        }
+        request.setAttribute("problema", t);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+        dispatcher.forward(request, response);
 
     }
 

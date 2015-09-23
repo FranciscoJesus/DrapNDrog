@@ -4,6 +4,9 @@
     Author     : Sobremesa
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Entities.Problema"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,7 +25,15 @@
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-
+        
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $(".clickable-row").click(function(elem) {
+                        window.location = $(this).data('href');
+                });
+            });
+        </script>
+        
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
@@ -33,11 +44,15 @@
         <% 
             HttpSession sesion = request.getSession(false);
             Profesor p = (Profesor)sesion.getAttribute("usuario");
+            List<Problema> list = new ArrayList<Problema>();
+            int num = 1;
             
             if(p == null){
                 sesion.invalidate();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
+            }else{
+                list = (ArrayList<Problema>)request.getAttribute("problemas");                
             }
         %>
         
@@ -48,7 +63,28 @@
             <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>
-        
+            
+            <% if(list.size() > 0 ){ %>
+            
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <th>#</th>
+                        <th>Asignatura</th>
+                        <th>Enunciado</th>
+                    </thead>
+                <% for(Problema t : list ){ %>
+                    <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>">
+                        <td><%= num %></td>
+                        <td></td>
+                        <td><%= t.enunciado %></td>
+                    </tr>
+                <!-- out.print(t.enunciado); -->
+                <% num++; %>
+                <% } %>
+                
+                </table>
+                
+            <% } %>
         </div>
         
     </body>

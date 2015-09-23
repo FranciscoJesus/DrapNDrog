@@ -3,6 +3,7 @@
     Author     : Edgar Pérez Ferrando
 --%>
 
+<%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,15 @@
 
     <body>        
         <div class="container">
+            <%
+                HttpSession sesion = request.getSession(false);
+                Profesor p = (Profesor) sesion.getAttribute("usuario");
 
+                if (p != null) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+                    dispatcher.forward(request, response);
+                }
+            %>
             <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>

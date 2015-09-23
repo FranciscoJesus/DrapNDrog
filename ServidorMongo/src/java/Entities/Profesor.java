@@ -18,6 +18,7 @@ import org.bson.Document;
 @XmlRootElement
 public class Profesor implements EntityMongo {
 
+    public String id;
     public String nombre;
     public String apellido;
     public String idUsuario;
@@ -27,6 +28,14 @@ public class Profesor implements EntityMongo {
 
     }
 
+    public Profesor(Document object) {
+
+        id = object.getObjectId("_id").toString();
+        nombre = object.getString("nombre");
+        apellido = object.getString("apellido");
+        idUsuario = object.getString("idUsuario");
+        asignaturas = object.get("asignatura", ArrayList.class);
+    }
     /**
      * Método que se encarga de convertir un objeto Profesor en un objeto JSON
      *
@@ -54,11 +63,5 @@ public class Profesor implements EntityMongo {
      * @param object
      * @return
      */
-    public Profesor(Document object) {
-
-        nombre = object.getString("nombre");
-        apellido = object.getString("apellido");
-        idUsuario = object.getString("idUsuario");
-        asignaturas = object.get("asignatura", ArrayList.class);
-    }
+    
 }

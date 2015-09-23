@@ -44,16 +44,16 @@ public class MongoDB {
         try {
             abrirConexion();
             //Accedemos a la tabla
-            MongoCollection<Document> alumnos = mongoDB.getCollection(collection);
+            MongoCollection<Document> collectionDB = mongoDB.getCollection(collection);
 
             /*creación de un objeto "ObjectId" el cual nos permitirá hacer una
              búsqueda de un problema por su ID*/
             ObjectId objetoId = new ObjectId(id);
             BasicDBObject query = new BasicDBObject("_id", objetoId);
-            res = alumnos.find(query).first();
-            if (res == null) {
-                res = new Document("salida", "no se ha encontrado ningun objeto con este id");
-            }
+            res = collectionDB.find(query).first();
+//            if (res == null) {
+//                res = new Document("salida", "no se ha encontrado ningun objeto con este id");
+//            }
             
             //cerramos conexión
             cerrarConexion();
@@ -61,7 +61,7 @@ public class MongoDB {
             return res;
 
         } catch (Exception e) {
-            return new Document("Error", e.getMessage());
+            return null;
         }
     }
 

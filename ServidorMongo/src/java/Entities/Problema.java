@@ -14,9 +14,8 @@ import org.bson.Document;
  *
  * @author FranciscoJesús
  */
-
 @XmlRootElement
-public class Problema implements EntityMongo{
+public class Problema implements EntityMongo {
 
     public String id;
     public String idProfesor;
@@ -25,20 +24,38 @@ public class Problema implements EntityMongo{
     public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {
-        
+
     }
-    
+
+    public Problema(Document object) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        id = object.getObjectId("_id").toString();
+        idProfesor = object.getString("idProfesor");
+        enunciado = object.getString("enunciado");
+        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
+        for (Document p : pieza) {
+            piezas.add(new Pieza(p));
+        }
+        ArrayList<Document> soluciones = object.get("solucion", ArrayList.class);
+        for (Document p : soluciones) {
+            solucion.add(new Pieza(p));
+        }
+//        piezas = object.getString("idUsuario");
+//        asignaturas = object.get("asignatura", ArrayList.class);
+    }
+
     /**
      * Método que se encarga de convertir un objeto problema en un objeto JSON
      * (Document)
-     * @return 
+     *
+     * @return
      */
     @Override
     public Document converADocument() {
-        
+
         //inicializacion de la variable a devolver
         Document res = new Document();
-        
+
         res.append("idProfesor", idProfesor);
         //añadimos el enunciado
         res.append("enunciado", enunciado);
@@ -59,8 +76,4 @@ public class Problema implements EntityMongo{
         return res;
     }
 
-   
-    public Problema(Document object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

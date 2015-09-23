@@ -18,17 +18,28 @@ import org.bson.Document;
 @XmlRootElement
 public class Solucion implements EntityMongo {
 
+    public String id;
     public String idAlumno;
     public String idProblema;
     public String nombre;
     public ArrayList<Pieza> piezas = new ArrayList<>();
 
     public Solucion() {
-        
+
     }
-    
-    public Solucion(Document object){
-        
+
+    public Solucion(Document object) {
+
+        id = object.getObjectId("_id").toString();
+        idAlumno = object.getString("idAlumno");
+        idProblema = object.getString("idProblema");
+        //nombre = object.getString("nombre");
+        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
+        if (pieza != null) {
+            for (Document d : pieza) {
+                piezas.add(new Pieza(d));
+            }
+        }
     }
 
     /**

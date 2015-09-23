@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entities.EntityMongo;
 import Entities.Problema;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,6 +12,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import org.bson.Document;
 
 /**
  *
@@ -50,8 +50,9 @@ public class ServicioProblema {
     @GET
     @Path("buscarProblema")
     @Produces("application/json")
-    public EntityMongo leerProblema(@QueryParam("id") String id) {
+    public Problema leerProblema(@QueryParam("id") String id) {
 
-        return new Problema(MongoDB.findById(id, "Problemas"));
+        Document res = MongoDB.findById(id, "Problemas");
+        return res!=null?new Problema(res):null;
     }
 }

@@ -8,7 +8,9 @@ package Servicios;
 import Entities.EntityMongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -51,10 +53,7 @@ public class MongoDB {
             ObjectId objetoId = new ObjectId(id);
             BasicDBObject query = new BasicDBObject("_id", objetoId);
             res = collectionDB.find(query).first();
-//            if (res == null) {
-//                res = new Document("salida", "no se ha encontrado ningun objeto con este id");
-//            }
-            
+
             //cerramos conexión
             cerrarConexion();
 
@@ -63,6 +62,17 @@ public class MongoDB {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static MongoCursor<Document> find(BasicDBObject where, String collectionName) {
+
+        abrirConexion();
+
+        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+
+        FindIterable<Document> res = collection.find(where);
+
+        return res.iterator();
     }
 
     public static <T extends EntityMongo> void insert(T object, String collectionName) {
@@ -76,4 +86,5 @@ public class MongoDB {
         cerrarConexion();
 
     }
+    
 }

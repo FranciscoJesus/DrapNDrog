@@ -14,7 +14,7 @@ import org.bson.Document;
  */
 @XmlRootElement
 public interface EntityMongo {
-    
+
     public Document converADocument();
-    
+
 }

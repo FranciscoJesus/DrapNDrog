@@ -27,8 +27,16 @@ public class Usuario implements EntityMongo {
     public Usuario() {
 
     }
-    
-     /**
+
+    public Usuario(Document object) {
+
+        id = object.getObjectId("_id").toString();
+        usuario = object.getString("usuario");
+        password = object.getString("password");
+        rol = object.getInteger("rol");
+    }
+
+    /**
      * Método que se encarga de convertir un objeto Usuario en un objeto JSON
      *
      * @return
@@ -37,7 +45,6 @@ public class Usuario implements EntityMongo {
     public Document converADocument() {
         Document res = new Document();
 
-        res.append("id", id);
         res.append("usuario", usuario);
         res.append("password", Encriptar());
         res.append("rol", rol);

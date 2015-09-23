@@ -27,6 +27,23 @@ public class Problema implements EntityMongo {
 
     }
 
+    public Problema(Document object) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        id = object.getObjectId("_id").toString();
+        idProfesor = object.getString("idProfesor");
+        enunciado = object.getString("enunciado");
+        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
+        for (Document p : pieza) {
+            piezas.add(new Pieza(p));
+        }
+        ArrayList<Document> soluciones = object.get("solucion", ArrayList.class);
+        for (Document p : soluciones) {
+            solucion.add(new Pieza(p));
+        }
+//        piezas = object.getString("idUsuario");
+//        asignaturas = object.get("asignatura", ArrayList.class);
+    }
+
     /**
      * Método que se encarga de convertir un objeto problema en un objeto JSON
      * (Document)
@@ -59,20 +76,4 @@ public class Problema implements EntityMongo {
         return res;
     }
 
-    public Problema(Document object) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        id = object.getObjectId("_id").toString();
-        idProfesor = object.getString("idProfesor");
-        enunciado = object.getString("enunciado");
-        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
-        for(Document p : pieza){
-            piezas.add(new Pieza(p));
-        }
-        ArrayList<Document> soluciones = object.get("solucion", ArrayList.class);
-        for(Document p : soluciones){
-            solucion.add(new Pieza(p));
-        }
-//        piezas = object.getString("idUsuario");
-//        asignaturas = object.get("asignatura", ArrayList.class);
-    }
 }

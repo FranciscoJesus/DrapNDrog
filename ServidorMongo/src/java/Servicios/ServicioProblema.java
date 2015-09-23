@@ -69,14 +69,13 @@ public class ServicioProblema {
 
         MongoCursor<Document> res = MongoDB.find(where, "Problemas");
 
-        while (res.hasNext()) {
-            Document d = res.next();
-            problemasProfesor.add(new Problema(d));
+        if (res != null) {
+            while (res.hasNext()) {
+                Document d = res.next();
+                problemasProfesor.add(new Problema(d));
+            }
         }
 
-        MongoDB.cerrarConexion();
-        
         return problemasProfesor;
-
     }
 }

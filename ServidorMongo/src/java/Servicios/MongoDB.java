@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entities.Asignatura;
 import Entities.EntityMongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -12,6 +13,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -66,13 +68,19 @@ public class MongoDB {
 
     public static MongoCursor<Document> find(BasicDBObject where, String collectionName) {
 
+        MongoCursor<Document> resIterator = null;
+
         abrirConexion();
 
         MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
-
         FindIterable<Document> res = collection.find(where);
 
-        return res.iterator();
+        if (res != null) {
+            resIterator = res.iterator();
+        }
+        MongoDB.cerrarConexion();
+
+        return resIterator;
     }
 
     public static <T extends EntityMongo> void insert(T object, String collectionName) {
@@ -86,5 +94,16 @@ public class MongoDB {
         cerrarConexion();
 
     }
-    
+
+    public static <T extends EntityMongo> void update(String id, T object, String collectionName) {
+
+        abrirConexion();
+        //Accedemos a la tabla
+        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+        //insertamos el problema
+        collection.findOneAndUpdate(new BasicDBObject("_id", new ObjectId(id)), object.converADocument());
+        //cerramos conexión
+        cerrarConexion();
+    }
+
 }

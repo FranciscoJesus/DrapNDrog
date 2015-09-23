@@ -14,13 +14,13 @@ import javax.ws.rs.client.WebTarget;
  * Jersey REST client generated for REST resource:ServicioUsuario [Usuario]<br>
  * USAGE:
  * <pre>
- *        LoginJerseyClient2 client = new LoginJerseyClient2();
+ *        LoginJerseyClient client = new LoginJerseyClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
  * </pre>
  *
- * @author Sobremesa
+ * @author Pulgy
  */
 public class LoginJerseyClient {
     private WebTarget webTarget;
@@ -32,12 +32,20 @@ public class LoginJerseyClient {
         webTarget = client.target(BASE_URI).path("Usuario");
     }
 
-    public <T> T Login_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML), responseType);
+    public <T> T LoginProfesor_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("LoginProfesor").request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML), responseType);
     }
 
-    public <T> T Login_JSON(Object requestEntity, Class<T> responseType) throws ClientErrorException {
-        return webTarget.path("Login").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    public <T> T LoginProfesor_JSON(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("LoginProfesor").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
+    }
+
+    public <T> T LoginAlumno_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("LoginAlumno").request(javax.ws.rs.core.MediaType.APPLICATION_XML).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_XML), responseType);
+    }
+
+    public <T> T LoginAlumno_JSON(Object requestEntity, Class<T> responseType) throws ClientErrorException {
+        return webTarget.path("LoginAlumno").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
     public <T> T insertarUsuario_XML(Object requestEntity, Class<T> responseType) throws ClientErrorException {

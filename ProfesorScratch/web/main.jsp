@@ -16,53 +16,41 @@
         <!-- Librerias jQuery online
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
-        
+
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
+        <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
         <script type="text/javascript" src="libs/main.js"></script>
-        
+
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
-        
+
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-
+        
     </head>
     <body>
         <% 
-            HttpSession sesion = request.getSession();
-            Profesor p = null;
-            p = (Profesor)sesion.getAttribute("usuario");
-        %>    
+            HttpSession sesion = request.getSession(false);
+            Profesor p = (Profesor)sesion.getAttribute("usuario");
+            
+            if(p == null){
+                sesion.invalidate();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
+            }
+        %>
         
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= p.nombre + " " + p.apellido %><span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="LogoutServlet">Cerrar sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+        <%@include file="navegacion.jsp" %>
         
         <div class="container">
-            <div class="page-header">
-                <h1>Drag & Drop</h1>
-                <p class="lead">Arrastra, mueve, construye y destruye!</p>
-            </div>
             
+            <%@include file="header.jsp" %>
+
             <div id="alert_placeholder"></div>
-            
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel panel-default">
@@ -76,9 +64,9 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
-                
+
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -89,16 +77,16 @@
                             <ul id="sortable">
                             </ul>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 col-xs-offset-4">
                             <button id="finalizar" type="button" class="btn btn-success button-send">Finalizar</button>
                         </div>
                     </div>
-                        
+
                 </div>
-                
+
                 <div class="col-md-3" >
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -112,7 +100,7 @@
                             <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
                     </div>
-                    
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Bin</h3>
@@ -122,28 +110,17 @@
                             <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin-original.png"/>
                         </div>
                     </div>
-                                        
+
                 </div>
-                
+
             </div>
         </div>
-
-        <!------
-        
-        <input type = "button" id = "clickme" value="Click me!"/>
-        <div id = "alert_placeholder"></div>
-        <script>
-        bootstrap_alert = function() {}
-        bootstrap_alert.warning = function(message) {
-            $('#alert_placeholder').html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
-        }
-
-$('#clickme').on('click', function() {
-            bootstrap_alert.warning('Your text goes here');
-});
+<!--        
+        <script type="text/javascript">
+            $(function(){
+                $("#nav").load("navegacion.jsp"); 
+            });
         </script>
-
-        ----->
-                
+-->        
     </body>
 </html>

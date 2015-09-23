@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Profesor {
 
+    public String id;
     public String nombre;
     public String apellido;
     public String idUsuario;

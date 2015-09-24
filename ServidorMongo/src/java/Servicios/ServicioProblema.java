@@ -5,7 +5,11 @@
  */
 package Servicios;
 
+import Entities.Asignatura;
 import Entities.Problema;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCursor;
+import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -53,6 +57,59 @@ public class ServicioProblema {
     public Problema leerProblema(@QueryParam("id") String id) {
 
         Document res = MongoDB.findById(id, "Problemas");
-        return res!=null?new Problema(res):null;
+        return res != null ? new Problema(res) : null;
+    }
+
+    @GET
+    @Path("buscarProblemasProfesor")
+    @Produces("application/json")
+    public ArrayList<Problema> leerProblemasProfesor(@QueryParam("id") String id) {
+
+        BasicDBObject where = new BasicDBObject("idProfesor", id);
+        ArrayList<Problema> problemasProfesor = new ArrayList<>();
+
+        MongoCursor<Document> res = MongoDB.find(where, "Problemas");
+
+        if (res != null) {
+            while (res.hasNext()) {
+                Document d = res.next();
+                problemasProfesor.add(new Problema(d));
+            }
+        }
+
+        return problemasProfesor;
+    }
+
+    @GET
+    @Path("buscarProblemasAlumno")
+    @Produces("application/json")
+    public ArrayList<Problema> leerProblemasAlumno(@QueryParam("id") String id) {
+
+        BasicDBObject where = new BasicDBObject("idAlumnos", id);
+        ArrayList<Asignatura> AsignaturasAlumno = new ArrayList<>();
+        ArrayList<Problema> ProblemasAlumno = new ArrayList<>();
+
+        MongoCursor<Document> res = MongoDB.find(where, "Asignaturas");
+
+        if (res != null) {
+            while (res.hasNext()) {
+                Document d = res.next();
+                AsignaturasAlumno.add(new Asignatura(d));
+
+                where = new BasicDBObject("idAsignatura", d.getObjectId("_id").toString());
+                MongoCursor<Document> resProblemas = MongoDB.find(where, "Problemas");
+
+                if (null != resProblemas) {
+                    while (resProblemas.hasNext()) {
+
+                        Document dAlumno = resProblemas.next();
+                        ProblemasAlumno.add(new Problema(dAlumno));
+                    }
+                }
+
+            }
+        }
+
+        return ProblemasAlumno;
     }
 }

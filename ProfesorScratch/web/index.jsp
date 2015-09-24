@@ -3,6 +3,7 @@
     Author     : Edgar Pérez Ferrando
 --%>
 
+<%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -26,20 +27,21 @@
         <title>Iniciar sesión</title>
     </head>
 
-    <body>
-        <!-- @todo Finalizar sesion -->
-        <% if( ("0").equals(request.getAttribute("loginState")) ){ %>
-            <script type="text/javascript">throw_alert("danger","Usuario o contraseña incorrectos");</script>
-        <% } %>
+    <body>        
         <div class="container">
+            <%
+                HttpSession sesion = request.getSession(false);
+                Profesor p = (Profesor) sesion.getAttribute("usuario");
 
-            <div class="page-header">
-                <h1>Drag & Drop</h1>
-                <p class="lead">Arrastra, mueve, construye y destruye!</p>
-            </div>
+                if (p != null) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+                    dispatcher.forward(request, response);
+                }
+            %>
+            <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>
-
+        
             <div id="login-box" class="row">
 
                 <div class="login-content col-xs-8 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
@@ -51,7 +53,6 @@
                         </div>
 
                         <div id="login-panel" class="panel-body">
-
                             <form action="LoginServlet" method="post">
 
                                 <div class="form-group">
@@ -68,31 +69,15 @@
 
                             </form>
                         </div>
-
                     </div>
-
                 </div>
-
-            </div>
-
-            <!--                <div id="container-login" class="col-md-6 col-xs-6 col-sm-6 col-lg-6 col-xs-offset-3 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
-                                
-                                <h3>Iniciar sesión</h3>
-                                
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="usr" placeholder="Nombre de usuario">
-                                </div>
-                                
-                                <div class="form-group">
-                                    <input type="password" class="form-control" id="pwd" placeholder="Contraseña">
-                                </div>
-                                
-                                <div class="form-group button-submit">
-                                    <input class="btn btn-default" type="submit" value="Entrar">
-                                </div>
-                            </div>
-            -->                
-
+            </div>   
         </div>
+        
+        <% if (("0").equals(request.getAttribute("loginState"))) { %>
+        <script type="text/javascript">
+            throw_alert("danger","Usuario o contraseña incorrectos");
+        </script>
+        <% }%>
     </body>
 </html>

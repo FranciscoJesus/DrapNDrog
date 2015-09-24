@@ -19,12 +19,29 @@ public class Problema implements EntityMongo {
 
     public String id;
     public String idProfesor;
+    public String idAsignatura;
     public String enunciado;
     public ArrayList<Pieza> piezas = new ArrayList<>();
     public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {
 
+    }
+
+    public Problema(Document object) {
+
+        id = object.getObjectId("_id").toString();
+        idProfesor = object.getString("idProfesor");
+        idAsignatura = object.getString("idAsignatura");
+        enunciado = object.getString("enunciado");
+        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
+        for (Document p : pieza) {
+            piezas.add(new Pieza(p));
+        }
+        ArrayList<Document> soluciones = object.get("solucion", ArrayList.class);
+        for (Document p : soluciones) {
+            solucion.add(new Pieza(p));
+        }
     }
 
     /**
@@ -40,6 +57,7 @@ public class Problema implements EntityMongo {
         Document res = new Document();
 
         res.append("idProfesor", idProfesor);
+        res.append("idAsignatura", idAsignatura);
         //añadimos el enunciado
         res.append("enunciado", enunciado);
         //creamos un array donde vamos a almacenar la lista de piezas
@@ -59,20 +77,4 @@ public class Problema implements EntityMongo {
         return res;
     }
 
-    public Problema(Document object) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        id = object.getObjectId("_id").toString();
-        idProfesor = object.getString("idProfesor");
-        enunciado = object.getString("enunciado");
-        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
-        for(Document p : pieza){
-            piezas.add(new Pieza(p));
-        }
-        ArrayList<Document> soluciones = object.get("solucion", ArrayList.class);
-        for(Document p : soluciones){
-            solucion.add(new Pieza(p));
-        }
-//        piezas = object.getString("idUsuario");
-//        asignaturas = object.get("asignatura", ArrayList.class);
-    }
 }

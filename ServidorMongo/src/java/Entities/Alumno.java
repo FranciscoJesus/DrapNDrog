@@ -16,7 +16,7 @@ import org.bson.Document;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Alumno implements EntityMongo{
+public class Alumno implements EntityMongo {
 
     public String id;
     public String nombre;
@@ -24,21 +24,32 @@ public class Alumno implements EntityMongo{
     public String dni;
     public String idUsuario;
     public List<String> idAsignaturas = new ArrayList<>();
-    
+
     public Alumno() {
-        
+
     }
-    
-     /**
-     * Método que se utiliza para devolver una instancia de Asignatura en un objeto
-     * Mongo
-     * @return 
+
+    public Alumno(Document object) {
+
+        id = object.getObjectId("_id").toString();
+        nombre = object.getString("nombre");
+        apellido = object.getString("apellido");
+        dni = object.getString("dni");
+        idUsuario = object.getString("idUsuario");
+        idAsignaturas = object.get("idAsignaturas", ArrayList.class);
+    }
+
+    /**
+     * Método que se utiliza para devolver una instancia de Asignatura en un
+     * objeto Mongo
+     *
+     * @return
      */
     @Override
     public Document converADocument() {
-        
+
         Document res = new Document();
-        
+
         res.append("nombre", nombre);
         res.append("apellido", apellido);
         res.append("dni", dni);
@@ -52,8 +63,4 @@ public class Alumno implements EntityMongo{
         return res;
     }
 
-    
-    public Alumno(Document object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

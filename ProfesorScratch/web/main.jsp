@@ -4,6 +4,12 @@
     Author     : Edgar Perez Ferrando
 --%>
 
+<%@page import="Entities.Input"%>
+<%@page import="Entities.Pieza"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Entities.Problema"%>
+<%@page import="Entities.Asignatura"%>
 <%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -29,37 +35,26 @@
 
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-
+        
     </head>
     <body>
         <% 
-            HttpSession sesion = request.getSession();
-            Profesor p = null;
-            p = (Profesor)sesion.getAttribute("usuario");
-        %>    
-        
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= p.nombre + " " + p.apellido %><span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="LogoutServlet">Cerrar sesión</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+            HttpSession sesion = request.getSession(false);
+            Profesor p = (Profesor)sesion.getAttribute("usuario");
+            
+            if(p == null){
+                sesion.invalidate();
+                RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                dispatcher.forward(request, response);
+            }
+            
+        %>
+        <input type="hidden" id="idProfesor" value="<%= p.id %>"/>
+        <%@include file="navegacion.jsp" %>
         
         <div class="container">
-            <div class="page-header">
-                <h1>Drag & Drop</h1>
-                <p class="lead">Arrastra, mueve, construye y destruye!</p>
-            </div>
+            
+            <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>
 
@@ -102,9 +97,33 @@
                 <div class="col-md-3" >
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                            <h3 class="panel-title">Asignatura</h3>
+                        </div>
+                                                
+                        <div id="asignatura-panel-content" class="panel-body row">
+                            <div id="input-file" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">
+                                <!-- <input type="select" id="files" class="filestyle" data-input="false" data-badge="false" name="files" >
+                                    <option>Option</option>
+                                </input> -->
+                                <select id="select-asignatura" class="form-control">
+                                    <% 
+                                        List<Asignatura> asignaturas = (List<Asignatura>)sesion.getAttribute("asignaturas");
+                                        if(asignaturas.size() > 0){
+                                            for(Asignatura a : asignaturas){
+                                                %><option><%= a.nombre %></option><%
+                                            }
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
                             <h3 class="panel-title">Pieces panel</h3>
                         </div>
-
+                                                
                         <div id="pieces-panel-content" class="panel-body row">
                             <div id="input-file" class="col-md-6 col-sm-6 col-lg-6 col-xs-6 col-xs-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-offset-3">
                                 <input type="file" id="files" class="filestyle" data-input="false" data-badge="false" name="files" />
@@ -112,7 +131,7 @@
                             <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
                     </div>
-
+                    
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Bin</h3>
@@ -127,23 +146,49 @@
 
             </div>
         </div>
-
-        <!------
-
-<input type = "button" id = "clickme" value="Click me!"/>
-<div id = "alert_placeholder"></div>
-<script>
-bootstrap_alert = function() {}
-bootstrap_alert.warning = function(message) {
-    $('#alert_placeholder').html('<div class="alert"><a class="close" data-dismiss="alert">×</a><span>'+message+'</span></div>')
-}
-
-$('#clickme').on('click', function() {
-    bootstrap_alert.warning('Your text goes here');
-});
-</script>
-
------>
-
+<!--        
+        <script type="text/javascript">
+            $(function(){
+                $("#nav").load("navegacion.jsp"); 
+            });
+        </script>
+-->     
+        <%
+            Problema t = (Problema)request.getAttribute("problema");
+            if(t != null){
+        %>
+                <script type="text/javascript">
+                    $(function(){
+                        $("#enunciado").val("<%= t.enunciado %>");
+                    });
+                </script>
+        <%
+                    List<Pieza> piezas = new ArrayList<Pieza>();
+                    piezas = t.piezas;
+                    
+                    String json = "[";
+                    
+                    for( Pieza pieza : piezas ){
+                        
+                        json += "{\"inputs\": [";
+                        List<Input> inputs = new ArrayList<Input>();
+                        inputs = pieza.inputs;
+                        for( Input tag : inputs){
+                            json += tag.generarJSON() + ",";
+                        }
+                        json += "]},";
+                    }
+                    
+                    json = json.substring(0, json.length() - 1);
+                    json += "]";
+                    //@todo - arreglar
+                    %>
+                    <script type="text/javascript">
+                        //var json = "<% //json %>";
+                        //console.log(<%= json %>);
+                        buildPieces(<%= json %>);
+                    </script><%
+            } 
+        %>
     </body>
 </html>

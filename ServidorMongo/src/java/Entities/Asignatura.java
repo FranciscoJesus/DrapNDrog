@@ -6,6 +6,7 @@
 package Entities;
 
 import com.mongodb.BasicDBList;
+import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
 
@@ -13,27 +14,35 @@ import org.bson.Document;
  *
  * @author FranciscoJesús
  */
-public class Asignatura implements EntityMongo{
+public class Asignatura implements EntityMongo {
 
     public String id;
     public String nombre;
     public String idProfesor;
-    public List<String> idAlumnos;
+    public List<String> idAlumnos = new ArrayList<>();
 
     public Asignatura() {
 
     }
-    
+
+    public Asignatura(Document object) {
+        
+        id = object.getObjectId("_id").toString();
+        nombre = object.getString("nombre");
+        idProfesor = object.getString("idProfesor");
+        idAlumnos = object.get("idAlumnos", ArrayList.class);
+    }
+
     /**
-     * Método que se utiliza para devolver una instancia de Asignatura en un objeto
-     * Mongo
-     * @return 
+     * Método que se utiliza para devolver una instancia de Asignatura en un
+     * objeto Mongo
+     *
+     * @return
      */
     @Override
     public Document converADocument() {
         Document res = new Document();
 
-        res.append("id", id);
         res.append("nombre", nombre);
         res.append("idProfesor", idProfesor);
         BasicDBList alumnos = new BasicDBList();
@@ -45,8 +54,4 @@ public class Asignatura implements EntityMongo{
         return res;
     }
 
-   
-    public Asignatura(Document object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

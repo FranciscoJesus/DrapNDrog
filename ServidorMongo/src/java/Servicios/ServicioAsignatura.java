@@ -6,8 +6,6 @@
 package Servicios;
 
 import Entities.Asignatura;
-import Entities.EntityMongo;
-import Entities.Problema;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
 import java.util.ArrayList;

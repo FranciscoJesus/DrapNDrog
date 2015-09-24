@@ -5,7 +5,6 @@
  */
 package Servicios;
 
-import Entities.Asignatura;
 import Entities.EntityMongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -13,7 +12,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import java.util.ArrayList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -102,6 +100,17 @@ public class MongoDB {
         MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
         //insertamos el problema
         collection.findOneAndUpdate(new BasicDBObject("_id", new ObjectId(id)), object.converADocument());
+        //cerramos conexión
+        cerrarConexion();
+    }
+    
+    public static <T extends EntityMongo> void delete(String id, String collectionName) {
+
+        abrirConexion();
+        //Accedemos a la tabla
+        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
+        //insertamos el problema
+        collection.findOneAndDelete(new BasicDBObject("_id", new ObjectId(id)));
         //cerramos conexión
         cerrarConexion();
     }

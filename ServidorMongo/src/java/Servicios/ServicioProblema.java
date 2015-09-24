@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entities.Asignatura;
 import Entities.Problema;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
@@ -77,5 +78,38 @@ public class ServicioProblema {
         }
 
         return problemasProfesor;
+    }
+
+    @GET
+    @Path("buscarProblemasAlumno")
+    @Produces("application/json")
+    public ArrayList<Problema> leerProblemasAlumno(@QueryParam("id") String id) {
+
+        BasicDBObject where = new BasicDBObject("idAlumnos", id);
+        ArrayList<Asignatura> AsignaturasAlumno = new ArrayList<>();
+        ArrayList<Problema> ProblemasAlumno = new ArrayList<>();
+
+        MongoCursor<Document> res = MongoDB.find(where, "Asignaturas");
+
+        if (res != null) {
+            while (res.hasNext()) {
+                Document d = res.next();
+                AsignaturasAlumno.add(new Asignatura(d));
+
+                where = new BasicDBObject("idAsignatura", d.getObjectId("_id").toString());
+                MongoCursor<Document> resProblemas = MongoDB.find(where, "Problemas");
+
+                if (null != resProblemas) {
+                    while (resProblemas.hasNext()) {
+
+                        Document dAlumno = resProblemas.next();
+                        ProblemasAlumno.add(new Problema(dAlumno));
+                    }
+                }
+
+            }
+        }
+
+        return ProblemasAlumno;
     }
 }

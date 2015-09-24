@@ -6,29 +6,23 @@
 
 package profesorScratch.servlet;
 
-import Entities.Asignatura;
-import Entities.Profesor;
-import Entities.Usuario;
-import service.LoginJerseyClient;
+import Entities.Problema;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import service.AsignaturaJerseyClient;
+import service.ProblemaJerseyClient;
 
 /**
  *
  * @author Sobremesa
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "ProblemaServlet", urlPatterns = {"/ProblemaServlet"})
+public class ProblemaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,41 +36,16 @@ public class LoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        HttpSession sesion = request.getSession();
-        
         response.setContentType("text/html;charset=UTF-8");
+        String id = (String)request.getParameter("id");
         
-        Usuario u = new Usuario();
-        LoginJerseyClient service = new LoginJerseyClient();
-        AsignaturaJerseyClient asignaturaClient = new AsignaturaJerseyClient();
+        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        Problema t = (Problema)service.leerProblema(Problema.class, id);
         
-        String user = request.getParameter("user");
-        String pass = request.getParameter("pass");
-        
-        u.usuario = user;
-        u.password = pass;
-        u.rol = 2;
-        
-        Profesor p = (Profesor)service.LoginProfesor_JSON(u,Profesor.class);
-        
+        request.setAttribute("problema", t);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+        dispatcher.forward(request, response);
 
-        // Comprobar que los datos devueltos del servicio RESTFull son correctos
-        if(p != null){
-            // Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
-            List<Asignatura> asignaturas = new ArrayList<Asignatura>();
-            asignaturas = (List<Asignatura>)asignaturaClient.getAsignaturasProfesor(p.id);
-            sesion.setAttribute("asignaturas", asignaturas);
-            
-            sesion.setAttribute("usuario", p);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-            dispatcher.forward(request, response);
-        }else{
-            // @todo - generar alerta en bootstrap mediante js
-            request.setAttribute("loginState", "0");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-            dispatcher.forward(request, response);
-        }
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

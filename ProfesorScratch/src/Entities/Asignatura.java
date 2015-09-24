@@ -12,15 +12,15 @@ import java.util.List;
  *
  * @author FranciscoJesús
  */
-public class Profesor {
+public class Asignatura {
 
     public String id;
     public String nombre;
-    public String apellido;
-    public String idUsuario;
-    public List<String> asignaturas = new ArrayList<>();
+    public String idProfesor;
+    public List<String> idAlumnos = new ArrayList<>();
 
-    public Profesor() {
+    public Asignatura() {
+
     }
 
 }

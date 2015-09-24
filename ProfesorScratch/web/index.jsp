@@ -3,6 +3,7 @@
     Author     : Edgar Pérez Ferrando
 --%>
 
+<%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,7 +14,6 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <script type="text/javascript" src="libs/functions.js"></script>
         <!-- <script type="text/javascript" src="libs/main.js"></script> -->
         <script type="text/javascript" src="libs/log.js"></script>
 
@@ -29,7 +29,15 @@
 
     <body>        
         <div class="container">
+            <%
+                HttpSession sesion = request.getSession(false);
+                Profesor p = (Profesor) sesion.getAttribute("usuario");
 
+                if (p != null) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+                    dispatcher.forward(request, response);
+                }
+            %>
             <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>

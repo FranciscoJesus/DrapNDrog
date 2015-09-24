@@ -5,22 +5,22 @@
  */
 package Entities;
 
+import Entities.Input;
 import java.util.ArrayList;
-import java.util.List;
+import javax.ws.rs.QueryParam;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author FranciscoJesús
  */
-public class Profesor {
+@XmlRootElement
+public class Pieza {
 
-    public String id;
-    public String nombre;
-    public String apellido;
-    public String idUsuario;
-    public List<String> asignaturas = new ArrayList<>();
+    public ArrayList<Input> inputs = new ArrayList<>();
 
-    public Profesor() {
+    public Pieza() {
+
     }
 
 }

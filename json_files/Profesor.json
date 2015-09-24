@@ -1,0 +1,1 @@
+{ "_id" : { "$oid" : "55fb0941a74db814986336a7"} , "nombre" : "pepito" , "apellido" : "perez" , "idUsuario" : "55fb08f9a74db814986336a5" , "asignaturas" : [ "560322a7af5eec13ec81a630"]}

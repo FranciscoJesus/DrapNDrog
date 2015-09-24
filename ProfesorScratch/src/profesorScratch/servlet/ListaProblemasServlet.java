@@ -6,14 +6,20 @@
 
 package profesorScratch.servlet;
 
+import Entities.Problema;
+import Entities.Profesor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import service.ProblemasJerseyClient;
 
 /**
  *
@@ -36,8 +42,21 @@ public class ListaProblemasServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         // @todo - Obtener todos los probelmas realizados por el profesor
-        RequestDispatcher dispatcher = request.getRequestDispatcher("listadoProblemas.jsp");
-        dispatcher.forward(request, response);
+        
+        HttpSession sesion = request.getSession();
+        Profesor p = (Profesor)sesion.getAttribute("usuario");
+        
+        // @todo - control de errores
+        if( p != null ){
+            List<Problema> list = new ArrayList<Problema>();
+            ProblemasJerseyClient servicio = new ProblemasJerseyClient();
+            list = servicio.getProblemasProfesor(p.id);
+            
+            request.setAttribute("problemas", list);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("listadoProblemas.jsp");
+            dispatcher.forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

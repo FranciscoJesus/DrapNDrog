@@ -98,17 +98,18 @@ public class LoginAlumnoServlet extends HttpServlet {
         
         if (alu == null) {
            miSesion.setAttribute("Log","error");
-           RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+          // RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+      RequestDispatcher dispatcher = request.getRequestDispatcher("listaEnunciados.jsp");
            dispatcher.forward(request, response);
         } else {
             
             Object currentUser = miSesion.getAttribute("alumno");
-
+            
 
             if (currentUser != null) {
                 miSesion.invalidate();
             }
-            
+             miSesion.setAttribute("Log","correcto");
             miSesion.setAttribute("alumno", alu);
             List<Problema> listproblemas=null;
          //   List<Problema>  listproblemas = (List<Problema>) servicio.LoginAlumno_JSON(, null);

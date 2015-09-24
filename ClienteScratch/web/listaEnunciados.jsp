@@ -3,6 +3,7 @@
     Author     : JavierOrdoñezMartin
 --%>
 
+<%@page import="Entities.Alumno"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,6 +12,25 @@
         <title>Lista Enunciados</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <%
+                 HttpSession miSesion = request.getSession(false);
+                String log =(String) miSesion.getAttribute("Log");
+                Alumno alu= (Alumno) miSesion.getAttribute("alumno");
+                %>
+        <div id="container">
+            <%
+                if(alu!=null){
+            %>
+                <div id="container-log">
+               
+                </div>
+            
+              <% }else{ %>
+                  
+               Pasar a pagina de log
+               }%>
+               
+        </div>
+        
     </body>
 </html>

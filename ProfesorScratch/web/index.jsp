@@ -14,7 +14,6 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <script type="text/javascript" src="libs/functions.js"></script>
         <!-- <script type="text/javascript" src="libs/main.js"></script> -->
         <script type="text/javascript" src="libs/log.js"></script>
 

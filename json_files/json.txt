@@ -1,0 +1,62 @@
+[
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "Pieza 1"
+            },
+            {
+                "type": "text",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "Pieza 1"
+            },
+            {
+                "type": "text",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "select",
+                "value": ["op1","op2","op3"]
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "Pieza 1"
+            },
+            {
+                "type": "text",
+                "value": 1
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "Pieza 1"
+            },
+            {
+                "type": "text",
+                "value": 1
+            },
+	    {
+                "type": "label",
+                "value": " ok"
+            }
+        ]
+    }
+]

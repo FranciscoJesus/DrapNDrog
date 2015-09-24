@@ -6,11 +6,14 @@
 
 package profesorScratch.servlet;
 
+import Entities.Asignatura;
 import Entities.Profesor;
 import Entities.Usuario;
 import service.LoginJerseyClient;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.AsignaturaJerseyClient;
 
 /**
  *
@@ -44,6 +48,7 @@ public class LoginServlet extends HttpServlet {
         
         Usuario u = new Usuario();
         LoginJerseyClient service = new LoginJerseyClient();
+        AsignaturaJerseyClient asignaturaClient = new AsignaturaJerseyClient();
         
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
@@ -54,9 +59,14 @@ public class LoginServlet extends HttpServlet {
         
         Profesor p = (Profesor)service.LoginProfesor_JSON(u,Profesor.class);
         
+
         // Comprobar que los datos devueltos del servicio RESTFull son correctos
         if(p != null){
             // Almacenar en la sesion los datos del profesor previamente antes de hacer la redirección.
+            List<Asignatura> asignaturas = new ArrayList<Asignatura>();
+            asignaturas = (List<Asignatura>)asignaturaClient.getAsignaturasProfesor(p.id);
+            sesion.setAttribute("asignaturas", asignaturas);
+            
             sesion.setAttribute("usuario", p);
             RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
             dispatcher.forward(request, response);

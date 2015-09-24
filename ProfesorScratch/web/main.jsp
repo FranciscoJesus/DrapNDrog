@@ -9,6 +9,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="Entities.Problema"%>
+<%@page import="Entities.Asignatura"%>
 <%@page import="Entities.Profesor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -48,7 +49,7 @@
             }
             
         %>
-        
+        <input type="hidden" id="idProfesor" value="<%= p.id %>"/>
         <%@include file="navegacion.jsp" %>
         
         <div class="container">
@@ -99,19 +100,22 @@
                             <h3 class="panel-title">Asignatura</h3>
                         </div>
                                                 
-                        <div id="pieces-panel-content" class="panel-body row">
-                            <div id="input-file" class="col-md-6 col-sm-6 col-lg-6 col-xs-6 col-xs-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-offset-3">
+                        <div id="asignatura-panel-content" class="panel-body row">
+                            <div id="input-file" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">
                                 <!-- <input type="select" id="files" class="filestyle" data-input="false" data-badge="false" name="files" >
                                     <option>Option</option>
                                 </input> -->
-                                <select class="form-control">
-                                    <option>-------</option>
-                                    <option>Mustard</option>
-                                    <option>Ketchup</option>
-                                    <option>Relish</option>
+                                <select id="select-asignatura" class="form-control">
+                                    <% 
+                                        List<Asignatura> asignaturas = (List<Asignatura>)sesion.getAttribute("asignaturas");
+                                        if(asignaturas.size() > 0){
+                                            for(Asignatura a : asignaturas){
+                                                %><option><%= a.nombre %></option><%
+                                            }
+                                        }
+                                    %>
                                 </select>
                             </div>
-                            <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
                     </div>
                     
@@ -148,7 +152,7 @@
                 $("#nav").load("navegacion.jsp"); 
             });
         </script>
--->        
+-->     
         <%
             Problema t = (Problema)request.getAttribute("problema");
             if(t != null){
@@ -161,15 +165,29 @@
         <%
                     List<Pieza> piezas = new ArrayList<Pieza>();
                     piezas = t.piezas;
-                    String json = "";
+                    
+                    String json = "[";
                     
                     for( Pieza pieza : piezas ){
+                        
+                        json += "{\"inputs\": [";
                         List<Input> inputs = new ArrayList<Input>();
                         inputs = pieza.inputs;
                         for( Input tag : inputs){
                             json += tag.generarJSON() + ",";
                         }
+                        json += "]},";
                     }
+                    
+                    json = json.substring(0, json.length() - 1);
+                    json += "]";
+                    //@todo - arreglar
+                    %>
+                    <script type="text/javascript">
+                        //var json = "<% //json %>";
+                        //console.log(<%= json %>);
+                        buildPieces(<%= json %>);
+                    </script><%
             } 
         %>
     </body>

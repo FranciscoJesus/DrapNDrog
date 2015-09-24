@@ -24,7 +24,7 @@ public class Input {
     
     public String generarJSON(){
         
-        String json = "{\"inputs\":[{\"type\":\""+ type +"\",\"value\":";
+        String json = "{\"type\":\""+ type +"\",\"value\":";
         
         if("select".equals(type)) json += "[";
         
@@ -35,7 +35,7 @@ public class Input {
         }
         
         if("select".equals(type)) json += "]";
-        json += "}]}";
+        json += "}";
         
         return json;
     }

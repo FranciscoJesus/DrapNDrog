@@ -7,6 +7,9 @@ package Servicios;
 
 import Entities.Problema;
 import Entities.Solucion;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -28,7 +31,7 @@ public class ServicioSolucion {
     public Solucion insertarSolucion(Solucion sol) {
         try {
             Problema p = MongoDB.findById(sol.idProblema, Problema.class);
-            sol.ponerNota(p.solucion);            
+            sol.ponerNota(p.solucion);
             MongoDB.insert(sol);
         } catch (Exception e) {
             return null;
@@ -42,6 +45,17 @@ public class ServicioSolucion {
     public Solucion buscarSolucion(@QueryParam("id") String id) {
 
         return MongoDB.findById(id, Solucion.class);
+    }
+
+    @GET
+    @Path("SolucionesDeProblema")
+    @Produces("application/json")
+    public List<Solucion> SolucionesUnProblema(@QueryParam("id") String idProblema) {
+
+        Map<String, String> where = new TreeMap<>();
+        where.put("idProblema", idProblema);
+        
+        return MongoDB.find(where, Solucion.class);
     }
 
 }

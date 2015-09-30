@@ -12,12 +12,18 @@ import static Servicios.MongoDB.abrirConexion;
 import static Servicios.MongoDB.cerrarConexion;
 import static Servicios.MongoDB.mongoDB;
 import com.mongodb.BasicDBObject;
+import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
 
 /**
  *
@@ -26,6 +32,8 @@ import org.bson.Document;
 @Path("Usuario")
 public class ServicioUsuario {
 
+    final Morphia morphia = new Morphia();
+
     @POST
     @Path("insertarUsuario")
     @Consumes({"application/xml", "application/json"})
@@ -33,11 +41,37 @@ public class ServicioUsuario {
     public Usuario insertarUsuario(Usuario u) {
 
         try {
-            MongoDB.insert(u, "Usuarios");
+            MongoDB.insert(u);
         } catch (Exception e) {
             return null;
         }
         return u;
+    }
+
+    @POST
+    @Path("insertarUsuarioMorphia")
+    @Consumes({"application/xml", "application/json"})
+    @Produces("application/json")
+    public Usuario insertarUsuarioMorphia(Usuario u) {
+
+        Datastore ds = morphia.createDatastore(new MongoClient(), "Prueba");
+        ds.ensureIndexes();
+
+        u.password = u.Encriptar();
+        ds.save(u);
+
+        return u;
+    }
+
+    @GET
+    @Path("buscarUsuarioMorphia")
+    @Consumes({"application/xml", "application/json"})
+    @Produces("application/json")
+    public Usuario buscarUsuarioMorphia(@QueryParam("id") String id) {
+
+        Usuario u = MongoDB.findById(id, Usuario.class);
+
+        return u == null ? new Usuario() : u;
     }
 
     @POST
@@ -118,7 +152,7 @@ public class ServicioUsuario {
                     MongoCollection<Document> profesores = mongoDB.getCollection("Profesor");
                     String id = res.getObjectId("_id").toString();
                     res = profesores.find(new BasicDBObject("idUsuario", id)).first();
-                    resObject = new Profesor(res);
+                    //resObject = new Profesor(res);
                 }
             }
             //cerramos conexión

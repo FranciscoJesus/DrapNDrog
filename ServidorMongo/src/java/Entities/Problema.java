@@ -9,19 +9,26 @@ import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
  * @author FranciscoJesús
  */
 @XmlRootElement
+@Entity("Problemas")
 public class Problema implements EntityMongo {
 
+    @Id
     public String id;
     public String idProfesor;
     public String idAsignatura;
     public String enunciado;
+    @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();
+    @Embedded
     public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {

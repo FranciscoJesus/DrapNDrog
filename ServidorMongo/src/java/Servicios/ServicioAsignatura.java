@@ -31,7 +31,7 @@ public class ServicioAsignatura {
     public Asignatura insertarAsignatura(Asignatura a) {
 
         try {
-            MongoDB.insert(a, "Asignaturas");
+            MongoDB.insert(a);
         } catch (Exception e) {
             return null;
         }
@@ -42,9 +42,8 @@ public class ServicioAsignatura {
     @Path("buscarAsignatura")
     @Produces("application/json")
     public Asignatura buscarAsignatura(@QueryParam("id") String id) {
-
-        Document res = MongoDB.findById(id, "Asignaturas");
-        return res != null ? new Asignatura(MongoDB.findById(id, "Asignaturas")) : null;
+        
+        return MongoDB.findById(id, Asignatura.class);
     }
 
     @GET

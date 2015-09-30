@@ -10,14 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
  * @author FranciscoJesús
  */
+@Entity("Alumno")
 @XmlRootElement
 public class Alumno implements EntityMongo {
 
+    @Id
     public String id;
     public String nombre;
     public String apellido;

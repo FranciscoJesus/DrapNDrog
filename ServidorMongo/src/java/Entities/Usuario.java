@@ -11,14 +11,18 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
  * @author FranciscoJesús
  */
 @XmlRootElement
+@Entity("Usuarios")
 public class Usuario implements EntityMongo {
 
+    @Id
     public String id;
     public String usuario;
     public String password;

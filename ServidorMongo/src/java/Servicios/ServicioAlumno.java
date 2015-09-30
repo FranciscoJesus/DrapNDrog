@@ -13,6 +13,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import org.bson.Document;
 
 /**
  *
@@ -28,7 +29,7 @@ public class ServicioAlumno {
     public Alumno insertarUsuario(Alumno a) {
 
         try {
-            MongoDB.insert(a, "Alumnos");
+            MongoDB.insert(a);
         } catch (Exception e) {
             a.nombre = "error";
             return a;
@@ -41,7 +42,7 @@ public class ServicioAlumno {
     @Produces("application/json")
     public EntityMongo buscarAlumno(@QueryParam("id") String id) {
 
-        return new Alumno(MongoDB.findById(id, "Alumnos"));
+        return MongoDB.findById(id,Alumno.class);
 
     }
 }

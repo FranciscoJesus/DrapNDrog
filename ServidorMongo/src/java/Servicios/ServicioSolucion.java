@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entities.Problema;
 import Entities.Solucion;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
@@ -27,7 +27,9 @@ public class ServicioSolucion {
     @Produces("application/json")
     public Solucion insertarSolucion(Solucion sol) {
         try {
-            MongoDB.insert(sol, "Soluciones");
+            Problema p = MongoDB.findById(sol.idProblema, Problema.class);
+            sol.ponerNota(p.solucion);            
+            MongoDB.insert(sol);
         } catch (Exception e) {
             return null;
         }
@@ -39,8 +41,7 @@ public class ServicioSolucion {
     @Produces("application/json")
     public Solucion buscarSolucion(@QueryParam("id") String id) {
 
-        Document res = MongoDB.findById(id, "Soluciones");
-        return res != null ? new Solucion(res) : null;
+        return MongoDB.findById(id, Solucion.class);
     }
 
 }

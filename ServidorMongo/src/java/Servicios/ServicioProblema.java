@@ -10,6 +10,9 @@ import Entities.Problema;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCursor;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -38,7 +41,7 @@ public class ServicioProblema {
     public Problema insertar(Problema n) {
 
         try {
-            MongoDB.insert(n, "Problemas");
+            MongoDB.insert(n);
         } catch (Exception e) {
             return null;
         }
@@ -56,60 +59,37 @@ public class ServicioProblema {
     @Produces("application/json")
     public Problema leerProblema(@QueryParam("id") String id) {
 
-        Document res = MongoDB.findById(id, "Problemas");
-        return res != null ? new Problema(res) : null;
+        return MongoDB.findById(id, Problema.class);
     }
 
     @GET
     @Path("buscarProblemasProfesor")
     @Produces("application/json")
-    public ArrayList<Problema> leerProblemasProfesor(@QueryParam("id") String id) {
+    public List<Problema> leerProblemasProfesor(@QueryParam("id") String id) {
 
-        BasicDBObject where = new BasicDBObject("idProfesor", id);
-        ArrayList<Problema> problemasProfesor = new ArrayList<>();
+        Map<String, String> where = new TreeMap<>();
+        where.put("idProfesor", id);
+        List<Problema> res = MongoDB.find(where, Problema.class);
 
-        MongoCursor<Document> res = MongoDB.find(where, "Problemas");
-
-        if (res != null) {
-            while (res.hasNext()) {
-                Document d = res.next();
-                problemasProfesor.add(new Problema(d));
-            }
-        }
-
-        return problemasProfesor;
+        return res;
     }
 
     @GET
     @Path("buscarProblemasAlumno")
     @Produces("application/json")
-    public ArrayList<Problema> leerProblemasAlumno(@QueryParam("id") String id) {
+    public List<Problema> leerProblemasAlumno(@QueryParam("id") String id) {
 
-        BasicDBObject where = new BasicDBObject("idAlumnos", id);
-        ArrayList<Asignatura> AsignaturasAlumno = new ArrayList<>();
-        ArrayList<Problema> ProblemasAlumno = new ArrayList<>();
+        List<Problema> res = new ArrayList<>();
+        Map<String, String> where = new TreeMap<>();
+        where.put("idAlumnos", id);
+        List<Asignatura> resAsignatura = MongoDB.find(where, Asignatura.class);
+        
+        for(Asignatura a : resAsignatura){
+            where.clear();
+            where.put("idAsignatura", a.id);
+            res.addAll(MongoDB.find(where, Problema.class));
+        }    
 
-        MongoCursor<Document> res = MongoDB.find(where, "Asignaturas");
-
-        if (res != null) {
-            while (res.hasNext()) {
-                Document d = res.next();
-                AsignaturasAlumno.add(new Asignatura(d));
-
-                where = new BasicDBObject("idAsignatura", d.getObjectId("_id").toString());
-                MongoCursor<Document> resProblemas = MongoDB.find(where, "Problemas");
-
-                if (null != resProblemas) {
-                    while (resProblemas.hasNext()) {
-
-                        Document dAlumno = resProblemas.next();
-                        ProblemasAlumno.add(new Problema(dAlumno));
-                    }
-                }
-
-            }
-        }
-
-        return ProblemasAlumno;
+        return res;
     }
 }

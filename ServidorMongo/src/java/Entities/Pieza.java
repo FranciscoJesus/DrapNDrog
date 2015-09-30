@@ -8,6 +8,7 @@ package Entities;
 import Entities.Input;
 import com.mongodb.BasicDBList;
 import java.util.ArrayList;
+import java.util.Objects;
 import javax.ws.rs.QueryParam;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.bson.Document;
@@ -50,4 +51,24 @@ public class Pieza implements EntityMongo {
 
         return res;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pieza other = (Pieza) obj;
+        return Objects.equals(this.inputs, other.inputs);
+    }
+    
+    
 }

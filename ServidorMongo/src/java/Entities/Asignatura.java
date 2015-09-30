@@ -9,13 +9,18 @@ import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import java.util.List;
 import org.bson.Document;
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
 
 /**
  *
  * @author FranciscoJesús
  */
+
+@Entity("Asignaturas")
 public class Asignatura implements EntityMongo {
 
+    @Id
     public String id;
     public String nombre;
     public String idProfesor;

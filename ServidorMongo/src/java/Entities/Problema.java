@@ -25,6 +25,8 @@ public class Problema implements EntityMongo {
     public String id;
     public String idProfesor;
     public String idAsignatura;
+    public String nombreAsignatura;
+    public String titulo;
     public String enunciado;
     @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();

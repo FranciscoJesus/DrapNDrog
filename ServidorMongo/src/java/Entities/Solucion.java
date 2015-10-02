@@ -24,7 +24,7 @@ public class Solucion implements EntityMongo {
 
     @Id
     public String id;
-    public double nota;
+    public String nota;
     public String idAlumno;
     public String idProblema;
     public String nombre;
@@ -92,7 +92,7 @@ public class Solucion implements EntityMongo {
             }
         }
 
-        nota = (notaAlumno - notaARestar) * 10;
+        nota = String.valueOf((notaAlumno - notaARestar) * 10);
 
     }
 

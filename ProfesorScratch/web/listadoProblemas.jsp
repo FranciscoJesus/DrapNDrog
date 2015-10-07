@@ -68,13 +68,15 @@
                 <table class="table table-hover table-bordered">
                     <thead>
                         <th>#</th>
+                        <th>Titulo</th>
                         <th>Asignatura</th>
                         <th>Enunciado</th>
                     </thead>
                 <% for(Problema t : list ){ %>
                     <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>">
                         <td><%= num %></td>
-                        <td></td>
+                        <td><%= t.titulo %></td>
+                        <td><%= t.nombreAsignatura %></td>
                         <td><%= t.enunciado %></td>
                     </tr>
                 <!-- out.print(t.enunciado); -->

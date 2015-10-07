@@ -51,9 +51,23 @@ and open the template in the editor.
 
 .button-send{
     margin-bottom: 1em;
+    width: 100%;
 }
 
 .button-submit{
     margin: 0;
     text-align: center;
+}
+
+#titulo-input, #select-asignatura{
+    width: 100%;
+}
+
+#enunciado-div{
+    margin-top: 0.8em;
+}
+
+#contextMenu {
+  position: absolute;
+  display:none;
 }

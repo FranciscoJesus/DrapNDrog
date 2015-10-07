@@ -12,14 +12,25 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.Morphia;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 /**
  *
  * @author FranciscoJesús
  */
 public class MongoDB {
+
+    public final static Morphia morphia = new Morphia();
+
+    public static Datastore ds;
 
     public static MongoClient mongoClient;
 
@@ -32,6 +43,8 @@ public class MongoDB {
         mongoClient = new MongoClient("localhost");
         //accedemos a la base de datos específica
         mongoDB = mongoClient.getDatabase("Prueba");
+
+        ds = morphia.createDatastore(mongoClient, "Prueba");
     }
 
     /**
@@ -41,20 +54,24 @@ public class MongoDB {
         mongoClient.close();
     }
 
-    public static Document findById(String id, String collection) {
-        Document res;
+    /**
+     * Método que busca en la base de datos un objeto del tipo T con el id
+     *
+     * @param <T>
+     * @param id
+     * @param object
+     * @return
+     */
+    public static <T> T findById(String id, Class<T> object) {
+
         try {
+            //Abrimos conexion
             abrirConexion();
-            //Accedemos a la tabla
-            MongoCollection<Document> collectionDB = mongoDB.getCollection(collection);
 
-            /*creación de un objeto "ObjectId" el cual nos permitirá hacer una
-             búsqueda de un problema por su ID*/
-            ObjectId objetoId = new ObjectId(id);
-            BasicDBObject query = new BasicDBObject("_id", objetoId);
-            res = collectionDB.find(query).first();
+            T res;
+            ObjectId oid = new ObjectId(id);
+            res = ds.get(object, oid);
 
-            //cerramos conexión
             cerrarConexion();
 
             return res;
@@ -81,13 +98,44 @@ public class MongoDB {
         return resIterator;
     }
 
-    public static <T extends EntityMongo> void insert(T object, String collectionName) {
+    /**
+     * Método que busca en la base de dates una lista de elemento según que
+     * condiciones
+     *
+     * @param <T>
+     * @param wheres
+     * @param clas
+     * @return
+     */
+    public static <T> List<T> find(Map<String, String> wheres, Class<T> clas) {
+
+        abrirConexion();
+
+        List<T> array;
+
+        Query<T> query = ds.createQuery(clas);
+        for (Entry<String, String> s : wheres.entrySet()) {
+            query = query.field(s.getKey()).equal(s.getValue());
+        }
+
+        array = query.asList();
+
+        MongoDB.cerrarConexion();
+
+        return array;
+    }
+
+    /**
+     * Se inserta un objeto en la base de datos
+     *
+     * @param <T>
+     * @param object
+     */
+    public static <T> void insert(T object) {
 
         abrirConexion();
         //Accedemos a la tabla
-        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
-        //insertamos el problema
-        collection.insertOne(object.converADocument());
+        ds.save(object);
         //cerramos conexión
         cerrarConexion();
 
@@ -103,14 +151,40 @@ public class MongoDB {
         //cerramos conexión
         cerrarConexion();
     }
-    
-    public static <T extends EntityMongo> void delete(String id, String collectionName) {
+
+    /**
+     * Update de la base de datos usando la API de Morphia
+     *
+     * @param <T>
+     * @param id
+     * @param object
+     * @param change
+     */
+    public static <T> void update(String id, Class<T> object, Map<String, String> change) {
 
         abrirConexion();
         //Accedemos a la tabla
-        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
-        //insertamos el problema
-        collection.findOneAndDelete(new BasicDBObject("_id", new ObjectId(id)));
+        ObjectId oid = new ObjectId(id);
+        UpdateOperations<T> ops = ds.createUpdateOperations(object);
+        Query<T> elem = ds.createQuery(object).field("_id").equal(oid);
+
+        for (Entry<String, String> s : change.entrySet()) {
+            ops = ops.set(s.getKey(), s.getValue());
+        }
+
+        ds.update(elem, ops);
+
+        //cerramos conexión
+        cerrarConexion();
+    }
+
+    public static <T extends EntityMongo> void delete(String id, Class<T> entity) {
+
+        abrirConexion();
+        //eliminamos el elemento de la tabla entity 
+        ObjectId oid = new ObjectId(id);
+        Query<T> elem = ds.createQuery(entity).field("_id").equal(oid);
+        ds.delete(elem);
         //cerramos conexión
         cerrarConexion();
     }

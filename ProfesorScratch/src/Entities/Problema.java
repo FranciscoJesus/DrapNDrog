@@ -13,15 +13,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Problema{
+public class Problema {
 
     public String id;
     public String idProfesor;
+    public String idAsignatura;
+    public String nombreAsignatura;
+    public String titulo;
     public String enunciado;
     public ArrayList<Pieza> piezas = new ArrayList<>();
     public ArrayList<Pieza> solucion = new ArrayList<>();
 
     public Problema() {
+
     }
-    
+
 }

@@ -7,7 +7,6 @@
 package service;
 
 import Entities.Asignatura;
-import Entities.Problema;
 import java.util.List;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;

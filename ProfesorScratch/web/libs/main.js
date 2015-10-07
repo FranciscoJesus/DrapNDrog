@@ -6,9 +6,61 @@
 var jsonPiezas = "";
 
 $(document).ready(function() {
+    var CLIPBOARD = "";
+
+    $(document).contextmenu({
+        delegate: ".dragOut",
+        autoFocus: true,
+        preventContextMenuForPopup: true,
+        preventSelect: true,
+        taphold: true,
+        menu: [
+            {title: "Remove", cmd: "remove", uiIcon: "ui-icon-trash"},
+        ],
+        // Handle menu selection to implement a fake-clipboard
+        select: function(event, ui) {
+            //console.log(event);
+            //console.log(ui);
+            var $target = ui.target;
+            
+            if( ! $target.hasClass("dragOut") ){
+                $target = $target.parent();
+            }
+            
+            if( ! $target.hasClass("dragOut") ){
+                throw_alert("danger","No se puede eliminar la pieza seleccionada");
+                return;
+            }
+            
+            switch (ui.cmd) {
+                case "remove":
+                    CLIPBOARD = $target.remove();
+                    throw_alert("info","Pieza eliminada");
+                    break;
+            }
+            //alert("select " + ui.cmd + " on " + $target.text());
+            // Optionally return false, to prevent closing the menu now
+        },
+        // Implement the beforeOpen callback to dynamically change the entries
+        beforeOpen: function(event, ui) {
+            var $menu = ui.menu,
+                    $target = ui.target,
+                    extraData = ui.extraData; // passed when menu was opened by call to open()
+
+            ui.menu.zIndex($(event.target).zIndex() + 1);
+
+/*
+            $(document)
+                    .contextmenu("setEntry", "copy", "Copy '" + $target.text() + "'")
+                    .contextmenu("setEntry", "paste", "Paste" + (CLIPBOARD ? " '" + CLIPBOARD + "'" : ""))
+                    .contextmenu("enableEntry", "paste", (CLIPBOARD !== ""));
+*/
+
+        }
+    });
+                
     var counts = [0];
     
-
     /*
      $(".dragIn").draggable({
      helper:'clone',
@@ -27,6 +79,7 @@ $(document).ready(function() {
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
                 $("#sortable").append(droppedItem);
+                make_removable(droppedItem);
             }
         }
     });
@@ -39,32 +92,6 @@ $(document).ready(function() {
     });
 
     $("#sortable").sortable();
-
-    /**
-     * Funcion que procesa un fichero en tiempo de ejecución para generar las piezas
-     * @param {type} evt
-     * @returns {undefined}
-     */
-    function leerFichero(evt) {
-        var f = evt.target.files[0];
-
-        if (f.type.match('text.*')) {
-            var reader = new FileReader();
-
-            reader.onload = (function(theFile) {
-                return function(e) {
-                    var json = e.target.result;
-
-                    if (isValidJson(json)) buildPieces(JSON.parse(json));   //Construir piezas
-                    else throw_alert("danger", "El fichero <strong>" + f.name + "</strong> introducido no tiene un formato válido.");
-                };
-            })(f);
-            reader.readAsText(f);
-        } else
-            throw_alert("danger", "El fichero <strong>" + f.name + "</strong> introducido no es un fichero válido");
-    }
-
-    document.getElementById('files').addEventListener('change', leerFichero, false);
 
     /**
      * Función que recoge el enunciado y devuelve el contenido.
@@ -81,12 +108,14 @@ $(document).ready(function() {
     $("#finalizar").click(function(ev, ui) {
 
         var json;
+        var titulo = getTitulo(); //Obtenemos el titulo
+        var asignatura = getAsignatura(); //Obtenemos la asignatura
         var enunciado = getEnunciado(); //Obtenemos el enunciado
         var solucion = getSolucion();   //Obtemenos la solución planteada
         var idProfesor = $("#idProfesor").val();
         
         /* @todo - Control de errores */
-        json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
         //var ob = JSON.parse(json);
         console.log(json);
 
@@ -100,11 +129,22 @@ $(document).ready(function() {
                 //console.log(data);
                 throw_alert("success","El problema se ha enviado correctamente");
                 //@todo - Reiniciar el interfaz
+            },
+            complete: function( jqXHR, textStatus ){
+                throw_alert("success", textStatus);
             }
         });
 
     });
 
+    function getTitulo(){
+        return $('#titulo-input').val();
+    }
+    
+    function getAsignatura(){
+        return $('#select-asignatura').val();
+    }
+    
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
         var piezas = "[";
@@ -134,12 +174,16 @@ $(document).ready(function() {
         piezas = piezas + "]";
         return piezas;
     }
-
 });
 
 
 var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
 var index = 0;
+
+
+function make_removable(elem) {
+    
+}
     
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -205,7 +249,6 @@ function throw_alert(type, message) {
 
                 pieces.inputs.forEach(function(entry) {
                     $.input = buildPieceField(entry);
-
                     //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
                     pieza.append($.input);
                 });

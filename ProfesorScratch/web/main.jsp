@@ -26,8 +26,11 @@
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
-        <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
+        <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
+        <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
+                
         <script type="text/javascript" src="libs/main.js"></script>
+        <script type="text/javascript" src="libs/readFile.js"></script>
 
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -36,42 +39,73 @@
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
         
+        
+        
     </head>
     <body>
-        <% 
+        <%
             HttpSession sesion = request.getSession(false);
-            Profesor p = (Profesor)sesion.getAttribute("usuario");
-            
-            if(p == null){
+            Profesor p = (Profesor) sesion.getAttribute("usuario");
+
+            if (p == null) {
                 sesion.invalidate();
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }
-            
+
         %>
-        <input type="hidden" id="idProfesor" value="<%= p.id %>"/>
+        <input type="hidden" id="idProfesor" value="<%= p.id%>"/>
         <%@include file="navegacion.jsp" %>
         
         <div class="container">
-            
+
             <%@include file="header.jsp" %>
 
             <div id="alert_placeholder"></div>
-
+                        
             <div class="row">
+                
                 <div class="col-md-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Enunciado</h3>
+                            <h3 class="panel-title">Descripci&oacute;n del Problema</h3>
                         </div>
 
-                        <div id="question-panel" class="panel-body">
-                            <textarea class="form-control" rows="3" id="enunciado"></textarea>
+                        <div id="description-panel" class="panel-body form-inline">
+                            
+                            <div id="titulo-asignatura-div" class="row">
+                                <div class="form-group col-md-6">
+                                        <label class="control-label" for="titulo">Titulo</label>
+                                        <input id="titulo-input" type="text" class="form-control" placeholder="Titulo">
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="select-asignatura">Asignatura</label>
+                                    <select id="select-asignatura" class="form-control">
+                                        <%
+                                            List<Asignatura> asignaturas = (List<Asignatura>) sesion.getAttribute("asignaturas");
+                                            if (asignaturas.size() > 0) {
+                                                for (Asignatura a : asignaturas) {
+                                        %><option><%= a.nombre%></option><%
+                                                }
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div id="enunciado-div" class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label" for="enunciado">Enunciado</label>
+                                    <textarea class="form-control" rows="2" id="enunciado" placeholder="Enunciado"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
-
+            
             <div class="row">
 
                 <div class="col-md-9">
@@ -86,44 +120,22 @@
                         </div>
 
                     </div>
+
                     <div class="row">
-                        <div class="col-md-4 col-xs-4 col-lg-4 col-sm-4 col-md-offset-4 col-sm-offset-4 col-lg-offset-4 col-xs-offset-4">
-                            <button id="finalizar" type="button" class="btn btn-success button-send">Finalizar</button>
+                        <div class="col-md-12">
+                            <button id="finalizar" class="btn btn-primary button-send" type="button" value="Entrar">Finalizar</button>
                         </div>
                     </div>
 
                 </div>
 
                 <div class="col-md-3" >
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Asignatura</h3>
-                        </div>
-                                                
-                        <div id="asignatura-panel-content" class="panel-body row">
-                            <div id="input-file" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">
-                                <!-- <input type="select" id="files" class="filestyle" data-input="false" data-badge="false" name="files" >
-                                    <option>Option</option>
-                                </input> -->
-                                <select id="select-asignatura" class="form-control">
-                                    <% 
-                                        List<Asignatura> asignaturas = (List<Asignatura>)sesion.getAttribute("asignaturas");
-                                        if(asignaturas.size() > 0){
-                                            for(Asignatura a : asignaturas){
-                                                %><option><%= a.nombre %></option><%
-                                            }
-                                        }
-                                    %>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
+
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Pieces panel</h3>
                         </div>
-                                                
+
                         <div id="pieces-panel-content" class="panel-body row">
                             <div id="input-file" class="col-md-6 col-sm-6 col-lg-6 col-xs-6 col-xs-offset-3 col-md-offset-3 col-sm-offset-3 col-lg-offset-3">
                                 <input type="file" id="files" class="filestyle" data-input="false" data-badge="false" name="files" />
@@ -131,7 +143,8 @@
                             <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
                     </div>
-                    
+
+                    <!--
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Bin</h3>
@@ -141,54 +154,47 @@
                             <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin-original.png"/>
                         </div>
                     </div>
-
+                    -->
+                    
                 </div>
-
             </div>
         </div>
-<!--        
+        <%
+            Problema t = (Problema) request.getAttribute("problema");
+            if (t != null) {
+        %>
         <script type="text/javascript">
-            $(function(){
-                $("#nav").load("navegacion.jsp"); 
+            $(function() {
+                $("#enunciado").val("<%= t.enunciado%>");
             });
         </script>
--->     
         <%
-            Problema t = (Problema)request.getAttribute("problema");
-            if(t != null){
-        %>
-                <script type="text/javascript">
-                    $(function(){
-                        $("#enunciado").val("<%= t.enunciado %>");
-                    });
-                </script>
-        <%
-                    List<Pieza> piezas = new ArrayList<Pieza>();
-                    piezas = t.piezas;
-                    
-                    String json = "[";
-                    
-                    for( Pieza pieza : piezas ){
-                        
-                        json += "{\"inputs\": [";
-                        List<Input> inputs = new ArrayList<Input>();
-                        inputs = pieza.inputs;
-                        for( Input tag : inputs){
-                            json += tag.generarJSON() + ",";
-                        }
-                        json += "]},";
-                    }
-                    
-                    json = json.substring(0, json.length() - 1);
-                    json += "]";
+            List<Pieza> piezas = new ArrayList<Pieza>();
+            piezas = t.piezas;
+
+            String json = "[";
+
+            for (Pieza pieza : piezas) {
+
+                json += "{\"inputs\": [";
+                List<Input> inputs = new ArrayList<Input>();
+                inputs = pieza.inputs;
+                for (Input tag : inputs) {
+                    json += tag.generarJSON() + ",";
+                }
+                json += "]},";
+            }
+
+            json = json.substring(0, json.length() - 1);
+            json += "]";
                     //@todo - arreglar
-                    %>
-                    <script type="text/javascript">
-                        //var json = "<% //json %>";
-                        //console.log(<%= json %>);
-                        buildPieces(<%= json %>);
-                    </script><%
-            } 
+        %>
+        <script type="text/javascript">
+            //var json = "<% //json %>";
+            //console.log(<%= json%>);
+            buildPieces(<%= json%>);
+        </script><%
+            }
         %>
     </body>
 </html>

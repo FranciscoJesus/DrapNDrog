@@ -14,7 +14,7 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <!-- <script type="text/javascript" src="libs/main.js"></script> -->
+        <script type="text/javascript" src="libs/main.js"></script>
         <script type="text/javascript" src="libs/log.js"></script>
 
         <!-- Bootstrap -->
@@ -28,6 +28,14 @@
     </head>
 
     <body>        
+        <nav role="navigation" class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">Drag & Drop</a>
+                </div>
+            </div>
+        </nav>
         <div class="container">
             <%
                 HttpSession sesion = request.getSession(false);
@@ -64,7 +72,7 @@
                                 </div>
 
                                 <div class="form-group button-submit">
-                                    <input class="btn btn-default" type="submit" value="Entrar">
+                                    <input class="btn btn-primary" type="submit" value="Entrar">
                                 </div>
 
                             </form>

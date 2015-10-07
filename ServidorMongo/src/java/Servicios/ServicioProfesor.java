@@ -29,7 +29,7 @@ public class ServicioProfesor {
     public Profesor insertarProfesor(Profesor p) {
 
         try {
-            MongoDB.insert(p, "Profesores");
+            MongoDB.insert(p);
         } catch (Exception e) {
             return null;
         }
@@ -41,8 +41,6 @@ public class ServicioProfesor {
     @Produces("application/json")
     public Profesor leerProfesor(@QueryParam("id") String id) {
 
-        //return MongoDB.findById(id, "Profesor").toJson();
-        Document res = MongoDB.findById(id, "Profesor");
-        return res!=null?new Profesor(res):null;
+        return MongoDB.findById(id, Profesor.class);
     }
 }

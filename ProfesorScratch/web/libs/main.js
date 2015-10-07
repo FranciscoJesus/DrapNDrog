@@ -108,12 +108,14 @@ $(document).ready(function() {
     $("#finalizar").click(function(ev, ui) {
 
         var json;
+        var titulo = getTitulo(); //Obtenemos el titulo
+        var asignatura = getAsignatura(); //Obtenemos la asignatura
         var enunciado = getEnunciado(); //Obtenemos el enunciado
         var solucion = getSolucion();   //Obtemenos la solución planteada
         var idProfesor = $("#idProfesor").val();
         
         /* @todo - Control de errores */
-        json = '{\"enunciado\":\"' + enunciado + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura:\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
         //var ob = JSON.parse(json);
         console.log(json);
 
@@ -135,6 +137,14 @@ $(document).ready(function() {
 
     });
 
+    function getTitulo(){
+        return $('#titulo-input').val();
+    }
+    
+    function getAsignatura(){
+        return $('#select-asignatura').val();
+    }
+    
     function getSolucion() {
         var list = $("#sortable").find(".piece ");
         var piezas = "[";

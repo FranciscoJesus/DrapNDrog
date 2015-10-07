@@ -75,8 +75,8 @@
                 <% for(Problema t : list ){ %>
                     <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>">
                         <td><%= num %></td>
-                        <td><% //= t.titulo %></td>
-                        <td><% //= t.asignatura %></td>
+                        <td><%= t.titulo %></td>
+                        <td><%= t.nombreAsignatura %></td>
                         <td><%= t.enunciado %></td>
                     </tr>
                 <!-- out.print(t.enunciado); -->

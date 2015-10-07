@@ -83,12 +83,24 @@ public class ServicioProblema {
         Map<String, String> where = new TreeMap<>();
         where.put("idAlumnos", id);
         List<Asignatura> resAsignatura = MongoDB.find(where, Asignatura.class);
-        
-        for(Asignatura a : resAsignatura){
+
+        for (Asignatura a : resAsignatura) {
             where.clear();
             where.put("idAsignatura", a.id);
             res.addAll(MongoDB.find(where, Problema.class));
-        }    
+        }
+
+        return res;
+    }
+
+    @GET
+    @Path("buscarProblemasAsignatura")
+    @Produces("application/json")
+    public List<Problema> leerProblemasAsignatura(@QueryParam("id") String idAsignatura) {
+
+        Map<String, String> where = new TreeMap<>();
+        where.put("idAsignatura", idAsignatura);
+        List<Problema> res = MongoDB.find(where, Problema.class);
 
         return res;
     }

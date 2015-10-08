@@ -46,6 +46,13 @@ public class ServicioSolucion {
 
         return MongoDB.findById(id, Solucion.class);
     }
+    
+    @GET
+    @Path("eliminarSolucion")
+    public int eliminarSolucion(@QueryParam("id") String id) {
+
+        return MongoDB.delete(id, Solucion.class);
+    }
 
     @GET
     @Path("cambiarNota")

@@ -8,7 +8,6 @@ package Servicios;
 import Entities.Alumno;
 import Entities.Profesor;
 import Entities.Usuario;
-import com.mongodb.MongoClient;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.ws.rs.Consumes;
@@ -17,8 +16,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 
 /**
  *
@@ -27,8 +24,6 @@ import org.mongodb.morphia.Morphia;
 @Path("Usuario")
 public class ServicioUsuario {
 
-    final Morphia morphia = new Morphia();
-
     @POST
     @Path("insertarUsuario")
     @Consumes({"application/xml", "application/json"})
@@ -36,6 +31,7 @@ public class ServicioUsuario {
     public Usuario insertarUsuario(Usuario u) {
 
         try {
+            u.password = u.Encriptar();
             MongoDB.insert(u);
         } catch (Exception e) {
             return null;
@@ -43,30 +39,22 @@ public class ServicioUsuario {
         return u;
     }
 
-    @POST
-    @Path("insertarUsuarioMorphia")
-    @Consumes({"application/xml", "application/json"})
-    @Produces("application/json")
-    public Usuario insertarUsuarioMorphia(Usuario u) {
-
-        Datastore ds = morphia.createDatastore(new MongoClient(), "Prueba");
-        ds.ensureIndexes();
-
-        u.password = u.Encriptar();
-        ds.save(u);
-
-        return u;
-    }
-
     @GET
-    @Path("buscarUsuarioMorphia")
+    @Path("buscarUsuario")
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
-    public Usuario buscarUsuarioMorphia(@QueryParam("id") String id) {
+    public Usuario buscarUsuario(@QueryParam("id") String id) {
 
         Usuario u = MongoDB.findById(id, Usuario.class);
 
         return u == null ? new Usuario() : u;
+    }
+    
+    @GET
+    @Path("eliminarUsuario")
+    public int eliminarUsuario(@QueryParam("id") String id) {
+
+        return MongoDB.delete(id, Usuario.class);
     }
 
     @POST

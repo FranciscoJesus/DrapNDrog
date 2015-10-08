@@ -8,6 +8,7 @@ package Servicios;
 import Entities.EntityMongo;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.WriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
@@ -177,16 +178,22 @@ public class MongoDB {
         //cerramos conexión
         cerrarConexion();
     }
+    
 
-    public static <T extends EntityMongo> void delete(String id, Class<T> entity) {
+    public static <T> int delete(String id, Class<T> entity) {
 
+        int res;
         abrirConexion();
         //eliminamos el elemento de la tabla entity 
         ObjectId oid = new ObjectId(id);
         Query<T> elem = ds.createQuery(entity).field("_id").equal(oid);
-        ds.delete(elem);
+        WriteResult d = ds.delete(elem);
+        
+        res = d.getN();
         //cerramos conexión
         cerrarConexion();
+        
+        return res;
     }
 
 }

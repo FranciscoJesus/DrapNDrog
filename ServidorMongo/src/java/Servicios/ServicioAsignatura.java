@@ -47,6 +47,13 @@ public class ServicioAsignatura {
     }
 
     @GET
+    @Path("eliminarAsignatura")
+    public int eliminarAsignatura(@QueryParam("id") String id) {
+
+        return MongoDB.delete(id, Asignatura.class);
+    }
+    
+    @GET
     @Path("buscarAsignaturaProfesor")
     @Produces("application/json")
     public ArrayList<Asignatura> buscarAsignaturaProfesor(@QueryParam("id") String id) {

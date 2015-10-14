@@ -19,6 +19,7 @@ public class Input implements EntityMongo {
 
     public String type;
     public ArrayList<String> value;
+    public int opcion;
 
     public Input() {
 

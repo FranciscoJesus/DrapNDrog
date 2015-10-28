@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import Entities.Alumno;
 import Entities.Problema;
 import Entities.Solucion;
 import java.util.List;
@@ -46,7 +47,7 @@ public class ServicioSolucion {
 
         return MongoDB.findById(id, Solucion.class);
     }
-    
+
     @GET
     @Path("eliminarSolucion")
     public int eliminarSolucion(@QueryParam("id") String id) {
@@ -60,14 +61,14 @@ public class ServicioSolucion {
     public Solucion cambiarNota(@QueryParam("id") String idSolucion, @QueryParam("nota") String nota) {
 
         Solucion res = null;
-        
+
         Map<String, String> campos = new TreeMap<>();
 
         campos.put("nota", nota);
 
-        try{
-        MongoDB.update(idSolucion, Solucion.class, campos);
-        }catch(Exception e){
+        try {
+            MongoDB.update(idSolucion, Solucion.class, campos);
+        } catch (Exception e) {
             res = new Solucion();
         }
 
@@ -77,12 +78,19 @@ public class ServicioSolucion {
     @GET
     @Path("SolucionesDeProblema")
     @Produces("application/json")
-    public List<Solucion> SolucionesUnProblema(@QueryParam("id") String idProblema) {
+    public Map<Solucion, Alumno> SolucionesUnProblema(@QueryParam("id") String idProblema) {
 
+        Map<Solucion, Alumno> res = new TreeMap<>();
         Map<String, String> where = new TreeMap<>();
+
         where.put("idProblema", idProblema);
 
-        return MongoDB.find(where, Solucion.class);
+        List<Solucion> soluciones = MongoDB.find(where, Solucion.class);
+        for (Solucion s : soluciones) {
+            Alumno a = MongoDB.findById(s.idAlumno, Alumno.class);
+            res.put(s, a);
+        }
+        return res;
     }
 
 }

@@ -21,7 +21,7 @@ $(document).ready(function() {
                     var json = e.target.result;
 
                     if (isValidJson(json))
-                        buildPieces(JSON.parse(json));   //Construir piezas
+                        buildPiecesList(JSON.parse(json));   //Construir piezas
                     else
                         throw_alert("danger", "El fichero <strong>" + f.name + "</strong> introducido no tiene un formato válido.");
                 };

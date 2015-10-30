@@ -79,7 +79,6 @@ $(document).ready(function() {
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
                 $("#sortable").append(droppedItem);
-                make_removable(droppedItem);
             }
         }
     });
@@ -177,13 +176,8 @@ $(document).ready(function() {
 });
 
 
-var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
+var estilo_piezas = ["#FF9E9E", "#CEEF72", "#FFFDA8", "#F0F8FF"];
 var index = 0;
-
-
-function make_removable(elem) {
-    
-}
     
 /* 
  * To change this license header, choose License Headers in Project Properties.
@@ -219,50 +213,55 @@ function throw_alert(type, message) {
     $("#alert_placeholder").append($.alert);
 }
 
-    /**
-     * Función para construir las piezas en HTML
-     * @param {type} f
-     * @returns {undefined}
-     */
-    function buildPieces(f) {
+    function buildPieces(f,content, AuxClasses,draggable) {
         jsonPiezas = JSON.stringify(f);
         var o = f;
         
-        cleanPieces(f);
-
-        //Comprobamos que tenemos un array
         if (o.length === undefined || o.length <= 0) {
-            throw_alert("warning", "No se encuentran piezas en el fichero");
+            throw_alert("warning", "No se encuentran piezas");
             return;
         }
 
         o.forEach(function(pieces) {
 
-            // Comprobamos que tenemos inputs
             if (pieces.inputs !== undefined) {
 
                 var pieza = $('<div/>', {
-                    //id: 'div',
                     title: 'Piece',
-                    class: "row piece dragIn ui-draggable ui-draggable-handle"
+                    class: "row piece ui-draggable ui-draggable-handle ui-sortable-handle"
                 });
 
+                if(AuxClasses != "") pieza.addClass(AuxClasses);
+                
                 pieces.inputs.forEach(function(entry) {
                     $.input = buildPieceField(entry);
-                    //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
                     pieza.append($.input);
                 });
-
-                make_draggable(pieza);
-                pieza.css({"background-color": color_piezas()});
-                $("#pieces-panel").append(pieza, null);
+                
+                pieza.css({"background-color": color_piezas( pieces.inputs.length )});
+                if(draggable === true) make_draggable(pieza);
+                $(content).append(pieza,null);
 
             } else {
                 throw_alert("warning", "No se encuentran piezas en el fichero");
                 return;
             }
-
         });
+    }    
+
+    /**
+     * Función para construir las piezas en HTML
+     * @param {type} f
+     * @returns {undefined}
+     */
+    function buildPiecesList(f) {
+        $("#pieces-panel").find(".piece").remove();
+        buildPieces(f,"#pieces-panel","dragIn",true);
+    }
+    
+    function buildPiecesSolution(f) {
+        $("#sortable").find(".piece").remove();
+        buildPieces(f,"#sortable","dragOut",false);
     }
     
      /**
@@ -279,7 +278,7 @@ function throw_alert(type, message) {
             throw_alert("warning", "No se encuentra el tipo de componente en una pieza");
             return;
         }
-
+        
         switch (f.type) {
 
             case "label":
@@ -291,6 +290,7 @@ function throw_alert(type, message) {
                 $.content = $('<input/>').attr({type: 'text'});
                 $.content.addClass("form-control");
                 $.content.addClass("input-text-piece");
+                if(f.value != "") $.content.val(f.value);
                 break;
 
             case "select":
@@ -305,11 +305,6 @@ function throw_alert(type, message) {
                 break;
         }
         return $.content;
-    }
-    
-    function cleanPieces(f) {
-        index = 0;
-        $(".piece").remove();
     }
     
     /**
@@ -328,9 +323,8 @@ function throw_alert(type, message) {
      * 
      * @returns {String}
      */
-    function color_piezas() {
-        index = (index + 1) % 4;
-        return estilo_piezas[index];
+    function color_piezas(nInputs) {
+        return estilo_piezas[(nInputs) % 4];
     }
 
     function isValidJson(json) {

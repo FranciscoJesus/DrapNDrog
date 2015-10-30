@@ -19,16 +19,14 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,user-scalable=no">
-        <!-- Librerias jQuery online
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script> -->
 
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
-        <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" />
-                
+        <!-- <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" /> -->
+        <link href="libs/jquery-ui-contextmenu/jquery-ui-contextmenu.css" type="text/css" rel="stylesheet" />
+        
         <script type="text/javascript" src="libs/main.js"></script>
         <script type="text/javascript" src="libs/readFile.js"></script>
 
@@ -38,8 +36,6 @@
 
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-        
-        
         
     </head>
     <body>
@@ -142,58 +138,26 @@
                             </div>
                             <div id="pieces-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></div>
                         </div>
-                    </div>
-
-                    <!--
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Bin</h3>
-                        </div>
-
-                        <div id="bin-panel" class="panel-body">
-                            <img id="bin-image" class="img-responsive img-thumbnail" src="images/bin-original.png"/>
-                        </div>
-                    </div>
-                    -->
-                    
+                    </div>                    
                 </div>
             </div>
         </div>
+        
         <%
             Problema t = (Problema) request.getAttribute("problema");
             if (t != null) {
-        %>
-        <script type="text/javascript">
-            $(function() {
-                $("#enunciado").val("<%= t.enunciado%>");
-            });
-        </script>
+                
+                String listaPiezas = t.generarJSONPiezas();
+                String solucion = t.generarJSONSolucion();
+        %>                
+                <script type="text/javascript">
+                    $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
+                    $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
+                    buildPiecesList(<%= listaPiezas %>);
+                    buildPiecesSolution(<%= solucion %>);
+                </script>
+
         <%
-            List<Pieza> piezas = new ArrayList<Pieza>();
-            piezas = t.piezas;
-
-            String json = "[";
-
-            for (Pieza pieza : piezas) {
-
-                json += "{\"inputs\": [";
-                List<Input> inputs = new ArrayList<Input>();
-                inputs = pieza.inputs;
-                for (Input tag : inputs) {
-                    json += tag.generarJSON() + ",";
-                }
-                json += "]},";
-            }
-
-            json = json.substring(0, json.length() - 1);
-            json += "]";
-                    //@todo - arreglar
-        %>
-        <script type="text/javascript">
-            //var json = "<% //json %>";
-            //console.log(<%= json%>);
-            buildPieces(<%= json%>);
-        </script><%
             }
         %>
     </body>

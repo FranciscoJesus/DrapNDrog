@@ -65,19 +65,29 @@
             
             <% if(list.size() > 0 ){ %>
             
-                <table class="table table-hover table-bordered">
+                <table class="table table-striped">
                     <thead>
                         <th>#</th>
                         <th>Titulo</th>
                         <th>Asignatura</th>
                         <th>Enunciado</th>
+                        <th></th>
                     </thead>
                 <% for(Problema t : list ){ %>
-                    <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>">
+                    <!-- <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>"> -->
                         <td><%= num %></td>
                         <td><%= t.titulo %></td>
                         <td><%= t.nombreAsignatura %></td>
                         <td><%= t.enunciado %></td>
+                        <td>
+                            <a href="SolucionServlet?id=<%= t.id %>" class="btn btn-default btn-sm">Soluciones</a>
+                            <a href="ProblemaServlet?id=<%= t.id %>" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span> Editar 
+                            </a>
+                                <a href="#" class="btn btn-default btn-sm">
+                                <span class="glyphicon glyphicon-trash"></span> Eliminar
+                            </a>
+                        </td>
                     </tr>
                 <!-- out.print(t.enunciado); -->
                 <% num++; %>

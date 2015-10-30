@@ -50,9 +50,9 @@ public class ServicioSolucion {
 
     @GET
     @Path("eliminarSolucion")
-    public int eliminarSolucion(@QueryParam("id") String id) {
+    public String eliminarSolucion(@QueryParam("id") String id) {
 
-        return MongoDB.delete(id, Solucion.class);
+        return String.valueOf(MongoDB.delete(id, Solucion.class));
     }
 
     @GET

@@ -18,6 +18,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import org.bson.types.ObjectId;
 
 /**
  *
@@ -37,13 +38,26 @@ public class ServicioProblema {
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
     public Problema insertar(Problema n) {
-
         try {
             MongoDB.insert(n);
         } catch (Exception e) {
             return null;
         }
         return n;
+    }
+    
+    @POST
+    @Path("insertarPrueba")
+    @Consumes({"application/xml", "application/json"})
+    public int prueb() {
+        
+        try{
+            MongoDB.insertPrueba();
+            return 1;
+        }catch(Exception e){
+            return 0;
+        }
+        
     }
 
     /**

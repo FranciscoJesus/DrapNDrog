@@ -167,7 +167,16 @@ public class MongoDB {
         abrirConexion();
         
         p1.enunciado = "Esto es una prueba ";
+        p1.nombreAsignatura="asdasd";
         p2.enunciado = "Esto es una prueba 2";
+        p2.nombreAsignatura="asdasd";
+        
+        ds.save(p1);
+        p2.id = p1.id;
+        
+        ds.save(p2);
+        
+        cerrarConexion();
         
     }
     

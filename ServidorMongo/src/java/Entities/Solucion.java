@@ -66,7 +66,6 @@ public class Solucion {
 
         for (Pieza p : arrayPiezas) {
             for (Input i : p.inputs) {
-
                 notaMaxima++;
             }
         }

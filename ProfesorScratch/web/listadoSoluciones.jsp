@@ -1,9 +1,14 @@
 <%-- 
-    Document   : listadoProblemas
+    Document   : listadoSoluciones
     Created on : 23-sep-2015, 15:20:02
     Author     : Sobremesa
 --%>
 
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.TreeMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="Entities.Solucion"%>
+<%@page import="Entities.Alumno"%>
 <%@page import="java.util.List"%>
 <%@page import="Entities.Problema"%>
 <%@page import="java.util.ArrayList"%>
@@ -25,25 +30,27 @@
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
         
-        <script type="text/javascript">
+        <!-- <script type="text/javascript">
             $(document).ready(function() {
                 $(".clickable-row").click(function(elem) {
                         window.location = $(this).data('href');
                 });
             });
-        </script>
+        </script>-->
         
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Listado de problemas</title>
+        <title>Soluciones propuestas</title>
         
     </head>
     <body>
         <% 
             HttpSession sesion = request.getSession(false);
             Profesor p = (Profesor)sesion.getAttribute("usuario");
-            List<Problema> list = new ArrayList<Problema>();
+            
+            Map<Alumno,Solucion> map = new TreeMap<Alumno,Solucion>();
+        
             int num = 1;
             
             if(p == null){
@@ -51,7 +58,7 @@
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }else{
-                list = (ArrayList<Problema>)request.getAttribute("problemas");                
+                map = (Map<Alumno,Solucion>)request.getAttribute("soluciones");                
             }
         %>
         
@@ -63,26 +70,31 @@
 
             <div id="alert_placeholder"></div>
             
-            <% if(list.size() > 0 ){ %>
+            <% if(map.size() > 0 ){ %>
             
                 <table class="table table-striped">
                     <thead>
                         <th>#</th>
-                        <th>Titulo</th>
-                        <th>Asignatura</th>
+                        <th>Alumno</th>
                         <th>Enunciado</th>
                         <th></th>
                     </thead>
-                <% for(Problema t : list ){ %>
-                    <!-- <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>"> -->
+                
+                <% for(Map.Entry<Alumno,Solucion> t : map.entrySet() ){ 
+                    
+                        Alumno a = (Alumno) t.getKey();
+                        Solucion s = (Solucion) t.getValue();
+                        
+                %>
                         <td><%= num %></td>
-                        <td><%= t.titulo %></td>
-                        <td><%= t.nombreAsignatura %></td>
-                        <td><%= t.enunciado %></td>
+                        <td><%= a.nombre + " " + a.apellido %></td>
+                        <!-- <td><%= //t.nombreAsignatura %></td>
+                        <td><%= //t.enunciado %></td> -->
+                        <!-- 
                         <td>
                             <div class="btn-group btn-group-md btn-group-justified botonera" role="group" aria-label="...">
-                                <a href="SolucionServlet?id=<%= t.id%>" class="btn btn-default btn-sm">Soluciones</a>
-                                <a href="ProblemaServlet?id=<%= t.id%>" class="btn btn-default btn-sm">
+                                <a href="SolucionServlet?id=<%= //t.id%>" class="btn btn-default btn-sm">Soluciones</a>
+                                <a href="ProblemaServlet?id=<%= //t.id%>" class="btn btn-default btn-sm">
                                     <span class="glyphicon glyphicon-pencil"></span> Editar 
                                 </a>
                                 <a href="#" class="btn btn-default btn-sm">
@@ -90,6 +102,7 @@
                                 </a>
                             </div>
                         </td>
+                        -->
                     </tr>
                 <!-- out.print(t.enunciado); -->
                 <% num++; %>

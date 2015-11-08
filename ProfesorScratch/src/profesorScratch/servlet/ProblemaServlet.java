@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemaJerseyClient;
+import service.ProblemasJerseyClient;
 
 /**
  *
@@ -39,7 +39,7 @@ public class ProblemaServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String id = (String)request.getParameter("id");
         
-        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        ProblemasJerseyClient service = new ProblemasJerseyClient();
         Problema t = (Problema)service.leerProblema(Problema.class, id);
         
         request.setAttribute("problema", t);

@@ -10,6 +10,8 @@ import Entities.Alumno;
 import Entities.Solucion;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.servlet.RequestDispatcher;
@@ -43,17 +45,14 @@ public class SolucionServlet extends HttpServlet {
         String id = request.getParameter("id");
         SolucionJerseyClient cliente = new SolucionJerseyClient();
         
-        /*
-        Map<Alumno,Solucion> map = new TreeMap<Alumno,Solucion>();
-        map = (TreeMap<Alumno,Solucion>)cliente.SolucionesUnProblema(TreeMap.class, id);
+        //List<Solucion> soluciones = new ArrayList<Solucion>();
+        //soluciones = (ArrayList<Solucion>)cliente.getSoluciones(id);
         
-        request.setAttribute("soluciones", map);
-        */
-        
+        //request.setAttribute("soluciones", soluciones);
+                
         RequestDispatcher dispatcher = request.getRequestDispatcher("listadoSoluciones.jsp");
         dispatcher.forward(request, response);
-        
-        
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

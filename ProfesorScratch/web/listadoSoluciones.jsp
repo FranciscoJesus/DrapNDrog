@@ -49,7 +49,7 @@
             HttpSession sesion = request.getSession(false);
             Profesor p = (Profesor)sesion.getAttribute("usuario");
             
-            Map<Alumno,Solucion> map = new TreeMap<Alumno,Solucion>();
+            List<Solucion> soluciones = new ArrayList<Solucion>();
         
             int num = 1;
             
@@ -58,7 +58,7 @@
                 RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
                 dispatcher.forward(request, response);
             }else{
-                map = (Map<Alumno,Solucion>)request.getAttribute("soluciones");                
+                soluciones = (ArrayList<Solucion>)request.getAttribute("soluciones");                
             }
         %>
         
@@ -70,24 +70,19 @@
 
             <div id="alert_placeholder"></div>
             
-            <% if(map.size() > 0 ){ %>
+            <% if(soluciones.size() > 0 ){ %>
             
                 <table class="table table-striped">
                     <thead>
                         <th>#</th>
                         <th>Alumno</th>
-                        <th>Enunciado</th>
-                        <th></th>
+                        <!-- <th>Enunciado</th> -->
+                        <!-- <th></th> -->
                     </thead>
                 
-                <% for(Map.Entry<Alumno,Solucion> t : map.entrySet() ){ 
-                    
-                        Alumno a = (Alumno) t.getKey();
-                        Solucion s = (Solucion) t.getValue();
-                        
-                %>
+                <% for(Solucion s : soluciones ){ %>
                         <td><%= num %></td>
-                        <td><%= a.nombre + " " + a.apellido %></td>
+                        <td><%= s.nombre + " " + s.apellidos %></td>
                         <!-- <td><%= //t.nombreAsignatura %></td>
                         <td><%= //t.enunciado %></td> -->
                         <!-- 

@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Asignatura;
 import Entities.Problema;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class ServicioProblema {
 
         return MongoDB.delete(id, Problema.class);
     }
-    
+
     @GET
     @Path("buscarProblemasProfesor")
     @Produces("application/json")

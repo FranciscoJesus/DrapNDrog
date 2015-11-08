@@ -3,20 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servicios;
+package BD;
 
-import Entities.EntityMongo;
-import com.mongodb.BasicDBObject;
+import Entities.Problema;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import com.mongodb.client.FindIterable;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -35,15 +30,11 @@ public class MongoDB {
 
     public static MongoClient mongoClient;
 
-    public static MongoDatabase mongoDB;
-
     /**
      * Método que se utiliza para abrir conexión con la base de datos
      */
     public static void abrirConexion() {
         mongoClient = new MongoClient("localhost");
-        //accedemos a la base de datos específica
-        mongoDB = mongoClient.getDatabase("Prueba");
 
         ds = morphia.createDatastore(mongoClient, "Prueba");
     }
@@ -80,23 +71,6 @@ public class MongoDB {
         } catch (Exception e) {
             return null;
         }
-    }
-
-    public static MongoCursor<Document> find(BasicDBObject where, String collectionName) {
-
-        MongoCursor<Document> resIterator = null;
-
-        abrirConexion();
-
-        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
-        FindIterable<Document> res = collection.find(where);
-
-        if (res != null) {
-            resIterator = res.iterator();
-        }
-        MongoDB.cerrarConexion();
-
-        return resIterator;
     }
 
     /**
@@ -142,17 +116,6 @@ public class MongoDB {
 
     }
 
-    public static <T extends EntityMongo> void update(String id, T object, String collectionName) {
-
-        abrirConexion();
-        //Accedemos a la tabla
-        MongoCollection<Document> collection = mongoDB.getCollection(collectionName);
-        //insertamos el problema
-        collection.findOneAndUpdate(new BasicDBObject("_id", new ObjectId(id)), object.converADocument());
-        //cerramos conexión
-        cerrarConexion();
-    }
-
     /**
      * Update de la base de datos usando la API de Morphia
      *
@@ -161,7 +124,8 @@ public class MongoDB {
      * @param object
      * @param change
      */
-    public static <T> void update(String id, Class<T> object, Map<String, String> change) {
+    public static <T> void update(String id, Class<T> object,
+            Map<String, Object> change) {
 
         abrirConexion();
         //Accedemos a la tabla
@@ -169,16 +133,15 @@ public class MongoDB {
         UpdateOperations<T> ops = ds.createUpdateOperations(object);
         Query<T> elem = ds.createQuery(object).field("_id").equal(oid);
 
-        for (Entry<String, String> s : change.entrySet()) {
+        for (Entry<String, Object> s : change.entrySet()) {
             ops = ops.set(s.getKey(), s.getValue());
         }
-
+        
         ds.update(elem, ops);
 
         //cerramos conexión
         cerrarConexion();
     }
-    
 
     public static <T> int delete(String id, Class<T> entity) {
 
@@ -188,12 +151,25 @@ public class MongoDB {
         ObjectId oid = new ObjectId(id);
         Query<T> elem = ds.createQuery(entity).field("_id").equal(oid);
         WriteResult d = ds.delete(elem);
-        
+
         res = d.getN();
         //cerramos conexión
         cerrarConexion();
-        
+
         return res;
     }
+    
+    public static void insertPrueba(){
+        Problema p1,p2;
+        p1 = new Problema();
+        p2 = new Problema();
+        
+        abrirConexion();
+        
+        p1.enunciado = "Esto es una prueba ";
+        p2.enunciado = "Esto es una prueba 2";
+        
+    }
+    
 
 }

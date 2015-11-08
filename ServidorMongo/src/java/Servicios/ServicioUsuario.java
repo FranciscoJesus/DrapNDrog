@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Alumno;
 import Entities.Profesor;
 import Entities.Usuario;

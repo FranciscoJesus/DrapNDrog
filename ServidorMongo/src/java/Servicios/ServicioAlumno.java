@@ -5,8 +5,8 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Alumno;
-import Entities.EntityMongo;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,7 +39,7 @@ public class ServicioAlumno {
     @GET
     @Path("buscarAlumno")
     @Produces("application/json")
-    public EntityMongo buscarAlumno(@QueryParam("id") String id) {
+    public Alumno buscarAlumno(@QueryParam("id") String id) {
 
         return MongoDB.findById(id, Alumno.class);
 

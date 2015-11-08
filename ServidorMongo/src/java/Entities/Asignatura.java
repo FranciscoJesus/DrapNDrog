@@ -5,10 +5,8 @@
  */
 package Entities;
 
-import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import java.util.List;
-import org.bson.Document;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -16,9 +14,8 @@ import org.mongodb.morphia.annotations.Id;
  *
  * @author FranciscoJesús
  */
-
 @Entity("Asignaturas")
-public class Asignatura implements EntityMongo {
+public class Asignatura {
 
     @Id
     public String id;
@@ -28,35 +25,6 @@ public class Asignatura implements EntityMongo {
 
     public Asignatura() {
 
-    }
-
-    public Asignatura(Document object) {
-        
-        id = object.getObjectId("_id").toString();
-        nombre = object.getString("nombre");
-        idProfesor = object.getString("idProfesor");
-        idAlumnos = object.get("idAlumnos", ArrayList.class);
-    }
-
-    /**
-     * Método que se utiliza para devolver una instancia de Asignatura en un
-     * objeto Mongo
-     *
-     * @return
-     */
-    @Override
-    public Document converADocument() {
-        Document res = new Document();
-
-        res.append("nombre", nombre);
-        res.append("idProfesor", idProfesor);
-        BasicDBList alumnos = new BasicDBList();
-        for (String i : idAlumnos) {
-            alumnos.add(i);
-        }
-        res.append("idAlumnos", alumnos);
-
-        return res;
     }
 
 }

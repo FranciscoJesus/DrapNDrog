@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Alumno;
 import Entities.Problema;
 import Entities.Solucion;
@@ -62,7 +63,7 @@ public class ServicioSolucion {
 
         Solucion res = null;
 
-        Map<String, String> campos = new TreeMap<>();
+        Map<String, Object> campos = new TreeMap<>();
 
         campos.put("nota", nota);
 
@@ -78,19 +79,12 @@ public class ServicioSolucion {
     @GET
     @Path("SolucionesDeProblema")
     @Produces("application/json")
-    public Map<Solucion, Alumno> SolucionesUnProblema(@QueryParam("id") String idProblema) {
+    public List<Solucion> SolucionesUnProblema(@QueryParam("id") String idProblema) {
 
-        Map<Solucion, Alumno> res = new TreeMap<>();
         Map<String, String> where = new TreeMap<>();
-
         where.put("idProblema", idProblema);
 
-        List<Solucion> soluciones = MongoDB.find(where, Solucion.class);
-        for (Solucion s : soluciones) {
-            Alumno a = MongoDB.findById(s.idAlumno, Alumno.class);
-            res.put(s, a);
-        }
-        return res;
+        return MongoDB.find(where, Solucion.class);
     }
 
 }

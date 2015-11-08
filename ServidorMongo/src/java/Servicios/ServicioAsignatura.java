@@ -5,17 +5,17 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Asignatura;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCursor;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
@@ -42,7 +42,7 @@ public class ServicioAsignatura {
     @Path("buscarAsignatura")
     @Produces("application/json")
     public Asignatura buscarAsignatura(@QueryParam("id") String id) {
-        
+
         return MongoDB.findById(id, Asignatura.class);
     }
 
@@ -52,25 +52,17 @@ public class ServicioAsignatura {
 
         return MongoDB.delete(id, Asignatura.class);
     }
-    
+
     @GET
     @Path("buscarAsignaturaProfesor")
     @Produces("application/json")
-    public ArrayList<Asignatura> buscarAsignaturaProfesor(@QueryParam("id") String id) {
+    public List<Asignatura> buscarAsignaturaProfesor(@QueryParam("id") String id) {
 
-        BasicDBObject where = new BasicDBObject("idProfesor", id);
-        ArrayList<Asignatura> asignaturasProfesor = new ArrayList<>();
+        Map<String, String> where = new TreeMap<>();
+        where.put("idProfesor", id);
+        List<Asignatura> res = MongoDB.find(where, Asignatura.class);
 
-        MongoCursor<Document> res = MongoDB.find(where, "Asignaturas");
-
-        if (res != null) {
-            while (res.hasNext()) {
-                Document d = res.next();
-                asignaturasProfesor.add(new Asignatura(d));
-            }
-        }
-
-        return asignaturasProfesor;
+        return res;
     }
 
 }

@@ -8,6 +8,7 @@ package Servicios;
 import BD.MongoDB;
 import Entities.Asignatura;
 import Entities.Problema;
+import Entities.Solucion;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import org.bson.types.ObjectId;
@@ -63,8 +65,17 @@ public class ServicioProblema {
 
     @GET
     @Path("eliminarProblema")
-    public int eliminarProblema(@QueryParam("id") String id) {
-
+    public int eliminarProblema(@PathParam("id") String id) {
+        
+        Map<String, String> where = new TreeMap<>();
+        where.put("idProblema", id);
+        
+        List<Solucion> solucionesAEliminar = MongoDB.find(where, Solucion.class);
+        
+        for(Solucion s : solucionesAEliminar ){
+            MongoDB.delete(s.id, Solucion.class);
+        }
+        
         return MongoDB.delete(id, Problema.class);
     }
 

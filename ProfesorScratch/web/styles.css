@@ -59,7 +59,7 @@ and open the template in the editor.
     text-align: center;
 }
 
-#titulo-input, #select-asignatura{
+#titulo-input, #select-asignatura, #input-asignatura{
     width: 100%;
 }
 

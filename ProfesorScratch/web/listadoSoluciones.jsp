@@ -4,6 +4,7 @@
     Author     : Sobremesa
 --%>
 
+<%@page import="Entities.Asignatura"%>
 <%@page import="java.util.Map.Entry"%>
 <%@page import="java.util.TreeMap"%>
 <%@page import="java.util.Map"%>
@@ -30,13 +31,13 @@
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
         
-        <!-- <script type="text/javascript">
+        <script type="text/javascript">
             $(document).ready(function() {
                 $(".clickable-row").click(function(elem) {
                         window.location = $(this).data('href');
                 });
             });
-        </script>-->
+        </script>
         
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
@@ -70,6 +71,40 @@
 
             <div id="alert_placeholder"></div>
             
+            <div class="row">
+                
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Descripci&oacute;n del Problema</h3>
+                        </div>
+
+                        <div id="description-panel" class="panel-body form-inline">
+                            
+                            <div id="titulo-asignatura-div" class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="titulo">Titulo</label>
+                                    <input id="titulo-input" type="text" class="form-control" placeholder="Titulo" readonly>
+                                </div>
+                                
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="input-asignatura">Asignatura</label>
+                                    <input id="input-asignatura" type="text" class="form-control" placeholder="Asignatura" readonly>
+                                </div>
+                            </div>
+                            
+                            <div id="enunciado-div" class="row">
+                                <div class="col-md-12">
+                                    <label class="control-label" for="enunciado">Enunciado</label>
+                                    <textarea class="form-control" rows="2" id="enunciado" placeholder="Enunciado" readonly></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+                                    
             <% if(soluciones.size() > 0 ){ %>
             
                 <table class="table table-striped">
@@ -77,29 +112,16 @@
                         <th>#</th>
                         <th>Alumno</th>
                         <!-- <th>Enunciado</th> -->
-                        <!-- <th></th> -->
+                        <th>Nota</th>
                     </thead>
                 
                 <% for(Solucion s : soluciones ){ %>
+                    <tr class="clickable-row" data-href="CorregirServlet?id=<%= s.id%>" id="<%= s.id%>">
                         <td><%= num %></td>
-                        <td><%= s.nombre + " " + s.apellidos %></td>
-                        <!-- <td><%= //t.nombreAsignatura %></td>
-                        <td><%= //t.enunciado %></td> -->
-                        <!-- 
-                        <td>
-                            <div class="btn-group btn-group-md btn-group-justified botonera" role="group" aria-label="...">
-                                <a href="SolucionServlet?id=<%= //t.id%>" class="btn btn-default btn-sm">Soluciones</a>
-                                <a href="ProblemaServlet?id=<%= //t.id%>" class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-pencil"></span> Editar 
-                                </a>
-                                <a href="#" class="btn btn-default btn-sm">
-                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
-                                </a>
-                            </div>
-                        </td>
-                        -->
+                        <td><%= s.nombre + " " +s.apellidos %></td>
+                        <td><%= s.nota %></td>
+                        <!-- <td><a href="SolucionServlet?id=<%= s.id%>" class="btn btn-default btn-sm">Solucion</a></td> -->
                     </tr>
-                <!-- out.print(t.enunciado); -->
                 <% num++; %>
                 <% } %>
                 
@@ -107,6 +129,17 @@
                 
             <% } %>
         </div>
-        
+        <%
+            Problema t = (Problema) request.getAttribute("problema");
+            if (t != null) {
+        %>                
+                <script type="text/javascript">
+                    $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
+                    $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
+                    $(function(){ $("#asignatura-input").val("<%= t.nombreAsignatura %>"); });
+                </script>
+        <%
+            }
+        %>
     </body>
 </html>

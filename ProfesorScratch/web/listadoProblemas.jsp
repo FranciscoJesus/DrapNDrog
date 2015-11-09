@@ -74,6 +74,7 @@
                         <th></th>
                     </thead>
                 <% for(Problema t : list ){ %>
+                    <tr>
                     <!-- <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>"> -->
                         <td><%= num %></td>
                         <td><%= t.titulo %></td>

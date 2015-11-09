@@ -67,7 +67,7 @@ public class ServicioUsuario {
         try {
             Map<String, String> where = new TreeMap<>();
             where.put("password", u.Encriptar());
-            where.put("usuario", u.nombreUsuario);
+            where.put("nombreUsuario", u.nombreUsuario);
 
             u = MongoDB.find(where, Usuario.class).get(0);
 
@@ -89,11 +89,11 @@ public class ServicioUsuario {
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
     public Profesor LoginProfesor(Usuario u) {
-        Profesor p = null;
+        Profesor p = new Profesor();
         try {
             Map<String, String> where = new TreeMap<>();
             where.put("password", u.Encriptar());
-            where.put("usuario", u.nombreUsuario);
+            where.put("nombreUsuario", u.nombreUsuario);
 
             u = MongoDB.find(where, Usuario.class).get(0);
 

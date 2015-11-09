@@ -64,7 +64,7 @@ public class ServicioProblema {
     }
 
     @GET
-    @Path("eliminarProblema")
+    @Path("eliminarProblema/{id}")
     public int eliminarProblema(@PathParam("id") String id) {
         
         Map<String, String> where = new TreeMap<>();

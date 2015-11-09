@@ -1,1 +1,1 @@
-{ "_id" : "564092d8304fa722c03dd867" , "className" : "Entities.Profesor" , "nombre" : "Edgar" , "apellido" : "Perez Ferrando" , "idUsuario" : "563f9b106d336312c41b6eae"}
+{ "_id" : "564092d8304fa722c03dd867" , "className" : "Entities.Profesor" , "nombre" : "Edgar" , "idUsuario" : "563f9b106d336312c41b6eae" , "apellidos" : "Perez Ferrando"}

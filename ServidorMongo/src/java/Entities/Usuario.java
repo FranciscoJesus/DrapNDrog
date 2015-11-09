@@ -24,7 +24,7 @@ public class Usuario{
 
     @Id
     public String id = new ObjectId().toString();
-    public String usuario;
+    public String nombreUsuario;
     public String password;
     public int rol;
 

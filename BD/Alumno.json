@@ -1,1 +1,1 @@
-{ "_id" : "5640b1ea304fa722c03dd871" , "className" : "Entities.Alumno" , "nombre" : "Francisco" , "apellido" : "Dominguez" , "dni" : "66655544S" , "idUsuario" : "563f9b006d336312c41b6eac"}
+{ "_id" : "5640b1ea304fa722c03dd871" , "className" : "Entities.Alumno" , "nombre" : "Francisco" , "dni" : "66655544S" , "idUsuario" : "563f9b006d336312c41b6eac" , "apellidos" : "Dominguez"}

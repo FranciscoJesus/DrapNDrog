@@ -27,7 +27,7 @@ public class Solucion {
     public String idAlumno;
     public String idProblema;
     public String nombre;
-    public String apellido;
+    public String apellidos;
     @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();
 

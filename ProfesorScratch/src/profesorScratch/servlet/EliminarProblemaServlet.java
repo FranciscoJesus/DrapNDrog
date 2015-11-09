@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemaJerseyClient__;
+import service.ProblemaJerseyClient;
 
 /**
  *
@@ -39,12 +39,12 @@ public class EliminarProblemaServlet extends HttpServlet {
         
         String id = (String)request.getParameter("id");
         
-        ProblemaJerseyClient__ service = new ProblemaJerseyClient__();
-        Integer t = (Integer)service.eliminarProblema(Integer.class, id);
+        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        service.eliminarProblema(id);
         
-        request.setAttribute("problema", t);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-        dispatcher.forward(request, response);
+        //request.setAttribute("problema", t);
+        //RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+        //dispatcher.forward(request, response);
         
     }
 

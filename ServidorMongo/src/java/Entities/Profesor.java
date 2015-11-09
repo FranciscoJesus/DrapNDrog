@@ -23,7 +23,7 @@ public class Profesor {
     @Id
     public String id = new ObjectId().toString();
     public String nombre;
-    public String apellido;
+    public String apellidos;
     public String idUsuario;
     public List<String> asignaturas = new ArrayList<>();
 

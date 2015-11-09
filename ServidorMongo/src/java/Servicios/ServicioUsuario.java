@@ -67,7 +67,7 @@ public class ServicioUsuario {
         try {
             Map<String, String> where = new TreeMap<>();
             where.put("password", u.Encriptar());
-            where.put("usuario", u.usuario);
+            where.put("usuario", u.nombreUsuario);
 
             u = MongoDB.find(where, Usuario.class).get(0);
 
@@ -93,7 +93,7 @@ public class ServicioUsuario {
         try {
             Map<String, String> where = new TreeMap<>();
             where.put("password", u.Encriptar());
-            where.put("usuario", u.usuario);
+            where.put("usuario", u.nombreUsuario);
 
             u = MongoDB.find(where, Usuario.class).get(0);
 

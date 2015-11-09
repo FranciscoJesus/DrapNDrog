@@ -8,6 +8,7 @@ package Entities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -21,12 +22,12 @@ import org.mongodb.morphia.annotations.Id;
 public class Solucion {
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     public String nota;
     public String idAlumno;
     public String idProblema;
     public String nombre;
-    public String apellidos;
+    public String apellido;
     @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();
 

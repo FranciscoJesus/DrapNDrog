@@ -8,6 +8,7 @@ package Entities;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -20,7 +21,7 @@ import org.mongodb.morphia.annotations.Id;
 public class Profesor {
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     public String nombre;
     public String apellido;
     public String idUsuario;

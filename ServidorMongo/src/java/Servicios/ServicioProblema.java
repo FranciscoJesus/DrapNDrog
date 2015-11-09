@@ -46,19 +46,6 @@ public class ServicioProblema {
         return n;
     }
     
-    @POST
-    @Path("insertarPrueba")
-    @Consumes({"application/xml", "application/json"})
-    public int prueb() {
-        
-        try{
-            MongoDB.insertPrueba();
-            return 1;
-        }catch(Exception e){
-            return 0;
-        }
-        
-    }
 
     /**
      * Servicio el cual a partir de un id se devuelve un problema específico

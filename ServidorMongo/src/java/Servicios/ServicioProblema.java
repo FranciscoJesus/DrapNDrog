@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -63,9 +64,9 @@ public class ServicioProblema {
         return MongoDB.findById(id, Problema.class);
     }
 
-    @GET
+    @DELETE
     @Path("eliminarProblema/{id}")
-    public int eliminarProblema(@PathParam("id") String id) {
+    public void eliminarProblema(@PathParam("id") String id) {
         
         Map<String, String> where = new TreeMap<>();
         where.put("idProblema", id);
@@ -76,7 +77,7 @@ public class ServicioProblema {
             MongoDB.delete(s.id, Solucion.class);
         }
         
-        return MongoDB.delete(id, Problema.class);
+        MongoDB.delete(id, Problema.class);
     }
 
     @GET

@@ -10,6 +10,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 import javax.xml.bind.annotation.XmlRootElement;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
 
@@ -22,7 +23,7 @@ import org.mongodb.morphia.annotations.Id;
 public class Usuario{
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     public String usuario;
     public String password;
     public int rol;

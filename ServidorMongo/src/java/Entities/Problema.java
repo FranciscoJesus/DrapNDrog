@@ -21,7 +21,7 @@ import org.mongodb.morphia.annotations.Id;
 public class Problema {
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     
     public String idProfesor;
     public String idAsignatura;

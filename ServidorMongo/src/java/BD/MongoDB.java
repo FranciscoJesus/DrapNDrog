@@ -61,8 +61,7 @@ public class MongoDB {
             abrirConexion();
 
             T res;
-            ObjectId oid = new ObjectId(id);
-            res = ds.get(object, oid);
+            res = ds.get(object, id);
 
             cerrarConexion();
 

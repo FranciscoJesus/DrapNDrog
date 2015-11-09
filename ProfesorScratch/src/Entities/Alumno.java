@@ -18,7 +18,7 @@ public class Alumno{
 
     public String id;
     public String nombre;
-    public String apellido;
+    public String apellidos;
     public String dni;
     public String idUsuario;
     public List<String> idAsignaturas = new ArrayList<>();

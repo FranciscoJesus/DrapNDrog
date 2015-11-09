@@ -7,7 +7,6 @@
 package profesorScratch.servlet;
 
 import Entities.Problema;
-import Entities.Solucion;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -16,15 +15,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemasJerseyClient_;
-import service.SolucionJerseyClient;
+import service.ProblemaJerseyClient;
 
 /**
  *
  * @author Sobremesa
  */
-@WebServlet(name = "CorregirServlet", urlPatterns = {"/CorregirServlet"})
-public class CorregirServlet extends HttpServlet {
+@WebServlet(name = "EliminarProblemaServlet", urlPatterns = {"/EliminarProblemaServlet"})
+public class EliminarProblemaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,17 +37,15 @@ public class CorregirServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String id = (String) request.getParameter("id");
-        SolucionJerseyClient solucionCliente = new SolucionJerseyClient();
-        ProblemasJerseyClient_ problemaCliente = new ProblemasJerseyClient_();
+        String id = (String)request.getParameter("id");
         
-        Solucion solucion = (Solucion) solucionCliente.buscarSolucion(Solucion.class, id);
-        Problema problema = (Problema) problemaCliente.leerProblema(Problema.class, solucion.idProblema);
+        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        Integer t = (Integer)service.eliminarProblema(Integer.class, id);
         
-        request.setAttribute("problema", problema);
-        request.setAttribute("solucion", solucion);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("correccion.jsp");
+        request.setAttribute("problema", t);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
         dispatcher.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

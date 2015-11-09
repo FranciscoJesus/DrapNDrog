@@ -18,7 +18,7 @@ import javax.ws.rs.core.GenericType;
  * [Problema]<br>
  * USAGE:
  * <pre>
- *        ProblemasJerseyClient client = new ProblemasJerseyClient();
+ *        ProblemaJerseyClient client = new ProblemaJerseyClient();
  *        Object response = client.XXX(...);
  *        // do whatever with response
  *        client.close();
@@ -26,25 +26,26 @@ import javax.ws.rs.core.GenericType;
  *
  * @author Sobremesa
  */
-public class ProblemasJerseyClient {
+public class ProblemaJerseyClient {
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/ServidorMongo/API";
 
-    public List<Problema> getProblemasProfesor(String id){
-        ProblemasJerseyClient cliente = new ProblemasJerseyClient();
-        GenericType<List<Problema>> gType = new GenericType<List<Problema>>(){};
-        List<Problema> lista = (List<Problema>) cliente.leerProblemasProfesor(gType,id);
-        cliente.close();
-        return lista;
-    }
-    
-    public ProblemasJerseyClient() {
+    public ProblemaJerseyClient() {
         client = javax.ws.rs.client.ClientBuilder.newClient();
         webTarget = client.target(BASE_URI).path("Problema");
     }
-    
-    public <T> T leerProblemasProfesor(GenericType<T> responseType, String id) throws ClientErrorException {
+
+    public <T> T leerProblemasAlumno(Class<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("buscarProblemasAlumno");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T leerProblemasProfesor(Class<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
         if (id != null) {
             resource = resource.queryParam("id", id);
@@ -61,6 +62,25 @@ public class ProblemasJerseyClient {
         return webTarget.path("insertarProblema").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
+    public <T> T eliminarProblema(Class<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("eliminarProblema");
+        //return resource.get(responseType);
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
+    public <T> T leerProblemasAsignatura(Class<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("buscarProblemasAsignatura");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+
     public <T> T leerProblema(Class<T> responseType, String id) throws ClientErrorException {
         WebTarget resource = webTarget;
         if (id != null) {
@@ -70,6 +90,23 @@ public class ProblemasJerseyClient {
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
 
+    public List<Problema> getProblemasProfesor(String id){
+        ProblemasJerseyClient_ cliente = new ProblemasJerseyClient_();
+        GenericType<List<Problema>> gType = new GenericType<List<Problema>>(){};
+        List<Problema> lista = (List<Problema>) cliente.leerProblemasProfesor(gType,id);
+        cliente.close();
+        return lista;
+    }
+    
+    public <T> T leerProblemasProfesor(GenericType<T> responseType, String id) throws ClientErrorException {
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("buscarProblemasProfesor");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+    }
+        
     public void close() {
         client.close();
     }

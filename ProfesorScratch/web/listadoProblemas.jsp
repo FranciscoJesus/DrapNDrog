@@ -25,14 +25,6 @@
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
         
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $(".clickable-row").click(function(elem) {
-                        window.location = $(this).data('href');
-                });
-            });
-        </script>
-        
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
@@ -86,7 +78,7 @@
                                 <a href="ProblemaServlet?id=<%= t.id%>" class="btn btn-default btn-sm">
                                     <span class="glyphicon glyphicon-pencil"></span> Editar 
                                 </a>
-                                <a href="#" class="btn btn-default btn-sm">
+                                    <a href="EliminarProblemaServlet?id=<%= t.id %>" class="btn btn-default btn-sm">
                                     <span class="glyphicon glyphicon-trash"></span> Eliminar
                                 </a>
                             </div>

@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         
-        u.usuario = user;
+        u.nombreUsuario = user;
         u.password = pass;
         u.rol = 2;
         

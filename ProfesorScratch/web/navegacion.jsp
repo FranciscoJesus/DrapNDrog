@@ -18,7 +18,7 @@
                 <li><a href="main.jsp">Nuevo Problema</a></li>
                 <li><a href="ListaProblemasServlet">Problemas</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= p.nombre + " " + p.apellido %><span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= p.nombre + " " + p.apellidos %><span class="caret"></span></a>
                     <ul role="menu" class="dropdown-menu">
                         <li><a href="LogoutServlet">Cerrar sesión</a></li>
                     </ul>

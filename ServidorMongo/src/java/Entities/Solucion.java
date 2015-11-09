@@ -22,12 +22,12 @@ import org.mongodb.morphia.annotations.Id;
 public class Solucion {
 
     @Id
-    public String id = new ObjectId().toString();;
+    public String id = new ObjectId().toString();
     public String nota;
     public String idAlumno;
     public String idProblema;
     public String nombre;
-    public String apellidos;
+    public String apellido;
     @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();
 

@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemaJerseyClient;
+import service.ProblemaJerseyClient__;
 
 /**
  *
@@ -39,7 +39,7 @@ public class EliminarProblemaServlet extends HttpServlet {
         
         String id = (String)request.getParameter("id");
         
-        ProblemaJerseyClient service = new ProblemaJerseyClient();
+        ProblemaJerseyClient__ service = new ProblemaJerseyClient__();
         Integer t = (Integer)service.eliminarProblema(Integer.class, id);
         
         request.setAttribute("problema", t);

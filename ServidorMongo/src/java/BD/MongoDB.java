@@ -12,7 +12,6 @@ import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.query.Query;
@@ -128,9 +127,8 @@ public class MongoDB {
 
         abrirConexion();
         //Accedemos a la tabla
-        ObjectId oid = new ObjectId(id);
         UpdateOperations<T> ops = ds.createUpdateOperations(object);
-        Query<T> elem = ds.createQuery(object).field("_id").equal(oid);
+        Query<T> elem = ds.createQuery(object).field("_id").equal(id);
 
         for (Entry<String, Object> s : change.entrySet()) {
             ops = ops.set(s.getKey(), s.getValue());
@@ -147,8 +145,7 @@ public class MongoDB {
         int res;
         abrirConexion();
         //eliminamos el elemento de la tabla entity 
-        ObjectId oid = new ObjectId(id);
-        Query<T> elem = ds.createQuery(entity).field("_id").equal(oid);
+        Query<T> elem = ds.createQuery(entity).field("_id").equal(id);
         WriteResult d = ds.delete(elem);
 
         res = d.getN();

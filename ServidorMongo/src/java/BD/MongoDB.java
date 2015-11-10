@@ -142,17 +142,21 @@ public class MongoDB {
 
     public static <T> int delete(String id, Class<T> entity) {
 
-        int res;
-        abrirConexion();
-        //eliminamos el elemento de la tabla entity 
-        Query<T> elem = ds.createQuery(entity).field("_id").equal(id);
-        WriteResult d = ds.delete(elem);
+        try{
+            int res;
+            abrirConexion();
+            //eliminamos el elemento de la tabla entity 
+            Query<T> elem = ds.createQuery(entity).field("_id").equal(id);
+            WriteResult d = ds.delete(elem);
 
-        res = d.getN();
-        //cerramos conexión
-        cerrarConexion();
+            res = d.getN();
+            //cerramos conexión
+            cerrarConexion();
 
-        return res;
+            return res;
+        }catch(Exception e){
+            return -1;
+        }
     }
     
     public static void insertPrueba(){

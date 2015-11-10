@@ -21,8 +21,8 @@ import service.ProblemaJerseyClient;
  *
  * @author Sobremesa
  */
-@WebServlet(name = "ProblemaServlet", urlPatterns = {"/ProblemaServlet"})
-public class ProblemaServlet extends HttpServlet {
+@WebServlet(name = "EditarProblemaServlet", urlPatterns = {"/EditarProblemaServlet"})
+public class EditarProblemaServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,7 +43,7 @@ public class ProblemaServlet extends HttpServlet {
         Problema t = (Problema)service.leerProblema(Problema.class, id);
         
         request.setAttribute("problema", t);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("editarProblema.jsp");
         dispatcher.forward(request, response);
 
     }

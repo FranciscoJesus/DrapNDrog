@@ -116,7 +116,7 @@ $(document).ready(function() {
         /* @todo - Control de errores */
         json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
         //var ob = JSON.parse(json);
-        console.log(json);
+        //console.log(json);
 
         $.ajax({
             type: 'POST',
@@ -131,6 +131,42 @@ $(document).ready(function() {
             },
             complete: function( jqXHR, textStatus ){
                 throw_alert("success", textStatus);
+            }
+        });
+
+    });
+
+    /**
+     * Función que controla el botón de finalizar
+     * Se encarga de recoger el enunciado, las piezas utilizadas y la solución planteada para enviarlas al servidor.
+     */
+    $("#actualizar").click(function(ev, ui) {
+
+        var json;
+        var titulo = getTitulo(); //Obtenemos el titulo
+        var asignatura = getAsignatura(); //Obtenemos la asignatura
+        var enunciado = getEnunciado(); //Obtenemos el enunciado
+        var solucion = getSolucion();   //Obtemenos la solución planteada
+        var idProfesor = $("#idProfesor").val();
+        var idProblema = $("#idProblema").val();
+        
+        /* @todo - Control de errores */
+        //json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        json = '{\"id\":\"' + idProblema + '",\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        //var ob = JSON.parse(json);
+        //console.log(json);
+
+        $.ajax({
+            type: 'POST',
+            url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+            data: json,
+            contentType: "application/json",
+            dataType: 'jsonp',
+            success: function(data, textStatus, jqXHR) {
+                throw_alert("success","El problema se ha enviado correctamente");
+            },
+            complete: function( jqXHR, textStatus ){
+                throw_alert("success","El problema se ha enviado correctamente");
             }
         });
 
@@ -178,43 +214,6 @@ $(document).ready(function() {
 
 var estilo_piezas = ["#FF9E9E", "#CEEF72", "#FFFDA8", "#F0F8FF"];
 var index = 0;
-    
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-function throw_alert(type, message) {
-    var span = "";
-    
-    switch (type) {
-        case "warning":
-            span = "<strong>Warning!</strong>";
-            break;
-
-        case "danger":
-            span = "<strong>Danger!</strong>";
-            break;
-
-        case "success":
-            span = "<strong>Success!</strong>";
-            break;
-
-        case "info":
-            span = "<strong>Info!</strong>";
-            break;
-    }
-
-    $.alert = $("<div/>");
-    $.alert.addClass('alert alert-' + type);
-    $.alert.append("<a href='#' class='close fade' data-dismiss='alert' aria-label='close'>&times;</a>");
-    $.alert.append(span + " " + message);
-    
-    if(type == "success" || type == "info")
-        $.alert.fadeTo(2000, 500).slideUp(500, function(){ $.alert.alert('close'); });
-    
-    $("#alert_placeholder").append($.alert);
-}
 
     function buildPieces(f,content, AuxClasses,draggable) {
         jsonPiezas = JSON.stringify(f);

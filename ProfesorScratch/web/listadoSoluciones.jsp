@@ -24,7 +24,7 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <!-- <script type="text/javascript" src="libs/main.js"></script> -->
+        <script type="text/javascript" src="libs/alerts.js"></script>
         <script type="text/javascript" src="libs/log.js"></script>
 
         <!-- Bootstrap -->
@@ -106,7 +106,10 @@
                 </div>
                 
             </div>
-                                    
+                        
+            <p class="lead">Soluciones</p>
+            <hr>
+            
             <% if(soluciones.size() > 0 ){ %>
             
                 <table class="table table-striped">
@@ -135,6 +138,10 @@
                 
                 </table>
                 
+            <% }else{ %>
+            <script type="text/javascript">
+                throw_alert("warning","No hay soluciones propuestas");
+            </script> 
             <% } %>
         </div>
         <%

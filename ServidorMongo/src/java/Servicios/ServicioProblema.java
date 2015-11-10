@@ -66,7 +66,7 @@ public class ServicioProblema {
 
     @GET
     @Path("eliminarProblema")
-    public void eliminarProblema(@QueryParam("id") String id) {
+    public int eliminarProblema(@QueryParam("id") String id) {
         
 //        Map<String, String> where = new TreeMap<>();
 //        where.put("idProblema", id);
@@ -77,7 +77,7 @@ public class ServicioProblema {
 //            MongoDB.delete(s.id, Solucion.class);
 //        }
         
-        MongoDB.delete(id, Problema.class);
+        return MongoDB.delete(id, Problema.class);
     }
 
     @GET

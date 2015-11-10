@@ -29,6 +29,7 @@
         <link href="libs/jquery-ui-contextmenu/jquery-ui-contextmenu.css" type="text/css" rel="stylesheet" />
         
         <script type="text/javascript" src="libs/main.js"></script>
+        <script type="text/javascript" src="libs/alerts.js"></script>
         
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -162,8 +163,15 @@
                     buildPiecesList(<%= listaPiezas %>);
                     buildPiecesSolution(<%= solucion %>);
                 </script>
-
-        <%
+                
+                <% 
+                    Float nota = Float.parseFloat(s.nota);
+                    if( nota < 5 ){
+                        %>
+                            <script type="text/javascript">
+                                $("#nota-input").css('color', 'red');
+                            </script>
+                    <% }
             }
         %>
     </body>

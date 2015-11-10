@@ -49,12 +49,12 @@ and open the template in the editor.
     margin-bottom: 0.8em;
 }
 
-.button-send{
+.button-send, btn-success{
     margin-bottom: 1em;
     width: 100%;
 }
 
-.button-submit{
+.button-submit, btn-success{
     margin: 0;
     text-align: center;
 }

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : main.jsp
-    Created on : Sept 3, 2015
+    Document   : editarProblema.jsp
+    Created on : Nov 10, 2015
     Author     : Edgar Perez Ferrando
 --%>
 
@@ -120,7 +120,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <button id="finalizar" class="btn btn-primary button-send" type="button" value="Entrar">Finalizar</button>
+                            <button id="actualizar" class="btn btn-success button-send" type="button" value="Entrar">Actualizar</button>
                         </div>
                     </div>
 
@@ -146,6 +146,7 @@
         
         <%
             Problema t = (Problema) request.getAttribute("problema");
+            
             if (t != null) {
                 
                 String listaPiezas = t.generarJSONPiezas();

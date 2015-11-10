@@ -18,7 +18,7 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <script type="text/javascript" src="libs/main.js"></script>
+        <script type="text/javascript" src="libs/alerts.js"></script>
         <script type="text/javascript" src="libs/log.js"></script>
 
         <!-- Bootstrap -->
@@ -75,7 +75,7 @@
                         <td>
                             <div class="btn-group btn-group-md btn-group-justified botonera" role="group" aria-label="...">
                                 <a href="SolucionServlet?id=<%= t.id%>" class="btn btn-default btn-sm">Soluciones</a>
-                                <a href="ProblemaServlet?id=<%= t.id%>" class="btn btn-default btn-sm">
+                                <a href="EditarProblemaServlet?id=<%= t.id%>" class="btn btn-default btn-sm">
                                     <span class="glyphicon glyphicon-pencil"></span> Editar 
                                 </a>
                                     <a href="EliminarProblemaServlet?id=<%= t.id %>" class="btn btn-default btn-sm">
@@ -98,7 +98,7 @@
             if(respuesta != null){
                 Integer alerta = Integer.parseInt(respuesta);
                 if( alerta > 0 ){
-                    %><script type="text/javascript">throw_alert("info","Problema eliminado correctamente")</script><%
+                    %><script type="text/javascript">throw_alert("success","Problema eliminado correctamente")</script><%
                 }else if( alerta < 0 ){
                     %><script type="text/javascript">throw_alert("error","No se ha podido eliminar el problema")</script><%
                 }

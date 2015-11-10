@@ -63,7 +63,13 @@ public class ProblemaJerseyClient {
     }
 
     public void eliminarProblema(String id) throws ClientErrorException {
-        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request().delete();
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("eliminarProblema");
+        //return resource.get(responseType);
+        resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get();
     }
 
     public <T> T leerProblemasAsignatura(Class<T> responseType, String id) throws ClientErrorException {

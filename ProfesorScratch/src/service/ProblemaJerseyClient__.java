@@ -69,7 +69,7 @@ public class ProblemaJerseyClient__ {
         }
         resource = resource.path("eliminarProblema");
         //return resource.get(responseType);
-        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
+        return resource.request().get(responseType);
     }
 
     public <T> T leerProblemasAsignatura(Class<T> responseType, String id) throws ClientErrorException {

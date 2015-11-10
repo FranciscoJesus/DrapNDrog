@@ -40,11 +40,12 @@ public class EliminarProblemaServlet extends HttpServlet {
         String id = (String)request.getParameter("id");
         
         ProblemaJerseyClient service = new ProblemaJerseyClient();
-        service.eliminarProblema(id);
+        String res = service.eliminarProblema(id);
+                
+        request.setAttribute("estado", res);
         
-        //request.setAttribute("problema", t);
-        //RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-        //dispatcher.forward(request, response);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ListaProblemasServlet");
+        dispatcher.forward(request, response);
         
     }
 

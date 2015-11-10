@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import service.ProblemasJerseyClient_;
+import service.ProblemaJerseyClient;
 
 /**
  *
@@ -49,7 +49,7 @@ public class ListaProblemasServlet extends HttpServlet {
         // @todo - control de errores
         if( p != null ){
             List<Problema> list = new ArrayList<Problema>();
-            ProblemasJerseyClient_ servicio = new ProblemasJerseyClient_();
+            ProblemaJerseyClient servicio = new ProblemaJerseyClient();
             list = servicio.getProblemasProfesor(p.id);
             
             request.setAttribute("problemas", list);

@@ -120,11 +120,12 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Nota</h3>
+                            <h3 class="panel-title">Calificacion</h3>
                         </div>
-
+                        
                         <div id="pieces-panel-content" class="panel-body row">
                             <div id="nota-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">
+                                <span id="nombreAlumno" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></span>
                                 <input id="nota-input" type="text" class="form-control" placeholder="Nota">
                             </div>
                         </div>
@@ -157,6 +158,7 @@
                     $("#enunciado").val("<%= t.enunciado%>");
                     $("#titulo-input").val("<%= t.titulo%>");
                     $("#nota-input").val("<%= s.nota %>");
+                    $("#nombreAlumno").html("<%= s.nombre + " " + s.apellidos %>");
                     buildPiecesList(<%= listaPiezas %>);
                     buildPiecesSolution(<%= solucion %>);
                 </script>

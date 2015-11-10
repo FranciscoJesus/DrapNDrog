@@ -18,7 +18,7 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <!-- <script type="text/javascript" src="libs/main.js"></script> -->
+        <script type="text/javascript" src="libs/main.js"></script>
         <script type="text/javascript" src="libs/log.js"></script>
 
         <!-- Bootstrap -->
@@ -92,6 +92,18 @@
                 
             <% } %>
         </div>
+        
+        <% 
+            String respuesta = (String)request.getAttribute("estado");
+            if(respuesta != null){
+                Integer alerta = Integer.parseInt(respuesta);
+                if( alerta > 0 ){
+                    %><script type="text/javascript">throw_alert("info","Problema eliminado correctamente")</script><%
+                }else if( alerta < 0 ){
+                    %><script type="text/javascript">throw_alert("error","No se ha podido eliminar el problema")</script><%
+                }
+            }
+        %>
         
     </body>
 </html>

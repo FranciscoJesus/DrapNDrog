@@ -9,14 +9,13 @@ package profesorScratch.servlet;
 import Entities.Problema;
 import Entities.Solucion;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemasJerseyClient_;
+import service.ProblemaJerseyClient;
 import service.SolucionJerseyClient;
 
 /**
@@ -41,7 +40,7 @@ public class CorregirServlet extends HttpServlet {
         
         String id = (String) request.getParameter("id");
         SolucionJerseyClient solucionCliente = new SolucionJerseyClient();
-        ProblemasJerseyClient_ problemaCliente = new ProblemasJerseyClient_();
+        ProblemaJerseyClient problemaCliente = new ProblemaJerseyClient();
         
         Solucion solucion = (Solucion) solucionCliente.buscarSolucion(Solucion.class, id);
         Problema problema = (Problema) problemaCliente.leerProblema(Problema.class, solucion.idProblema);

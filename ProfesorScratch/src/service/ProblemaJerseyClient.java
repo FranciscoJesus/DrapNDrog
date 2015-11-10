@@ -12,6 +12,7 @@ import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
 
 /**
  * Jersey REST client generated for REST resource:ServicioProblema
@@ -62,8 +63,15 @@ public class ProblemaJerseyClient {
         return webTarget.path("insertarProblema").request(javax.ws.rs.core.MediaType.APPLICATION_JSON).post(javax.ws.rs.client.Entity.entity(requestEntity, javax.ws.rs.core.MediaType.APPLICATION_JSON), responseType);
     }
 
-    public void eliminarProblema(String id) throws ClientErrorException {
-        webTarget.path(java.text.MessageFormat.format("{0}", new Object[]{id})).request().delete();
+    public <T> String eliminarProblema(String id) throws ClientErrorException {
+        
+        WebTarget resource = webTarget;
+        if (id != null) {
+            resource = resource.queryParam("id", id);
+        }
+        resource = resource.path("eliminarProblema");
+        return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(String.class);
+        
     }
 
     public <T> T leerProblemasAsignatura(Class<T> responseType, String id) throws ClientErrorException {
@@ -83,9 +91,9 @@ public class ProblemaJerseyClient {
         resource = resource.path("buscarProblema");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
-    
+
     public List<Problema> getProblemasProfesor(String id){
-        ProblemasJerseyClient_ cliente = new ProblemasJerseyClient_();
+        ProblemaJerseyClient cliente = new ProblemaJerseyClient();
         GenericType<List<Problema>> gType = new GenericType<List<Problema>>(){};
         List<Problema> lista = (List<Problema>) cliente.leerProblemasProfesor(gType,id);
         cliente.close();
@@ -100,7 +108,7 @@ public class ProblemaJerseyClient {
         resource = resource.path("buscarProblemasProfesor");
         return resource.request(javax.ws.rs.core.MediaType.APPLICATION_JSON).get(responseType);
     }
-
+    
     public void close() {
         client.close();
     }

@@ -78,4 +78,11 @@ and open the template in the editor.
 
 #nota-input{
     text-align: right;
+    font-weight: bold;
+}
+
+#nombreAlumno{
+    text-align: center;
+    padding-bottom: 0.8em;
+    font-weight: bold;
 }

@@ -31,6 +31,7 @@
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
         
+        <!--
         <script type="text/javascript">
             $(document).ready(function() {
                 $(".clickable-row").click(function(elem) {
@@ -38,6 +39,7 @@
                 });
             });
         </script>
+        -->
         
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
@@ -113,13 +115,19 @@
                         <th>Alumno</th>
                         <!-- <th>Enunciado</th> -->
                         <th>Nota</th>
+                        <th></th>
                     </thead>
                 
                 <% for(Solucion s : soluciones ){ %>
-                    <tr class="clickable-row" data-href="CorregirServlet?id=<%= s.id%>" id="<%= s.id%>">
+                    <tr class="clickable-row" id="<%= s.id%>">
                         <td><%= num %></td>
                         <td><%= s.nombre + " " +s.apellidos %></td>
                         <td><%= s.nota %></td>
+                        <td>
+                            <div class="btn-group btn-group-md btn-group-justified botonera" role="group" aria-label="...">
+                                <a href="CorregirServlet?id=<%= s.id%>" class="btn btn-default btn-sm">Solucion</a></td>
+                            </div>
+                        </td>
                         <!-- <td><a href="SolucionServlet?id=<%= s.id%>" class="btn btn-default btn-sm">Solucion</a></td> -->
                     </tr>
                 <% num++; %>

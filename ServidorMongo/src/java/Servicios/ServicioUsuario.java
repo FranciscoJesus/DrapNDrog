@@ -89,7 +89,7 @@ public class ServicioUsuario {
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
     public Profesor LoginProfesor(Usuario u) {
-        Profesor p = new Profesor();
+        Profesor p = null;
         try {
             Map<String, String> where = new TreeMap<>();
             where.put("password", u.Encriptar());

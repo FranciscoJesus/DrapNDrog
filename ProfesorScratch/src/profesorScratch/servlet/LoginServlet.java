@@ -58,6 +58,8 @@ public class LoginServlet extends HttpServlet {
         u.rol = 2;
         
         Profesor p = (Profesor)service.LoginProfesor_JSON(u,Profesor.class);
+        
+        System.out.println(p);
 
         // Comprobar que los datos devueltos del servicio RESTFull son correctos
         if(p != null){

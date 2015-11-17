@@ -5,10 +5,8 @@
  */
 package BD;
 
-import Entities.Problema;
 import com.mongodb.MongoClient;
 import com.mongodb.WriteResult;
-import com.mongodb.client.MongoDatabase;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -86,9 +84,13 @@ public class MongoDB {
 
         List<T> array;
 
+//        Query<T> query = ds.createQuery(clas);
+//        for (Entry<String, String> s : wheres.entrySet()) {
+//            query = query.field(s.getKey()).equal(s.getValue());
+//        }
         Query<T> query = ds.createQuery(clas);
         for (Entry<String, String> s : wheres.entrySet()) {
-            query = query.field(s.getKey()).equal(s.getValue());
+            query = query.filter(s.getKey(), s.getValue());
         }
 
         array = query.asList();
@@ -133,7 +135,7 @@ public class MongoDB {
         for (Entry<String, Object> s : change.entrySet()) {
             ops = ops.set(s.getKey(), s.getValue());
         }
-        
+
         ds.update(elem, ops);
 
         //cerramos conexión
@@ -142,7 +144,7 @@ public class MongoDB {
 
     public static <T> int delete(String id, Class<T> entity) {
 
-        try{
+        try {
             int res;
             abrirConexion();
             //eliminamos el elemento de la tabla entity 
@@ -154,31 +156,9 @@ public class MongoDB {
             cerrarConexion();
 
             return res;
-        }catch(Exception e){
+        } catch (Exception e) {
             return -1;
         }
     }
-    
-    public static void insertPrueba(){
-        Problema p1,p2;
-        p1 = new Problema();
-        p2 = new Problema();
-        
-        abrirConexion();
-        
-        p1.enunciado = "Esto es una prueba ";
-        p1.nombreAsignatura="asdasd";
-        p2.enunciado = "Esto es una prueba 2";
-        p2.nombreAsignatura="asdasd";
-        
-        ds.save(p1);
-        p2.id = p1.id;
-        
-        ds.save(p2);
-        
-        cerrarConexion();
-        
-    }
-    
 
 }

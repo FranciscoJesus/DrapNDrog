@@ -64,5 +64,17 @@ public class ServicioAsignatura {
 
         return res;
     }
+    
+    @GET
+    @Path("buscarAsignaturaAlumno")
+    @Produces("applicaction/json")    
+    public List<Asignatura> buscarAsignaturaAlumno(@QueryParam("id") String idAlumno){
+        
+        Map<String, String> where = new TreeMap<>();
+        where.put("idAlumnos in", idAlumno);
+        List<Asignatura> res = MongoDB.find(where, Asignatura.class);
+        
+        return res;
+    }
 
 }

@@ -30,8 +30,7 @@ public class ServicioAlumno {
         try {
             MongoDB.insert(a);
         } catch (Exception e) {
-            a.nombre = "error";
-            return a;
+            return null;
         }
         return a;
     }

@@ -63,6 +63,26 @@ public class ServicioSolucion {
 
         return String.valueOf(MongoDB.delete(id, Solucion.class));
     }
+    
+    @GET
+    @Path("cambiarNota")
+    @Produces("application/json")
+    public Solucion cambiarNota(@QueryParam("id") String idSolucion, @QueryParam("nota") String nota) {
+
+        Solucion res = null;
+
+        Map<String, Object> campos = new TreeMap<>();
+
+        campos.put("nota", nota);
+
+        try {
+            MongoDB.update(idSolucion, Solucion.class, campos);
+        } catch (Exception e) {
+            res = new Solucion();
+        }
+
+        return res;
+    }
 
     @GET
     @Path("SolucionesDeProblema")

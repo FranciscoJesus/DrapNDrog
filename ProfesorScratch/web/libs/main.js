@@ -171,7 +171,7 @@ $(document).ready(function() {
         });
 
     });
-
+    
     function getTitulo(){
         return $('#titulo-input').val();
     }

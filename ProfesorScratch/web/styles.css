@@ -49,12 +49,12 @@ and open the template in the editor.
     margin-bottom: 0.8em;
 }
 
-.button-send, btn-success{
+.button-send, btn-success, cambiar-calificacion{
     margin-bottom: 1em;
     width: 100%;
 }
 
-.button-submit, btn-success{
+.button-submit, btn-success, cambiar-calificacion{
     margin: 0;
     text-align: center;
 }
@@ -85,4 +85,8 @@ and open the template in the editor.
     text-align: center;
     padding-bottom: 0.8em;
     font-weight: bold;
+}
+
+#cambiar-calificacion{
+    margin-top: 0.8em;
 }

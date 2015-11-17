@@ -55,6 +55,9 @@ public class ListaProblemasServlet extends HttpServlet {
             request.setAttribute("problemas", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("listadoProblemas.jsp");
             dispatcher.forward(request, response);
+        }else{
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
         }
 
     }

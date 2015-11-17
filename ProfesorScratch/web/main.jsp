@@ -144,22 +144,5 @@
             </div>
         </div>
         
-        <%
-            Problema t = (Problema) request.getAttribute("problema");
-            if (t != null) {
-                
-                String listaPiezas = t.generarJSONPiezas();
-                String solucion = t.generarJSONSolucion();
-        %>                
-                <script type="text/javascript">
-                    $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
-                    $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
-                    buildPiecesList(<%= listaPiezas %>);
-                    buildPiecesSolution(<%= solucion %>);
-                </script>
-
-        <%
-            }
-        %>
     </body>
 </html>

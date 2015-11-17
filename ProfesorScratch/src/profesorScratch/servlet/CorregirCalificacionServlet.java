@@ -6,26 +6,22 @@
 
 package profesorScratch.servlet;
 
-import Entities.Problema;
-import Entities.Solucion;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import service.ProblemaJerseyClient;
 import service.SolucionJerseyClient;
 
 /**
  *
  * @author Sobremesa
  */
-@WebServlet(name = "SolucionServlet", urlPatterns = {"/SolucionServlet"})
-public class SolucionServlet extends HttpServlet {
+@WebServlet(name = "CorregirCalificacionServlet", urlPatterns = {"/CorregirCalificacionServlet"})
+public class CorregirCalificacionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,21 +36,17 @@ public class SolucionServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        String id = request.getParameter("id");
-        SolucionJerseyClient solucionCliente = new SolucionJerseyClient();
-        ProblemaJerseyClient problemaCliente = new ProblemaJerseyClient();
+        String nota = (String)request.getParameter("nota");
+        String idSolucion = (String)request.getParameter("idSolucion");
         
-        Problema p = (Problema) problemaCliente.leerProblema(Problema.class,id);
+        SolucionJerseyClient servicio = new SolucionJerseyClient();
         
-        List<Solucion> soluciones = new ArrayList<Solucion>();
-        soluciones = (ArrayList<Solucion>)solucionCliente.getSoluciones(id);
+        String respuesta = (String)servicio.cambiarNota(String.class, idSolucion, nota);
         
-        request.setAttribute("soluciones", soluciones);
-        request.setAttribute("problema", p);
-                
-        RequestDispatcher dispatcher = request.getRequestDispatcher("listadoSoluciones.jsp");
+        /* @todo - Evaluar respuesta */
+        RequestDispatcher dispatcher = request.getRequestDispatcher("CorregirServlet?id=" + idSolucion);
         dispatcher.forward(request, response);
-                
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

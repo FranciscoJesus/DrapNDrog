@@ -52,6 +52,7 @@
 
         %>
         <input type="hidden" id="idProfesor" value="<%= p.id%>"/>
+        <input type="hidden" id="idProblema" />
         <%@include file="navegacion.jsp" %>
         
         <div class="container">
@@ -155,6 +156,7 @@
                 <script type="text/javascript">
                     $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
                     $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
+                    $(function(){ $("#idProblema").val("<%= t.id %>"); });
                     buildPiecesList(<%= listaPiezas %>);
                     buildPiecesSolution(<%= solucion %>);
                 </script>

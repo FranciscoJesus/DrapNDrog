@@ -50,8 +50,10 @@
                 dispatcher.forward(request, response);
             }
             
+            Problema t = (Problema) request.getAttribute("problema");
+            Solucion s = (Solucion) request.getAttribute("solucion");
         %>
-        <input type="hidden" id="idProfesor" value="<%= p.id%>"/>
+        
         <%@include file="navegacion.jsp" %>
         
         <div class="container">
@@ -99,7 +101,7 @@
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Builder panel</h3>
+                            <h3 class="panel-title">Solucion propuesta</h3>
                         </div>
 
                         <div id="content-panel" class="panel-body grid">
@@ -109,11 +111,13 @@
 
                     </div>
 
+                    <!--
                     <div class="row">
                         <div class="col-md-12">
                             <button id="finalizar" class="btn btn-primary button-send" type="button" value="Entrar">Finalizar</button>
                         </div>
                     </div>
+                    -->
 
                 </div>
 
@@ -127,7 +131,13 @@
                         <div id="pieces-panel-content" class="panel-body row">
                             <div id="nota-panel" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1">
                                 <span id="nombreAlumno" class="col-md-10 col-sm-10 col-lg-10 col-xs-10 col-xs-offset-1 col-md-offset-1 col-sm-offset-1 col-lg-offset-1"></span>
-                                <input id="nota-input" type="text" class="form-control" placeholder="Nota">
+                                <form action="CorregirCalificacionServlet" method="POST">
+                                    <input id="nota-input" type="text" class="form-control" name="nota" placeholder="Nota">
+                                    <input type="hidden" id="idSolucion" name="idSolucion" value="<%= s.id%>"/>
+                                    <input type="submit" id="cambiar-calificacion" class="btn btn-danger button-send" value="Cambiar calificacion" />
+                                </form>
+                                
+                                
                             </div>
                         </div>
                     </div>
@@ -146,10 +156,7 @@
         </div>
         
         <%
-            //@todo - control de errores
-            Problema t = (Problema) request.getAttribute("problema");
-            Solucion s = (Solucion) request.getAttribute("solucion");
-            
+            //@todo - control de errores            
             if (t != null) {
                 
                 String listaPiezas = t.generarJSONPiezas();

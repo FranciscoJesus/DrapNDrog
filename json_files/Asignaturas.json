@@ -1,1 +1,2 @@
-{ "_id" : { "$oid" : "560322a7af5eec13ec81a630"} , "nombre" : "matematicas" , "idProfesor" : "55f94aa2fc516c18dc5ffa80" , "idAlumnos" : [ ]}
+{ "_id" : { "$oid" : "560322a7af5eec13ec81a630"} , "nombre" : "matematicas" , "idProfesor" : "55f94aa2fc516c18dc5ffa80" , "idAlumnos" : [ "55fb0b406d7551045865fb82"]}
+{ "_id" : "5640b2b6304fa722c03dd873" , "className" : "Entities.Asignatura" , "nombre" : "matematicas" , "idProfesor" : "564092d8304fa722c03dd867"}

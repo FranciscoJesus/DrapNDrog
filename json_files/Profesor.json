@@ -1,1 +1,1 @@
-{ "_id" : { "$oid" : "55fb0941a74db814986336a7"} , "nombre" : "pepito" , "apellido" : "perez" , "idUsuario" : "55fb08f9a74db814986336a5" , "asignaturas" : [ "560322a7af5eec13ec81a630"]}
+{ "_id" : "564092d8304fa722c03dd867" , "className" : "Entities.Profesor" , "nombre" : "Jose" , "idUsuario" : "563f9b106d336312c41b6eae" , "apellidos" : "Garcia"}

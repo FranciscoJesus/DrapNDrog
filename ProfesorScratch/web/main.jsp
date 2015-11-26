@@ -1,6 +1,5 @@
 <%-- 
     Document   : main.jsp
-    Created on : Sept 3, 2015
     Author     : Edgar Perez Ferrando
 --%>
 
@@ -24,7 +23,6 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script>
-        <!-- <link href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css" type="text/css" rel="stylesheet" /> -->
         <link href="libs/jquery-ui-contextmenu/jquery-ui-contextmenu.css" type="text/css" rel="stylesheet" />
         
         <script type="text/javascript" src="libs/main.js"></script>
@@ -37,7 +35,7 @@
 
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-        
+        <title>Nuevo Problema</title>
     </head>
     <body>
         <%

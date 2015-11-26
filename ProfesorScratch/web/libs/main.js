@@ -17,10 +17,8 @@ $(document).ready(function() {
         menu: [
             {title: "Remove", cmd: "remove", uiIcon: "ui-icon-trash"},
         ],
-        // Handle menu selection to implement a fake-clipboard
+        
         select: function(event, ui) {
-            //console.log(event);
-            //console.log(ui);
             var $target = ui.target;
             
             if( ! $target.hasClass("dragOut") ){
@@ -38,10 +36,9 @@ $(document).ready(function() {
                     throw_alert("info","Pieza eliminada");
                     break;
             }
-            //alert("select " + ui.cmd + " on " + $target.text());
-            // Optionally return false, to prevent closing the menu now
+            
         },
-        // Implement the beforeOpen callback to dynamically change the entries
+        
         beforeOpen: function(event, ui) {
             var $menu = ui.menu,
                     $target = ui.target,
@@ -49,26 +46,10 @@ $(document).ready(function() {
 
             ui.menu.zIndex($(event.target).zIndex() + 1);
 
-/*
-            $(document)
-                    .contextmenu("setEntry", "copy", "Copy '" + $target.text() + "'")
-                    .contextmenu("setEntry", "paste", "Paste" + (CLIPBOARD ? " '" + CLIPBOARD + "'" : ""))
-                    .contextmenu("enableEntry", "paste", (CLIPBOARD !== ""));
-*/
-
         }
     });
                 
     var counts = [0];
-    
-    /*
-     $(".dragIn").draggable({
-     helper:'clone',
-     start: function(){ 
-     counts[0]++;
-     }
-     });
-     */
 
     $("#content-panel").droppable({
         accept: ".dragIn, .dragOut",
@@ -115,8 +96,6 @@ $(document).ready(function() {
         
         /* @todo - Control de errores */
         json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
-        //var ob = JSON.parse(json);
-        //console.log(json);
 
         $.ajax({
             type: 'POST',
@@ -125,12 +104,10 @@ $(document).ready(function() {
             contentType: "application/json",
             dataType: 'jsonp',
             success: function(data, textStatus, jqXHR) {
-                //console.log(data);
                 throw_alert("success","El problema se ha enviado correctamente");
-                //@todo - Reiniciar el interfaz
             },
             complete: function( jqXHR, textStatus ){
-                throw_alert("success", textStatus);
+                throw_alert("success", "El problema se ha enviado correctamente");
             }
         });
 
@@ -151,10 +128,7 @@ $(document).ready(function() {
         var idProblema = $("#idProblema").val();
         
         /* @todo - Control de errores */
-        //json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
         json = '{\"id\":\"' + idProblema + '",\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
-        //var ob = JSON.parse(json);
-        console.log(json);
 
         $.ajax({
             type: 'POST',

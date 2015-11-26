@@ -25,7 +25,7 @@ import javax.ws.rs.core.Response;
  *        client.close();
  * </pre>
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 public class ProblemaJerseyClient {
     private WebTarget webTarget;

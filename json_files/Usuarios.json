@@ -1,1 +1,3 @@
-{ "_id" : { "$oid" : "55fb08f9a74db814986336a5"} , "id" :  null  , "usuario" : "Edgar" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 2}
+{ "_id" : "563f9b006d336312c41b6eac" , "className" : "Entities.Usuario" , "password" : "7110eda4d09e062aa5e4a390b0a572ac0d2c0220" , "rol" : 1 , "nombreUsuario" : "Chiki"}
+{ "_id" : "563f9b106d336312c41b6eae" , "className" : "Entities.Usuario" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 2 , "nombreUsuario" : "edgar"}
+{ "_id" : "563f9b006d336312c41b6eab" , "className" : "Entities.Usuario" , "password" : "7110eda4d09e062aa5e4a390b0a572ac0d2c0220" , "rol" : 1 , "nombreUsuario" : "Edgar"}

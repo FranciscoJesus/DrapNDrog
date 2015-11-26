@@ -7,7 +7,6 @@
 package profesorScratch.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +17,7 @@ import service.SolucionJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "CorregirCalificacionServlet", urlPatterns = {"/CorregirCalificacionServlet"})
 public class CorregirCalificacionServlet extends HttpServlet {
@@ -41,9 +40,9 @@ public class CorregirCalificacionServlet extends HttpServlet {
         
         SolucionJerseyClient servicio = new SolucionJerseyClient();
         
+        /* @todo - Evaluar respuesta */
         String respuesta = (String)servicio.cambiarNota(String.class, idSolucion, nota);
         
-        /* @todo - Evaluar respuesta */
         RequestDispatcher dispatcher = request.getRequestDispatcher("CorregirServlet?id=" + idSolucion);
         dispatcher.forward(request, response);
         

@@ -23,7 +23,7 @@ import service.ProblemaJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "ListaProblemasServlet", urlPatterns = {"/ListaProblemasServlet"})
 public class ListaProblemasServlet extends HttpServlet {
@@ -40,9 +40,7 @@ public class ListaProblemasServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        // @todo - Obtener todos los probelmas realizados por el profesor
-        
+              
         HttpSession sesion = request.getSession();
         Profesor p = (Profesor)sesion.getAttribute("usuario");
         

@@ -1,6 +1,5 @@
 <%-- 
     Document   : editarProblema.jsp
-    Created on : Nov 10, 2015
     Author     : Edgar Perez Ferrando
 --%>
 
@@ -37,7 +36,7 @@
 
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-        
+        <title>Editar Problema</title>
     </head>
     <body>
         <%
@@ -149,7 +148,6 @@
             Problema t = (Problema) request.getAttribute("problema");
             
             if (t != null) {
-                
                 String listaPiezas = t.generarJSONPiezas();
                 String solucion = t.generarJSONSolucion();
         %>                
@@ -157,10 +155,9 @@
                     $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
                     $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
                     $(function(){ $("#idProblema").val("<%= t.id %>"); });
-                    buildPiecesList(<%= listaPiezas %>);
                     buildPiecesSolution(<%= solucion %>);
+                    buildPiecesList(<%= listaPiezas %>);
                 </script>
-
         <%
             }
         %>

@@ -22,7 +22,7 @@ import service.SolucionJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "SolucionServlet", urlPatterns = {"/SolucionServlet"})
 public class SolucionServlet extends HttpServlet {

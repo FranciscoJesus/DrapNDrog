@@ -15,7 +15,7 @@
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
         <script type="text/javascript" src="libs/alerts.js"></script>
-        <script type="text/javascript" src="libs/log.js"></script>
+        <!-- <script type="text/javascript" src="libs/log.js"></script> -->
 
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">

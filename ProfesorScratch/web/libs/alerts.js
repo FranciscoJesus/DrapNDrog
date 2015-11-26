@@ -3,6 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ * Función javascript que nos genera una alerta con la librería Bootstrap
+ * @param type Tipo de alerta que deseamos generar [warning|danger|success|info]
+ * @param message Mensaje que deseamos mostrar en la alerta
+ */
 function throw_alert(type, message) {
     var span = "";
     

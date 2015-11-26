@@ -24,7 +24,7 @@ import javax.ws.rs.core.GenericType;
  *        client.close();
  * </pre>
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 public class AsignaturaJerseyClient {
     private WebTarget webTarget;

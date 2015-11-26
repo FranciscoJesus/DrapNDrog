@@ -1,6 +1,5 @@
 <%-- 
     Document   : main.jsp
-    Created on : Sept 3, 2015
     Author     : Edgar Perez Ferrando
 --%>
 
@@ -37,7 +36,7 @@
 
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
-        
+        <title>Corrección</title>
     </head>
     <body>
         <%
@@ -108,17 +107,7 @@
                             <ul id="sortable">
                             </ul>
                         </div>
-
                     </div>
-
-                    <!--
-                    <div class="row">
-                        <div class="col-md-12">
-                            <button id="finalizar" class="btn btn-primary button-send" type="button" value="Entrar">Finalizar</button>
-                        </div>
-                    </div>
-                    -->
-
                 </div>
 
                 <div class="col-md-3" >
@@ -136,7 +125,6 @@
                                     <input type="hidden" id="idSolucion" name="idSolucion" value="<%= s.id%>"/>
                                     <input type="submit" id="cambiar-calificacion" class="btn btn-danger button-send" value="Cambiar calificacion" />
                                 </form>
-                                
                                 
                             </div>
                         </div>

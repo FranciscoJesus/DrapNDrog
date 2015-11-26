@@ -19,7 +19,7 @@ import service.ProblemaJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "EditarProblemaServlet", urlPatterns = {"/EditarProblemaServlet"})
 public class EditarProblemaServlet extends HttpServlet {

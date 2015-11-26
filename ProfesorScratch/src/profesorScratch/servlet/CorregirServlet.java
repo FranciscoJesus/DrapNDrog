@@ -20,7 +20,7 @@ import service.SolucionJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "CorregirServlet", urlPatterns = {"/CorregirServlet"})
 public class CorregirServlet extends HttpServlet {

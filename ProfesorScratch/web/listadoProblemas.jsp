@@ -1,7 +1,6 @@
 <%-- 
     Document   : listadoProblemas
-    Created on : 23-sep-2015, 15:20:02
-    Author     : Sobremesa
+    Author     : Edgar Pérez Ferrando
 --%>
 
 <%@page import="java.util.List"%>
@@ -17,10 +16,8 @@
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
-        <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
         <script type="text/javascript" src="libs/alerts.js"></script>
-        <script type="text/javascript" src="libs/log.js"></script>
-
+        
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
@@ -67,7 +64,6 @@
                     </thead>
                 <% for(Problema t : list ){ %>
                     <tr>
-                    <!-- <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>"> -->
                         <td><%= num %></td>
                         <td><%= t.titulo %></td>
                         <td><%= t.nombreAsignatura %></td>
@@ -84,10 +80,10 @@
                             </div>
                         </td>
                     </tr>
-                <!-- out.print(t.enunciado); -->
+
                 <% num++; %>
                 <% } %>
-                
+
                 </table>
                 
             <% } %>

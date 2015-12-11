@@ -64,15 +64,6 @@ public class ServicioProblema {
     @Path("eliminarProblema")
     public String eliminarProblema(@QueryParam("id") String id) {
         
-//        Map<String, String> where = new TreeMap<>();
-//        where.put("idProblema", id);
-//
-//        List<Solucion> solucionesAEliminar = MongoDB.find(where, Solucion.class);
-//
-//        for (Solucion s : solucionesAEliminar) {
-//            MongoDB.delete(s.id, Solucion.class);
-//        }
-        
         return String.valueOf(MongoDB.delete(id, Problema.class));
     }
 

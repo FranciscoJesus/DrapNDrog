@@ -35,37 +35,44 @@ public class Solucion {
 
     }
 
-    public void ponerNota(List<Pieza> arrayPiezas) {
+    public void evaluar(List<Pieza> arrayPiezas) {
 
         double notaMaxima = notaMaxima(arrayPiezas);
         double notaAlumno = 0.0;
         double notaAlumnoMejor = 0.0;
         double notaARestar = 0;
-        int i = 0;
+        int i;
 
-        for (int k = 0; k < arrayPiezas.size(); k++) {
+        for (int k = 1 - piezas.size(); k < arrayPiezas.size(); k++) {
             i = 0;
+            notaARestar = 0;
+
+            for (; k + i < 0; i++) {
+                for (Input inp : piezas.get(i).inputs) {
+                    notaARestar = notaARestar + 1 / notaMaxima;
+                }
+            }
+
             for (; ((i + k) < arrayPiezas.size()) && (i < piezas.size()); i++) {
-                if (i < piezas.size()) {
-                    Pieza Alumno = piezas.get(i);
-                    if (arrayPiezas.get(i + k).equals(Alumno)) {
-                        for (Input inp : Alumno.inputs) {
-                            notaAlumno = notaAlumno + 1 / notaMaxima;
-                        }
+                Pieza Alumno = piezas.get(i);
+                if (arrayPiezas.get(i + k).equals(Alumno)) {
+                    for (Input inp : Alumno.inputs) {
+                        notaAlumno = notaAlumno + 1 / notaMaxima;
                     }
                 }
             }
-            notaARestar = 0;
+
             for (; i < piezas.size(); i++) {
                 for (Input inp : piezas.get(i).inputs) {
                     notaARestar = notaARestar + 1 / notaMaxima;
                 }
             }
+            
             notaAlumno = notaAlumno - notaARestar;
             if (notaAlumno > notaAlumnoMejor) {
                 notaAlumnoMejor = notaAlumno;
-                notaAlumno = 0.0;
             }
+            notaAlumno = 0.0;
         }
 
         nota = String.valueOf(notaAlumnoMejor * 10);

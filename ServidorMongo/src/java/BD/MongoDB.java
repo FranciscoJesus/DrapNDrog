@@ -83,11 +83,7 @@ public class MongoDB {
         abrirConexion();
 
         List<T> array;
-
-//        Query<T> query = ds.createQuery(clas);
-//        for (Entry<String, String> s : wheres.entrySet()) {
-//            query = query.field(s.getKey()).equal(s.getValue());
-//        }
+        
         Query<T> query = ds.createQuery(clas);
         for (Entry<String, String> s : wheres.entrySet()) {
             query = query.filter(s.getKey(), s.getValue());

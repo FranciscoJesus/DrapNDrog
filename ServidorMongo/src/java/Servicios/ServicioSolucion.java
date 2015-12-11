@@ -6,7 +6,6 @@
 package Servicios;
 
 import BD.MongoDB;
-import Entities.Alumno;
 import Entities.Problema;
 import Entities.Solucion;
 import java.util.List;
@@ -35,7 +34,7 @@ public class ServicioSolucion {
 
             if (sol.id == null || MongoDB.findById(sol.id, Solucion.class) == null) {
                 Problema p = MongoDB.findById(sol.idProblema, Problema.class);
-                sol.ponerNota(p.solucion);
+                sol.evaluar(p.solucion);
                 MongoDB.insert(sol);
             } else {
                 MongoDB.insert(sol);

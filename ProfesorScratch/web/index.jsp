@@ -32,7 +32,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand">Drag & Drop</a>
+                    <a href="#" class="navbar-brand">Drag & Build</a>
                 </div>
             </div>
         </nav>

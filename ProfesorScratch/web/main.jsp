@@ -106,7 +106,7 @@
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Builder panel</h3>
+                            <h3 class="panel-title">Panel de construccion</h3>
                         </div>
 
                         <div id="content-panel" class="panel-body grid">
@@ -128,7 +128,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Pieces panel</h3>
+                            <h3 class="panel-title">Panel de piezas</h3>
                         </div>
 
                         <div id="pieces-panel-content" class="panel-body row">

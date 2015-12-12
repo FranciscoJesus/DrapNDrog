@@ -86,6 +86,10 @@
 
                 </table>
                 
+            <% }else{ %>
+                <script type="text/javascript">
+                    throw_alert("warning","No hay problemas propuestos");
+                </script>
             <% } %>
         </div>
         

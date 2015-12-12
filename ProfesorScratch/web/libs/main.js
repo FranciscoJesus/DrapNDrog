@@ -94,23 +94,26 @@ $(document).ready(function() {
         var solucion = getSolucion();   //Obtemenos la solución planteada
         var idProfesor = $("#idProfesor").val();
         
+        if(jsonPiezas == "") jsonPiezas = "[]";
+        
         /* @todo - Control de errores */
-        json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
-
-        $.ajax({
-            type: 'POST',
-            url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
-            data: json,
-            contentType: "application/json",
-            dataType: 'jsonp',
-            success: function(data, textStatus, jqXHR) {
-                throw_alert("success","El problema se ha enviado correctamente");
-            },
-            complete: function( jqXHR, textStatus ){
-                throw_alert("success", "El problema se ha enviado correctamente");
-            }
-        });
-
+        if( enunciado != "" && titulo != "" && asignatura != "" && jsonPiezas != "[]" && solucion != "[]" && idProfesor != "" )
+            json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        else json = null;
+        
+        if(json != null){
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+                data: json,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    if(data.id == null) throw_alert("danger","Ha habido un problema en la inserción");
+                    else throw_alert("success","El problema se ha insertado correctamente");
+                }
+            });
+        }else throw_alert("danger","Se requieren todos los datos para insertar un problema");
     });
 
     /**
@@ -127,23 +130,26 @@ $(document).ready(function() {
         var idProfesor = $("#idProfesor").val();
         var idProblema = $("#idProblema").val();
         
+        if(jsonPiezas == "") jsonPiezas = "[]";
+        
         /* @todo - Control de errores */
-        json = '{\"id\":\"' + idProblema + '",\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
-
-        $.ajax({
-            type: 'POST',
-            url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
-            data: json,
-            contentType: "application/json",
-            dataType: 'jsonp',
-            success: function(data, textStatus, jqXHR) {
-                throw_alert("success","El problema se ha enviado correctamente");
-            },
-            complete: function( jqXHR, textStatus ){
-                throw_alert("success","El problema se ha enviado correctamente");
-            }
-        });
-
+        if( enunciado != "" && titulo != "" && asignatura != "" && jsonPiezas != "[]" && solucion != "[]" && idProfesor != "" )
+            json = '{\"id\":\"' + idProblema + '",\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        else json = null;
+        
+        if(json != null){
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+                data: json,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    if(data.id == null) throw_alert("danger","Ha habido un problema en la actualización");
+                    else throw_alert("success","El problema se ha actualizado correctamente");
+                }
+            });
+        }else throw_alert("danger","Se requieren todos los datos para actualizar un problema");
     });
     
     function getTitulo(){

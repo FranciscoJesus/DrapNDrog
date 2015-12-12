@@ -138,7 +138,7 @@
                 <script type="text/javascript">
                     $(function(){ $("#enunciado").val("<%= t.enunciado%>"); });
                     $(function(){ $("#titulo-input").val("<%= t.titulo%>"); });
-                    $(function(){ $("#asignatura-input").val("<%= t.nombreAsignatura %>"); });
+                    $(function(){ $("#input-asignatura").val("<%= t.nombreAsignatura %>"); });
                 </script>
         <%
             }

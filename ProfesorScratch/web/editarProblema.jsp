@@ -83,7 +83,7 @@
                                             List<Asignatura> asignaturas = (List<Asignatura>) sesion.getAttribute("asignaturas");
                                             if (asignaturas.size() > 0) {
                                                 for (Asignatura a : asignaturas) {
-                                        %><option><%= a.nombre%></option><%
+                                                    %><option><%= a.nombre%></option><%
                                                 }
                                             }
                                         %>
@@ -108,7 +108,7 @@
                 <div class="col-md-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Builder panel</h3>
+                            <h3 class="panel-title">Panel de construccion</h3>
                         </div>
 
                         <div id="content-panel" class="panel-body grid">
@@ -130,7 +130,7 @@
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Pieces panel</h3>
+                            <h3 class="panel-title">Panel de piezas</h3>
                         </div>
 
                         <div id="pieces-panel-content" class="panel-body row">
@@ -157,6 +157,12 @@
                     $(function(){ $("#idProblema").val("<%= t.id %>"); });
                     buildPiecesSolution(<%= solucion %>);
                     buildPiecesList(<%= listaPiezas %>);
+                    
+                    $("#select-asignatura option").each(function(){
+                        if($(this).val() == "<%= t.nombreAsignatura %>" ){ 
+                            $(this).attr("selected","selected");    
+                        }
+                    });
                 </script>
         <%
             }

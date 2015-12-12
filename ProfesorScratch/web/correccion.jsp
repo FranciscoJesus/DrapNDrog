@@ -132,7 +132,7 @@
                     
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h3 class="panel-title">Pieces panel</h3>
+                            <h3 class="panel-title">Panel de piezas</h3>
                         </div>
 
                         <div id="pieces-panel-content" class="panel-body row">
@@ -155,6 +155,7 @@
                     $("#titulo-input").val("<%= t.titulo%>");
                     $("#nota-input").val("<%= s.nota %>");
                     $("#nombreAlumno").html("<%= s.nombre + " " + s.apellidos %>");
+                    $("#input-asignatura").val("<%= t.nombreAsignatura %>");
                     buildPiecesList(<%= listaPiezas %>);
                     buildPiecesSolution(<%= solucion %>);
                 </script>

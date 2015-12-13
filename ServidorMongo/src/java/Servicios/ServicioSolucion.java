@@ -32,18 +32,13 @@ public class ServicioSolucion {
     public Solucion insertarSolucion(Solucion sol) {
         try {
 
-            if (sol.id == null || MongoDB.findById(sol.id, Solucion.class) == null) {
-                Problema p = MongoDB.findById(sol.idProblema, Problema.class);
-                sol.evaluar(p.solucion);
-                MongoDB.insert(sol);
-            } else {
-                MongoDB.insert(sol);
-            }
+            Problema p = MongoDB.findById(sol.idProblema, Problema.class);
+            sol.evaluar(p.solucion);
+            MongoDB.insert(sol);
 
             return sol;
 
         } catch (Exception e) {
-            sol.apellidos = e.getMessage();
             return sol;
         }
     }
@@ -62,7 +57,7 @@ public class ServicioSolucion {
 
         return String.valueOf(MongoDB.delete(id, Solucion.class));
     }
-    
+
     @GET
     @Path("cambiarNota")
     @Produces("application/json")

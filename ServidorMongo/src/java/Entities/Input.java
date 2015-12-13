@@ -44,6 +44,9 @@ public class Input {
         if (!Objects.equals(this.type, other.type)) {
             return false;
         }
+        if (!Objects.equals(this.opcion, other.opcion)) {
+            return false;
+        }
         return Objects.equals(this.value, other.value);
     }
 }

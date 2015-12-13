@@ -49,7 +49,7 @@ public class Solucion {
 
             for (; k + i < 0; i++) {
                 for (Input inp : piezas.get(i).inputs) {
-                    notaARestar = notaARestar + 1 / notaMaxima;
+                    notaARestar = notaARestar + 1 ;
                 }
             }
 
@@ -57,14 +57,14 @@ public class Solucion {
                 Pieza Alumno = piezas.get(i);
                 if (arrayPiezas.get(i + k).equals(Alumno)) {
                     for (Input inp : Alumno.inputs) {
-                        notaAlumno = notaAlumno + 1 / notaMaxima;
+                        notaAlumno = notaAlumno + 1;
                     }
                 }
             }
 
             for (; i < piezas.size(); i++) {
                 for (Input inp : piezas.get(i).inputs) {
-                    notaARestar = notaARestar + 1 / notaMaxima;
+                    notaARestar = notaARestar + 1;
                 }
             }
             
@@ -75,7 +75,7 @@ public class Solucion {
             notaAlumno = 0.0;
         }
 
-        nota = String.valueOf(notaAlumnoMejor * 10);
+        nota = String.valueOf(notaAlumnoMejor * 10 / notaMaxima);
 
     }
 

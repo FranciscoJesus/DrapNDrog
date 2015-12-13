@@ -25,7 +25,7 @@
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Listado de problemas</title>
+        <title>Drag and Build - Build Your Question!</title>
         
     </head>
     <body>

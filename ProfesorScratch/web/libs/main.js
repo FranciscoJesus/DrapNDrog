@@ -171,11 +171,23 @@ $(document).ready(function() {
                 for (var r = 0, tam = list[i].children.length; r < tam; r++) {
 
                     if (list[i].children[r].nodeName == "P") {
-                        piezas += "{\"type\":\"label\",\"value\":\"" + list[i].children[r].innerHTML + "\"}";
+                        var decoded = $("<div/>").html(list[i].children[r].innerHTML).text();
+                        piezas += "{\"type\":\"label\",\"value\":\"" + decoded + "\"}";
                     } else if (list[i].children[r].nodeName == "INPUT") {
                         piezas += "{\"type\":\"text\",\"value\": \"" + list[i].children[r].value + "\"}";
                     } else if (list[i].children[r].nodeName == "SELECT") {
-                        piezas += "{\"type\":\"select\",\"value\":\"" + list[i].children[r].value + "\"}";
+                        var index = 0;
+                        var options = list[i].children[r].options;
+                        var selectedIndex = options.selectedIndex;
+                        var length = options.length;
+                        var value = "[";
+                        for( var index = 0; index < length; index++ ){
+                            value += '\"' + options[index].value + '\"' + ",";
+                        }
+                        value = value.slice(0,-1);
+                        value += "]";
+                        
+                        piezas += "{\"type\":\"select\",\"value\":" + value + ",\"opcion\":" + selectedIndex + "}";
                     }
                     if (r + 1 < tam)
                         piezas += ",";
@@ -254,7 +266,7 @@ var index = 0;
     function buildPieceField(f) {
 
         $.content = "";
-
+        
         // Comprobamos que tenemos un tipo de pieza para poder identificarlo
         if (f.type === undefined) {
             throw_alert("warning", "No se encuentra el tipo de componente en una pieza");
@@ -276,9 +288,12 @@ var index = 0;
                 break;
 
             case "select":
+                var index = 0;
                 $.content = $('<select/>');
                 f.value.forEach(function(option) {
-                    $.content.append("<option>" + option + "</option>");
+                    if( index == f.opcion) $.content.append("<option selected>" + option + "</option>");
+                    else $.content.append("<option>" + option + "</option>");
+                    index++;
                 });
                 break;
 

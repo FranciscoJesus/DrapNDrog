@@ -31,7 +31,7 @@
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Listado de soluciones</title>
+        <title>Drag and Build - Build Your Question!</title>
         
     </head>
     <body>

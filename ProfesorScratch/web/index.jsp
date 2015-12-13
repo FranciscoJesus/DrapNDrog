@@ -24,7 +24,7 @@
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Iniciar sesión</title>
+        <title>Drag and Build - Build Your Question!</title>
     </head>
 
     <body>        

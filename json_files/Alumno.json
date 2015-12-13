@@ -1,2 +1,5 @@
 { "_id" : "5640b1ea304fa722c03dd871" , "className" : "Entities.Alumno" , "nombre" : "Francisco" , "dni" : "66655544S" , "idUsuario" : "563f9b006d336312c41b6eac" , "apellidos" : "Dominguez"}
-{ "_id" : "5640b1ea304fa722c03dd872" , "className" : "Entities.Alumno" , "nombre" : "Edgar" , "dni" : "12541658R" , "idUsuario" : "563f9b006d336312c41b6eab" , "apellidos" : "Pérez Ferrando"}
+{ "_id" : "566c9a356d75510f907f559d" , "className" : "Entities.Alumno" , "nombre" : "Javier" , "apellidos" : "Ordoñez Martin" , "dni" : "66655597S" , "idUsuario" : "566c8d886d75510f907f5582"}
+{ "_id" : "566ca4406d75510f907f55b3" , "className" : "Entities.Alumno" , "nombre" : "Ruben" , "apellidos" : "Castro" , "dni" : "66655597J" , "idUsuario" : "566c94c26d75510f907f558a"}
+{ "_id" : "566ca7486d75510f907f55b5" , "className" : "Entities.Alumno" , "nombre" : "Alejandro" , "apellidos" : "Dominguez" , "dni" : "66655540S" , "idUsuario" : "566c8da16d75510f907f5588"}
+{ "_id" : "566cade66d75510f907f55b7" , "className" : "Entities.Alumno" , "nombre" : "Ivan" , "apellidos" : "Sanchez" , "dni" : "68655542S" , "idUsuario" : "566c8d916d75510f907f5584"}

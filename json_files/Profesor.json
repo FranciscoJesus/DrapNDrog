@@ -1,2 +1,0 @@
-{ "_id" : "564092d8304fa722c03dd867" , "className" : "Entities.Profesor" , "nombre" : "Edgar" , "idUsuario" : "563f9b106d336312c41b6eae" , "apellidos" : "Perez Ferrando" , "asignaturas" : [ "5640b2b6304fa722c03dd873"]}
-{ "_id" : "566c96686d75510f907f558c" , "className" : "Entities.Profesor" , "nombre" : "Eduardo" , "apellidos" : "Guzman de los Riscos" , "idUsuario" : "566c8d986d75510f907f5586" , "asignaturas" : [ "566cb12f6d75510f907f55b9"]}

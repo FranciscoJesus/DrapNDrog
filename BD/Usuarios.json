@@ -1,5 +1,5 @@
 { "_id" : "563f9b006d336312c41b6eac" , "className" : "Entities.Usuario" , "password" : "7110eda4d09e062aa5e4a390b0a572ac0d2c0220" , "rol" : 1 , "nombreUsuario" : "Chiki"}
-{ "_id" : "563f9b106d336312c41b6eae" , "className" : "Entities.Usuario" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 2 , "nombreUsuario" : "edgar"}
+{ "_id" : "563f9b106d336312c41b6eae" , "className" : "Entities.Usuario" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 2 , "nombreUsuario" : "Edgar"}
 { "_id" : "566c8d886d75510f907f5582" , "className" : "Entities.Usuario" , "nombreUsuario" : "Javi" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 1}
 { "_id" : "566c8d916d75510f907f5584" , "className" : "Entities.Usuario" , "nombreUsuario" : "Ivan" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 1}
 { "_id" : "566c8d986d75510f907f5586" , "className" : "Entities.Usuario" , "nombreUsuario" : "Eduardo" , "password" : "40bd001563085fc35165329ea1ff5c5ecbdbbeef" , "rol" : 2}

@@ -3,6 +3,8 @@
     Author     : JavierOrdoñezMartin
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Entities.Problema"%>
 <%@page import="Entities.Alumno"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -14,21 +16,25 @@
     <body>
         <%
                  HttpSession miSesion = request.getSession(false);
-                String log =(String) miSesion.getAttribute("Log");
                 Alumno alu= (Alumno) miSesion.getAttribute("alumno");
                 %>
         <div id="container">
+            <div class="page-header">
+                <h1>Drag & Drop</h1>
+                <p class="lead">Arrastra, mueve, construye y destruye!</p>
+            </div>
             <%
                 if(alu!=null){
+                    List<Problema> listProblemas = (List<Problema>) miSesion.getAttribute("listaProblemas");
+                    for(Problema p : listProblemas){
             %>
-                <div id="container-log">
-               
-                </div>
-            
+                Lista de Problemas:
+                    <%=p.id%>>
+               <% } %>
               <% }else{ %>
                   
                Pasar a pagina de log
-               }%>
+               <%}%>
                
         </div>
         

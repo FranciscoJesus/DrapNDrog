@@ -52,6 +52,7 @@ public class ListaProblemasServlet extends HttpServlet {
             ProblemasJerseyClient servicio = new ProblemasJerseyClient();
             list = servicio.getProblemasProfesor(p.id);
             
+            
             request.setAttribute("problemas", list);
             RequestDispatcher dispatcher = request.getRequestDispatcher("listadoProblemas.jsp");
             dispatcher.forward(request, response);

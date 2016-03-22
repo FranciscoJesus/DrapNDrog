@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import service.ProblemasAluJerseyClient;
 
 /**
  *
@@ -97,10 +98,9 @@ public class LoginAlumnoServlet extends HttpServlet {
         HttpSession miSesion = request.getSession(true);
         
         if (alu == null) {
-           miSesion.setAttribute("Log","error");
-          // RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-      RequestDispatcher dispatcher = request.getRequestDispatcher("listaEnunciados.jsp");
-           dispatcher.forward(request, response);
+            miSesion.setAttribute("Log","error");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
         } else {
             
             Object currentUser = miSesion.getAttribute("alumno");
@@ -109,11 +109,12 @@ public class LoginAlumnoServlet extends HttpServlet {
             if (currentUser != null) {
                 miSesion.invalidate();
             }
-             miSesion.setAttribute("Log","correcto");
+            miSesion.setAttribute("Log","correcto");
             miSesion.setAttribute("alumno", alu);
-            List<Problema> listproblemas=null;
-         //   List<Problema>  listproblemas = (List<Problema>) servicio.LoginAlumno_JSON(, null);
-            //miSesion.setAttribute("listaProblemas",listproblemas);
+            
+            ProblemasAluJerseyClient servicioProblemas = new  ProblemasAluJerseyClient();
+            List<Problema> listproblemas= (List<Problema>)servicioProblemas.leerProblemasAlumno(Problema.class, alu.nombre);         
+            miSesion.setAttribute("listaProblemas",listproblemas);
             RequestDispatcher dispatcher = request.getRequestDispatcher("listaEnunciados.jsp");
             dispatcher.forward(request, response);
         }

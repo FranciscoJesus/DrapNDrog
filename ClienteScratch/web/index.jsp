@@ -20,17 +20,21 @@
         <title>Login Page</title>
     </head>
     <body>
-        <div id="container">
-           <% 
+         <% 
             HttpSession miSesion = request.getSession(false);
             String log =(String) miSesion.getAttribute("Log");
             Alumno alu= (Alumno) miSesion.getAttribute("alumno");
-            if(alu!=null){
-           %>
+         %>
+        <div id="container">
+            <div class="page-header">
+                <h1>Drag & Drop</h1>
+                <p class="lead">Arrastra, mueve, construye y destruye!</p>
+               </div>
+           <% if(alu!=null){ %>
            <a href="LoginAlumnoServlet">Cerrar Sesion</a>
            <% }else{ %>
             <div id="container-login">
-                <h1>Login:</h1>
+                <h1>Iniciar Sesi&oacuten</h1>
                 <form method="post" action="LoginAlumnoServlet">
                     <label for="usuario">Usuario:</label><br>
                     <input type="text" name="usuario"><br>

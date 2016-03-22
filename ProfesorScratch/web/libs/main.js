@@ -17,10 +17,8 @@ $(document).ready(function() {
         menu: [
             {title: "Remove", cmd: "remove", uiIcon: "ui-icon-trash"},
         ],
-        // Handle menu selection to implement a fake-clipboard
+        
         select: function(event, ui) {
-            //console.log(event);
-            //console.log(ui);
             var $target = ui.target;
             
             if( ! $target.hasClass("dragOut") ){
@@ -38,10 +36,9 @@ $(document).ready(function() {
                     throw_alert("info","Pieza eliminada");
                     break;
             }
-            //alert("select " + ui.cmd + " on " + $target.text());
-            // Optionally return false, to prevent closing the menu now
+            
         },
-        // Implement the beforeOpen callback to dynamically change the entries
+        
         beforeOpen: function(event, ui) {
             var $menu = ui.menu,
                     $target = ui.target,
@@ -49,26 +46,10 @@ $(document).ready(function() {
 
             ui.menu.zIndex($(event.target).zIndex() + 1);
 
-/*
-            $(document)
-                    .contextmenu("setEntry", "copy", "Copy '" + $target.text() + "'")
-                    .contextmenu("setEntry", "paste", "Paste" + (CLIPBOARD ? " '" + CLIPBOARD + "'" : ""))
-                    .contextmenu("enableEntry", "paste", (CLIPBOARD !== ""));
-*/
-
         }
     });
                 
     var counts = [0];
-    
-    /*
-     $(".dragIn").draggable({
-     helper:'clone',
-     start: function(){ 
-     counts[0]++;
-     }
-     });
-     */
 
     $("#content-panel").droppable({
         accept: ".dragIn, .dragOut",
@@ -79,7 +60,6 @@ $(document).ready(function() {
                 droppedItem.addClass("dragOut");
                 droppedItem.removeClass("dragIn");
                 $("#sortable").append(droppedItem);
-                make_removable(droppedItem);
             }
         }
     });
@@ -114,29 +94,64 @@ $(document).ready(function() {
         var solucion = getSolucion();   //Obtemenos la solución planteada
         var idProfesor = $("#idProfesor").val();
         
+        if(jsonPiezas == "") jsonPiezas = "[]";
+        
         /* @todo - Control de errores */
-        json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
-        //var ob = JSON.parse(json);
-        console.log(json);
-
-        $.ajax({
-            type: 'POST',
-            url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
-            data: json,
-            contentType: "application/json",
-            dataType: 'jsonp',
-            success: function(data, textStatus, jqXHR) {
-                //console.log(data);
-                throw_alert("success","El problema se ha enviado correctamente");
-                //@todo - Reiniciar el interfaz
-            },
-            complete: function( jqXHR, textStatus ){
-                throw_alert("success", textStatus);
-            }
-        });
-
+        if( enunciado != "" && titulo != "" && asignatura != "" && jsonPiezas != "[]" && solucion != "[]" && idProfesor != "" )
+            json = '{\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        else json = null;
+        
+        if(json != null){
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+                data: json,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    if(data.id == null) throw_alert("danger","Ha habido un problema en la inserción");
+                    else throw_alert("success","El problema se ha insertado correctamente");
+                }
+            });
+        }else throw_alert("danger","Se requieren todos los datos para insertar un problema");
     });
 
+    /**
+     * Función que controla el botón de finalizar
+     * Se encarga de recoger el enunciado, las piezas utilizadas y la solución planteada para enviarlas al servidor.
+     */
+    $("#actualizar").click(function(ev, ui) {
+
+        var json;
+        var titulo = getTitulo(); //Obtenemos el titulo
+        var asignatura = getAsignatura(); //Obtenemos la asignatura
+        var enunciado = getEnunciado(); //Obtenemos el enunciado
+        var solucion = getSolucion();   //Obtemenos la solución planteada
+        var idProfesor = $("#idProfesor").val();
+        var idProblema = $("#idProblema").val();
+        
+        if(jsonPiezas == "") jsonPiezas = "[]";
+        
+        /* @todo - Control de errores */
+        if( enunciado != "" && titulo != "" && asignatura != "" && jsonPiezas != "[]" && solucion != "[]" && idProfesor != "" )
+            json = '{\"id\":\"' + idProblema + '",\"enunciado\":\"' + enunciado + '", \"titulo\":\"' + titulo + '", \"nombreAsignatura\":\"' + asignatura + '", \"piezas\":' + jsonPiezas + ", \"solucion\":" + solucion + ", \"idProfesor\":\"" + idProfesor + "\"}";
+        else json = null;
+        
+        if(json != null){
+            $.ajax({
+                type: 'POST',
+                url: "http://localhost:8080/ServidorMongo/API/Problema/insertarProblema",
+                data: json,
+                contentType: "application/json",
+                dataType: 'json',
+                success: function(data, textStatus, jqXHR) {
+                    if(data.id == null) throw_alert("danger","Ha habido un problema en la actualización");
+                    else throw_alert("success","El problema se ha actualizado correctamente");
+                }
+            });
+        }else throw_alert("danger","Se requieren todos los datos para actualizar un problema");
+    });
+    
     function getTitulo(){
         return $('#titulo-input').val();
     }
@@ -156,11 +171,23 @@ $(document).ready(function() {
                 for (var r = 0, tam = list[i].children.length; r < tam; r++) {
 
                     if (list[i].children[r].nodeName == "P") {
-                        piezas += "{\"type\":\"label\",\"value\":\"" + list[i].children[r].innerHTML + "\"}";
+                        var decoded = $("<div/>").html(list[i].children[r].innerHTML).text();
+                        piezas += "{\"type\":\"label\",\"value\":\"" + decoded + "\"}";
                     } else if (list[i].children[r].nodeName == "INPUT") {
                         piezas += "{\"type\":\"text\",\"value\": \"" + list[i].children[r].value + "\"}";
                     } else if (list[i].children[r].nodeName == "SELECT") {
-                        piezas += "{\"type\":\"select\",\"value\":\"" + list[i].children[r].value + "\"}";
+                        var index = 0;
+                        var options = list[i].children[r].options;
+                        var selectedIndex = options.selectedIndex;
+                        var length = options.length;
+                        var value = "[";
+                        for( var index = 0; index < length; index++ ){
+                            value += '\"' + options[index].value + '\"' + ",";
+                        }
+                        value = value.slice(0,-1);
+                        value += "]";
+                        
+                        piezas += "{\"type\":\"select\",\"value\":" + value + ",\"opcion\":" + selectedIndex + "}";
                     }
                     if (r + 1 < tam)
                         piezas += ",";
@@ -177,92 +204,58 @@ $(document).ready(function() {
 });
 
 
-var estilo_piezas = ["#CEEF72", "#FFFDA8", "#F0F8FF", "#FF9E9E"];
+var estilo_piezas = ["#FF9E9E", "#CEEF72", "#FFFDA8", "#F0F8FF"];
 var index = 0;
 
+    function buildPieces(f,content, AuxClasses,draggable) {
+        jsonPiezas = JSON.stringify(f);
+        var o = f;
+        
+        if (o.length === undefined || o.length <= 0) {
+            throw_alert("warning", "No se encuentran piezas");
+            return;
+        }
 
-function make_removable(elem) {
-    
-}
-    
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-function throw_alert(type, message) {
-    var span = "";
-    
-    switch (type) {
-        case "warning":
-            span = "<strong>Warning!</strong>";
-            break;
+        o.forEach(function(pieces) {
 
-        case "danger":
-            span = "<strong>Danger!</strong>";
-            break;
+            if (pieces.inputs !== undefined) {
 
-        case "success":
-            span = "<strong>Success!</strong>";
-            break;
+                var pieza = $('<div/>', {
+                    title: 'Piece',
+                    class: "row piece ui-draggable ui-draggable-handle ui-sortable-handle"
+                });
 
-        case "info":
-            span = "<strong>Info!</strong>";
-            break;
-    }
+                if(AuxClasses != "") pieza.addClass(AuxClasses);
+                
+                pieces.inputs.forEach(function(entry) {
+                    $.input = buildPieceField(entry);
+                    pieza.append($.input);
+                });
+                
+                pieza.css({"background-color": color_piezas( pieces.inputs.length )});
+                if(draggable === true) make_draggable(pieza);
+                $(content).append(pieza,null);
 
-    $.alert = $("<div/>");
-    $.alert.addClass('alert alert-' + type);
-    $.alert.append("<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>");
-    $.alert.append(span + " " + message);
-    
-    $("#alert_placeholder").append($.alert);
-}
+            } else {
+                throw_alert("warning", "No se encuentran piezas en el fichero");
+                return;
+            }
+        });
+    }    
 
     /**
      * Función para construir las piezas en HTML
      * @param {type} f
      * @returns {undefined}
      */
-    function buildPieces(f) {
-        jsonPiezas = JSON.stringify(f);
-        var o = f;
-        
-        cleanPieces(f);
-
-        //Comprobamos que tenemos un array
-        if (o.length === undefined || o.length <= 0) {
-            throw_alert("warning", "No se encuentran piezas en el fichero");
-            return;
-        }
-
-        o.forEach(function(pieces) {
-
-            // Comprobamos que tenemos inputs
-            if (pieces.inputs !== undefined) {
-
-                var pieza = $('<div/>', {
-                    //id: 'div',
-                    title: 'Piece',
-                    class: "row piece dragIn ui-draggable ui-draggable-handle"
-                });
-
-                pieces.inputs.forEach(function(entry) {
-                    $.input = buildPieceField(entry);
-                    //$.input.addClass("col-md-" + calcular_ancho_pieza(pieces.inputs.length));
-                    pieza.append($.input);
-                });
-
-                make_draggable(pieza);
-                pieza.css({"background-color": color_piezas()});
-                $("#pieces-panel").append(pieza, null);
-
-            } else {
-                throw_alert("warning", "No se encuentran piezas en el fichero");
-                return;
-            }
-
-        });
+    function buildPiecesList(f) {
+        $("#pieces-panel").find(".piece").remove();
+        buildPieces(f,"#pieces-panel","dragIn",true);
+    }
+    
+    function buildPiecesSolution(f) {
+        $("#sortable").find(".piece").remove();
+        buildPieces(f,"#sortable","dragOut",false);
     }
     
      /**
@@ -273,13 +266,13 @@ function throw_alert(type, message) {
     function buildPieceField(f) {
 
         $.content = "";
-
+        
         // Comprobamos que tenemos un tipo de pieza para poder identificarlo
         if (f.type === undefined) {
             throw_alert("warning", "No se encuentra el tipo de componente en una pieza");
             return;
         }
-
+        
         switch (f.type) {
 
             case "label":
@@ -291,12 +284,16 @@ function throw_alert(type, message) {
                 $.content = $('<input/>').attr({type: 'text'});
                 $.content.addClass("form-control");
                 $.content.addClass("input-text-piece");
+                if(f.value != "") $.content.val(f.value);
                 break;
 
             case "select":
+                var index = 0;
                 $.content = $('<select/>');
                 f.value.forEach(function(option) {
-                    $.content.append("<option>" + option + "</option>");
+                    if( index == f.opcion) $.content.append("<option selected>" + option + "</option>");
+                    else $.content.append("<option>" + option + "</option>");
+                    index++;
                 });
                 break;
 
@@ -305,11 +302,6 @@ function throw_alert(type, message) {
                 break;
         }
         return $.content;
-    }
-    
-    function cleanPieces(f) {
-        index = 0;
-        $(".piece").remove();
     }
     
     /**
@@ -328,9 +320,8 @@ function throw_alert(type, message) {
      * 
      * @returns {String}
      */
-    function color_piezas() {
-        index = (index + 1) % 4;
-        return estilo_piezas[index];
+    function color_piezas(nInputs) {
+        return estilo_piezas[(nInputs) % 4];
     }
 
     function isValidJson(json) {

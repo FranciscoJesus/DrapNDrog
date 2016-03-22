@@ -5,16 +5,26 @@
  */
 package Entities;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
 @XmlRootElement
-public interface EntityMongo {
+public class Alumno{
 
-    public Document converADocument();
+    public String id;
+    public String nombre;
+    public String apellidos;
+    public String dni;
+    public String idUsuario;
+    public List<String> idAsignaturas = new ArrayList<>();
+
+    public Alumno() {
+
+    }
 
 }

@@ -5,10 +5,9 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Asignatura;
 import Entities.Problema;
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.MongoCursor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
@@ -39,7 +37,6 @@ public class ServicioProblema {
     @Consumes({"application/xml", "application/json"})
     @Produces("application/json")
     public Problema insertar(Problema n) {
-
         try {
             MongoDB.insert(n);
         } catch (Exception e) {
@@ -47,6 +44,7 @@ public class ServicioProblema {
         }
         return n;
     }
+    
 
     /**
      * Servicio el cual a partir de un id se devuelve un problema específico
@@ -60,6 +58,13 @@ public class ServicioProblema {
     public Problema leerProblema(@QueryParam("id") String id) {
 
         return MongoDB.findById(id, Problema.class);
+    }
+
+    @GET
+    @Path("eliminarProblema")
+    public String eliminarProblema(@QueryParam("id") String id) {
+        
+        return String.valueOf(MongoDB.delete(id, Problema.class));
     }
 
     @GET

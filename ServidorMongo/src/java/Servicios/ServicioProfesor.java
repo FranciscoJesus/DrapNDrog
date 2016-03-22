@@ -5,7 +5,7 @@
  */
 package Servicios;
 
-import Entities.EntityMongo;
+import BD.MongoDB;
 import Entities.Profesor;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -13,7 +13,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-import org.bson.Document;
 
 /**
  *
@@ -42,5 +41,12 @@ public class ServicioProfesor {
     public Profesor leerProfesor(@QueryParam("id") String id) {
 
         return MongoDB.findById(id, Profesor.class);
+    }
+    
+    @GET
+    @Path("eliminarProfesor")
+    public int eliminarProfesor(@QueryParam("id") String id) {
+
+        return MongoDB.delete(id, Profesor.class);
     }
 }

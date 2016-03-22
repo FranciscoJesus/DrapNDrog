@@ -1,12 +1,10 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 06-ago-2015, 18:40:13
-    Author     : Sobremesa
-*/
+/**
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ *
+ * Author     : Edgar Pérez Ferrando
+ */
 
 #content-panel {
     max-width:100%;
@@ -49,17 +47,17 @@ and open the template in the editor.
     margin-bottom: 0.8em;
 }
 
-.button-send{
+.button-send, btn-success, cambiar-calificacion{
     margin-bottom: 1em;
     width: 100%;
 }
 
-.button-submit{
+.button-submit, btn-success, cambiar-calificacion{
     margin: 0;
     text-align: center;
 }
 
-#titulo-input, #select-asignatura{
+#titulo-input, #select-asignatura, #input-asignatura{
     width: 100%;
 }
 
@@ -70,4 +68,23 @@ and open the template in the editor.
 #contextMenu {
   position: absolute;
   display:none;
+}
+
+.botonera{
+    width: auto;
+}
+
+#nota-input{
+    text-align: right;
+    font-weight: bold;
+}
+
+#nombreAlumno{
+    text-align: center;
+    padding-bottom: 0.8em;
+    font-weight: bold;
+}
+
+#cambiar-calificacion{
+    margin-top: 0.8em;
 }

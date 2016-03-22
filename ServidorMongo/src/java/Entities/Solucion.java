@@ -5,11 +5,10 @@
  */
 package Entities;
 
-import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Embedded;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
@@ -20,14 +19,15 @@ import org.mongodb.morphia.annotations.Id;
  */
 @Entity("Soluciones")
 @XmlRootElement
-public class Solucion implements EntityMongo {
+public class Solucion {
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     public String nota;
     public String idAlumno;
     public String idProblema;
     public String nombre;
+    public String apellidos;
     @Embedded
     public ArrayList<Pieza> piezas = new ArrayList<>();
 
@@ -35,64 +35,47 @@ public class Solucion implements EntityMongo {
 
     }
 
-    public Solucion(Document object) {
-
-        id = object.getObjectId("_id").toString();
-        idAlumno = object.getString("idAlumno");
-        idProblema = object.getString("idProblema");
-        //nombre = object.getString("nombre");
-        ArrayList<Document> pieza = object.get("piezas", ArrayList.class);
-        if (pieza != null) {
-            for (Document d : pieza) {
-                piezas.add(new Pieza(d));
-            }
-        }
-    }
-
-    /**
-     * Método que se encarga de convertir un objeto Solucion en un objeto JSON
-     *
-     * @return
-     */
-    @Override
-    public Document converADocument() {
-
-        Document res = new Document();
-
-        res.append("idAlumno", idAlumno);
-        res.append("idProblema", idProblema);
-        BasicDBList pieza = new BasicDBList();
-        for (Pieza i : piezas) {
-            pieza.add(i.converADocument());
-        }
-        res.append("piezas", pieza);
-
-        return res;
-    }
-
-    public void ponerNota(List<Pieza> arrayPiezas) {
+    public void evaluar(List<Pieza> arrayPiezas) {
 
         double notaMaxima = notaMaxima(arrayPiezas);
         double notaAlumno = 0.0;
+        double notaAlumnoMejor = 0.0;
+        double notaARestar = 0;
+        int i;
 
-        int i = 0;
-        for (i = 0; i < arrayPiezas.size(); i++) {
-            Pieza Alumno = piezas.get(i);
-            if (arrayPiezas.get(i).equals(Alumno)) {
-                for (Input inp : Alumno.inputs) {
-                    notaAlumno = notaAlumno + 1 / notaMaxima;
+        for (int k = 1 - piezas.size(); k < arrayPiezas.size(); k++) {
+            i = 0;
+            notaARestar = 0;
+
+            for (; k + i < 0; i++) {
+                for (Input inp : piezas.get(i).inputs) {
+                    notaARestar = notaARestar + 1 ;
                 }
             }
-        }
-        double notaARestar = 0;
-        for (; i < piezas.size(); i++) {
 
-            for (Input inp : piezas.get(i).inputs) {
-                notaARestar = notaARestar + 1 / notaMaxima;
+            for (; ((i + k) < arrayPiezas.size()) && (i < piezas.size()); i++) {
+                Pieza Alumno = piezas.get(i);
+                if (arrayPiezas.get(i + k).equals(Alumno)) {
+                    for (Input inp : Alumno.inputs) {
+                        notaAlumno = notaAlumno + 1;
+                    }
+                }
             }
+
+            for (; i < piezas.size(); i++) {
+                for (Input inp : piezas.get(i).inputs) {
+                    notaARestar = notaARestar + 1;
+                }
+            }
+            
+            notaAlumno = notaAlumno - notaARestar;
+            if (notaAlumno > notaAlumnoMejor) {
+                notaAlumnoMejor = notaAlumno;
+            }
+            notaAlumno = 0.0;
         }
 
-        nota = String.valueOf((notaAlumno - notaARestar) * 10);
+        nota = String.valueOf(notaAlumnoMejor * 10 / notaMaxima);
 
     }
 
@@ -102,7 +85,6 @@ public class Solucion implements EntityMongo {
 
         for (Pieza p : arrayPiezas) {
             for (Input i : p.inputs) {
-
                 notaMaxima++;
             }
         }

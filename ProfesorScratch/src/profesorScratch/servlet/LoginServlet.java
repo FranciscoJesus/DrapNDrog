@@ -11,7 +11,6 @@ import Entities.Profesor;
 import Entities.Usuario;
 import service.LoginJerseyClient;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -25,7 +24,7 @@ import service.AsignaturaJerseyClient;
 
 /**
  *
- * @author Sobremesa
+ * @author Edgar Pérez Ferrando
  */
 @WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
 public class LoginServlet extends HttpServlet {
@@ -53,12 +52,13 @@ public class LoginServlet extends HttpServlet {
         String user = request.getParameter("user");
         String pass = request.getParameter("pass");
         
-        u.usuario = user;
+        u.nombreUsuario = user;
         u.password = pass;
         u.rol = 2;
         
         Profesor p = (Profesor)service.LoginProfesor_JSON(u,Profesor.class);
         
+        //System.out.println(p);
 
         // Comprobar que los datos devueltos del servicio RESTFull son correctos
         if(p != null){

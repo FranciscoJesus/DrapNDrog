@@ -5,6 +5,7 @@
  */
 package Servicios;
 
+import BD.MongoDB;
 import Entities.Problema;
 import Entities.Solucion;
 import java.util.List;
@@ -30,13 +31,16 @@ public class ServicioSolucion {
     @Produces("application/json")
     public Solucion insertarSolucion(Solucion sol) {
         try {
+
             Problema p = MongoDB.findById(sol.idProblema, Problema.class);
-            sol.ponerNota(p.solucion);
+            sol.evaluar(p.solucion);
             MongoDB.insert(sol);
+
+            return sol;
+
         } catch (Exception e) {
-            return null;
+            return sol;
         }
-        return sol;
     }
 
     @GET
@@ -48,19 +52,26 @@ public class ServicioSolucion {
     }
 
     @GET
+    @Path("eliminarSolucion")
+    public String eliminarSolucion(@QueryParam("id") String id) {
+
+        return String.valueOf(MongoDB.delete(id, Solucion.class));
+    }
+
+    @GET
     @Path("cambiarNota")
     @Produces("application/json")
     public Solucion cambiarNota(@QueryParam("id") String idSolucion, @QueryParam("nota") String nota) {
 
         Solucion res = null;
-        
-        Map<String, String> campos = new TreeMap<>();
+
+        Map<String, Object> campos = new TreeMap<>();
 
         campos.put("nota", nota);
 
-        try{
-        MongoDB.update(idSolucion, Solucion.class, campos);
-        }catch(Exception e){
+        try {
+            MongoDB.update(idSolucion, Solucion.class, campos);
+        } catch (Exception e) {
             res = new Solucion();
         }
 

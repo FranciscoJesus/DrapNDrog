@@ -17,7 +17,7 @@ import java.util.Formatter;
 public class Usuario {
     
     public String id;
-    public String usuario;
+    public String nombreUsuario;
     public String password;
     public int rol;
 

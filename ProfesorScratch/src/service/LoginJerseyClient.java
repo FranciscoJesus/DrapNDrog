@@ -20,7 +20,7 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author Pulgy
+ * @author Edgar Pérez Ferrando
  */
 public class LoginJerseyClient {
     private WebTarget webTarget;

@@ -14,8 +14,8 @@
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
         <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <script type="text/javascript" src="libs/main.js"></script>
-        <script type="text/javascript" src="libs/log.js"></script>
+        <script type="text/javascript" src="libs/alerts.js"></script>
+        <!-- <script type="text/javascript" src="libs/log.js"></script> -->
 
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Iniciar sesión</title>
+        <title>Drag and Build - Build Your Question!</title>
     </head>
 
     <body>        
@@ -32,7 +32,7 @@
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand">Drag & Drop</a>
+                    <a href="#" class="navbar-brand">Drag & Build</a>
                 </div>
             </div>
         </nav>

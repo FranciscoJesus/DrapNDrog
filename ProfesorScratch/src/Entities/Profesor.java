@@ -16,7 +16,7 @@ public class Profesor {
 
     public String id;
     public String nombre;
-    public String apellido;
+    public String apellidos;
     public String idUsuario;
     public List<String> asignaturas = new ArrayList<>();
 

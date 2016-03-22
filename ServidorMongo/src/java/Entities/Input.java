@@ -8,43 +8,20 @@ package Entities;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.bson.Document;
 
 /**
  *
  * @author FranciscoJesús
  */
 @XmlRootElement
-public class Input implements EntityMongo {
+public class Input {
 
     public String type;
     public ArrayList<String> value;
+    public int opcion;
 
     public Input() {
 
-    }
-
-    public Input(Document object) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        type = object.getString("type");
-        value = object.get("value", ArrayList.class);
-    }
-
-    /**
-     * Metodo que convierte un objeto input a un objeto JSON
-     *
-     * @return
-     */
-    @Override
-    public Document converADocument() {
-        //creamos el objeto que vamos a devolver
-        Document res = new Document();
-        //añadimos los campos       
-        res.append("type", type);
-        res.append("value", value);
-
-        //devolvemos el objeto
-        return res;
     }
 
     @Override
@@ -65,6 +42,9 @@ public class Input implements EntityMongo {
         }
         final Input other = (Input) obj;
         if (!Objects.equals(this.type, other.type)) {
+            return false;
+        }
+        if (!Objects.equals(this.opcion, other.opcion)) {
             return false;
         }
         return Objects.equals(this.value, other.value);

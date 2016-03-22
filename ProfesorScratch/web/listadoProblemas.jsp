@@ -1,7 +1,6 @@
 <%-- 
     Document   : listadoProblemas
-    Created on : 23-sep-2015, 15:20:02
-    Author     : Sobremesa
+    Author     : Edgar Pérez Ferrando
 --%>
 
 <%@page import="java.util.List"%>
@@ -17,26 +16,16 @@
         <script type="text/javascript" src="libs/jquery-2.1.4/jquery-2.1.4.min.js"></script>
         <script type="text/javascript" src="libs/jquery-ui-1.11.4/jquery-ui.min.js"></script>
         <script type="text/javascript" src="libs/bootstrap-filestyle/bootstrap-filestyle.min.js"> </script>
-        <!-- <script type="text/javascript" src="libs/jquery-ui-contextmenu/jquery.ui-contextmenu.min.js"></script> -->
-        <!-- <script type="text/javascript" src="libs/main.js"></script> -->
-        <script type="text/javascript" src="libs/log.js"></script>
-
+        <script type="text/javascript" src="libs/alerts.js"></script>
+        
         <!-- Bootstrap -->
         <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <script src="libs/bootstrap/js/bootstrap.min.js"></script>
         
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $(".clickable-row").click(function(elem) {
-                        window.location = $(this).data('href');
-                });
-            });
-        </script>
-        
         <!-- Hojas de estilo -->
         <link rel="stylesheet" type="text/css" href="styles.css"/>
 
-        <title>Listado de problemas</title>
+        <title>Drag and Build - Build Your Question!</title>
         
     </head>
     <body>
@@ -65,28 +54,56 @@
             
             <% if(list.size() > 0 ){ %>
             
-                <table class="table table-hover table-bordered">
+                <table class="table table-striped">
                     <thead>
                         <th>#</th>
                         <th>Titulo</th>
                         <th>Asignatura</th>
                         <th>Enunciado</th>
+                        <th></th>
                     </thead>
                 <% for(Problema t : list ){ %>
-                    <tr class="clickable-row" data-href="ProblemaServlet?id=<%= t.id %>" id="<%= t.id %>">
+                    <tr>
                         <td><%= num %></td>
                         <td><%= t.titulo %></td>
                         <td><%= t.nombreAsignatura %></td>
                         <td><%= t.enunciado %></td>
+                        <td>
+                            <div class="btn-group btn-group-md btn-group-justified botonera" role="group" aria-label="...">
+                                <a href="SolucionServlet?id=<%= t.id%>" class="btn btn-default btn-sm">Soluciones</a>
+                                <a href="EditarProblemaServlet?id=<%= t.id%>" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-pencil"></span> Editar 
+                                </a>
+                                    <a href="EliminarProblemaServlet?id=<%= t.id %>" class="btn btn-default btn-sm">
+                                    <span class="glyphicon glyphicon-trash"></span> Eliminar
+                                </a>
+                            </div>
+                        </td>
                     </tr>
-                <!-- out.print(t.enunciado); -->
+
                 <% num++; %>
                 <% } %>
-                
+
                 </table>
                 
+            <% }else{ %>
+                <script type="text/javascript">
+                    throw_alert("warning","No hay problemas propuestos");
+                </script>
             <% } %>
         </div>
+        
+        <% 
+            String respuesta = (String)request.getAttribute("estado");
+            if(respuesta != null){
+                Integer alerta = Integer.parseInt(respuesta);
+                if( alerta > 0 ){
+                    %><script type="text/javascript">throw_alert("success","Problema eliminado correctamente")</script><%
+                }else if( alerta < 0 ){
+                    %><script type="text/javascript">throw_alert("error","No se ha podido eliminar el problema")</script><%
+                }
+            }
+        %>
         
     </body>
 </html>

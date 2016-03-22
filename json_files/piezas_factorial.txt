@@ -1,0 +1,78 @@
+[
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "int factorial = 1"
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "int i = "
+            },
+            {
+                "type": "text",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "while ( "
+            },{
+                "type": "text",
+                "value": ""
+            },{
+                "type": "label",
+                "value": " > "
+            },{
+                "type": "text",
+                "value": ""
+            },{
+                "type": "label",
+                "value": " ) "
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "i = i - 1"
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "factorial = "
+            },
+            {
+                "type": "text",
+                "value": ""
+            },
+            {
+                "type": "label",
+                "value": "*"
+            },
+            {
+                "type": "text",
+                "value": ""
+            }
+        ]
+    },
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "end while;"
+            }
+        ]
+    }
+]

@@ -1,0 +1,38 @@
+[
+    {
+        "inputs": [
+            {
+                "type": "label",
+                "value": "La rana de color"
+            },
+            {
+                "type": "select",
+                "value": ["VERDE","ROJA"]
+            },
+            {
+                "type": "label",
+                "value": "numero"
+            },
+            {
+                "type": "select",
+                "value": ["1","2","3"]
+            },
+            {
+                "type": "label",
+                "value": "salta de la piedra"
+            },
+            {
+                "type": "select",
+                "value": ["1","2","3","4","5","6","7"]
+            },
+            {
+                "type": "label",
+                "value": "a la piedra"
+            },
+            {
+                "type": "select",
+                "value": ["1","2","3","4","5","6","7"]
+            }
+        ]
+    }
+]

@@ -17,6 +17,7 @@ public class Input {
 
     public String type;
     public ArrayList<String> value;
+    public int opcion;
 
     public Input() {
 
@@ -34,7 +35,7 @@ public class Input {
                 json += ",";
         }
         
-        if("select".equals(type)) json += "]";
+        if("select".equals(type)) json += "] , \"opcion\":" + this.opcion ; 
         json += "}";
         
         return json;

@@ -3,28 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Servicios;
 
+package profesorScratch.servlet;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import Entities.Problema;
+import Entities.Solucion;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.bson.Document;
+import service.ProblemaJerseyClient;
+import service.SolucionJerseyClient;
 
 /**
  *
- * @author FranciscoJesús
+ * @author Edgar Pérez Ferrando
  */
-@WebServlet(name = "MongoPrueba", urlPatterns = {"/MongoPrueba"})
-public class MongoPrueba extends HttpServlet {
+@WebServlet(name = "SolucionServlet", urlPatterns = {"/SolucionServlet"})
+public class SolucionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,28 +39,22 @@ public class MongoPrueba extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //obtenemos el cliente mongo
-        MongoClient mongoClient = new MongoClient( "localhost" );
-        //accedemos a la base de datos específica
-        MongoDatabase mongoDB = mongoClient.getDatabase("Prueba");
-        //Accedemos a la tabla
-        MongoCollection<Document> nombres = mongoDB.getCollection("Nombres");
-        //creamos la query
-        BasicDBObject query = new BasicDBObject("Nombre","Edgar");        
-        Document res = nombres.find(query).first();
-        if(res==null){
-            //Creamos un objeto
-            res = new Document("Nombre", "Edgar");
-            //Lo insertamos
-            nombres.insertOne(res);
-        }       
         
-        //se lo añadimos al requestDispatcher
-        request.setAttribute("Nombre", res);
-        //redireccionamos la pagina
-        RequestDispatcher rd=request.getRequestDispatcher("index.jsp");  
-        rd.forward(request, response);
+        String id = request.getParameter("id");
+        SolucionJerseyClient solucionCliente = new SolucionJerseyClient();
+        ProblemaJerseyClient problemaCliente = new ProblemaJerseyClient();
         
+        Problema p = (Problema) problemaCliente.leerProblema(Problema.class,id);
+        
+        List<Solucion> soluciones = new ArrayList<Solucion>();
+        soluciones = (ArrayList<Solucion>)solucionCliente.getSoluciones(id);
+        
+        request.setAttribute("soluciones", soluciones);
+        request.setAttribute("problema", p);
+                
+        RequestDispatcher dispatcher = request.getRequestDispatcher("listadoSoluciones.jsp");
+        dispatcher.forward(request, response);
+                
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

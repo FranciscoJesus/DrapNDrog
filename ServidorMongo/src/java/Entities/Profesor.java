@@ -5,14 +5,12 @@
  */
 package Entities;
 
-import com.mongodb.BasicDBList;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Id;
-import org.mongodb.morphia.annotations.Reference;
 
 /**
  *
@@ -20,12 +18,12 @@ import org.mongodb.morphia.annotations.Reference;
  */
 @Entity("Profesor")
 @XmlRootElement
-public class Profesor implements EntityMongo {
+public class Profesor {
 
     @Id
-    public String id;
+    public String id = new ObjectId().toString();
     public String nombre;
-    public String apellido;
+    public String apellidos;
     public String idUsuario;
     public List<String> asignaturas = new ArrayList<>();
 
@@ -33,40 +31,4 @@ public class Profesor implements EntityMongo {
 
     }
 
-    public Profesor(Document object) {
-
-        id = object.getObjectId("_id").toString();
-        nombre = object.getString("nombre");
-        apellido = object.getString("apellido");
-        idUsuario = object.getString("idUsuario");
-        asignaturas = object.get("asignatura", ArrayList.class);
-    }
-    /**
-     * Método que se encarga de convertir un objeto Profesor en un objeto JSON
-     *
-     * @return
-     */
-    @Override
-    public Document converADocument() {
-
-        Document res = new Document();
-
-        res.append("nombre", nombre);
-        res.append("apellido", apellido);
-        res.append("idUsuario", idUsuario);
-        BasicDBList input = new BasicDBList();
-        for (String i : asignaturas) {
-            input.add(i);
-        }
-        res.append("asignaturas", input);
-
-        return res;
-    }
-
-    /**
-     *
-     * @param object
-     * @return
-     */
-    
 }

@@ -5,22 +5,14 @@
  */
 package Entities;
 
-import Entities.Input;
+
 import java.util.ArrayList;
-import javax.ws.rs.QueryParam;
-import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- *
- * @author FranciscoJesús
- */
-@XmlRootElement
-public class Pieza {
 
+
+public class Pieza { 
     public ArrayList<Input> inputs = new ArrayList<>();
-
-    public Pieza() {
-
-    }
-
+    
+    public Pieza(){}
+    
 }

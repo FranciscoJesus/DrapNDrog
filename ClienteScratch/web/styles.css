@@ -1,6 +1,6 @@
 /*
     Document   : ListaEnunciados
-    Author     : JavierOrdoñezMartin
+    Author     : Javier Ordoñez Martin
 */
 
 #content-panel {
@@ -40,4 +40,21 @@ textarea{
 #sortable{
     margin: 0px;
     padding: 0px;
+}table {
+    border-collapse: collapse;
+    width: 100%;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+    background-color: #2e6da4;
+    color: white;
 }

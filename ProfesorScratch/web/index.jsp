@@ -55,14 +55,12 @@
                 <div class="login-content col-xs-8 col-xs-offset-1 col-sm-4 col-sm-offset-4 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
 
                     <div class="panel panel-default panel-custom">
-
                         <div class="panel-heading">
                             <h3 class="panel-title">Iniciar sesión</h3>
                         </div>
-
-                        <div id="login-panel" class="panel-body">
+                       <div id="login-panel" class="panel-body"> 
                             <form action="LoginServlet" method="post">
-
+                                <header>Iniciar Sesión</header>
                                 <div class="form-group">
                                     <input type="text" class="form-control" id="usr" name="user" placeholder="Nombre de usuario">
                                 </div>
@@ -76,7 +74,8 @@
                                 </div>
 
                             </form>
-                        </div>
+                       </div> 
+              
                     </div>
                 </div>
             </div>   

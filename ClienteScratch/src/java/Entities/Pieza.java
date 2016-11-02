@@ -5,7 +5,10 @@
  */
 package Entities;
 
-
+/**
+ *
+ * @author Javier Ordoñez Martín
+ */
 import java.util.ArrayList;
 
 

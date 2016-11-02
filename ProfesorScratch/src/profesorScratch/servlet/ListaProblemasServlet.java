@@ -49,6 +49,7 @@ public class ListaProblemasServlet extends HttpServlet {
             List<Problema> list = new ArrayList<Problema>();
             ProblemaJerseyClient servicio = new ProblemaJerseyClient();
             list = servicio.getProblemasProfesor(p.id);
+           
             
             
             request.setAttribute("problemas", list);

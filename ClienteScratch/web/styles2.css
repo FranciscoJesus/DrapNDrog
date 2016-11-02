@@ -1,29 +1,69 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
+
 /* 
     Document   : styless2
-    Author     : JavierOrdonezMartín
+    Author     : Javier Ordoñez Martín
 */
 
 #container {
-  max-width: 100%;
-  margin: 0 auto;
+  max-width:100%;
+    width: 100%;
+ margin: 0 auto;
 }
 
-#container-login{
+#login {
+width: 60%;
+ margin: 0 auto;
+}
+
+form {
+  margin: auto;
   width: 50%;
-  position: absolute;
-  top: 15%;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
+  font-family: lato;
+  position: relative;
+  border-radius: 10px;
+}
+form header {
+  background: #e0e0e0;
+  padding: 30px 20px;
+  color: black;
+  font-size: 1.2em;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0;
+}
+form label {
+  margin-left: 20px;
+  display: inline-block;
+  margin-top: 30px;
+  margin-bottom: 5px;
+  position: relative;
+}
+form input {
+    width: 100%;
+    margin: 0 auto;
+}
+
+form button {
+  position: relative;
+  margin-top: 30px;
+  margin-bottom: 30px;
   left: 50%;
+  transform: translate(-50%, 0);
+  font-family: inherit;
+  color: black;
+  background: #e0e0e0;
+  outline: none;
+  border: none;
+  padding: 5px 15px;
+  font-size: 1.3em;
+  font-weight: 400;
+  border-radius: 3px;
+  box-shadow: 0px 0px 10px rgba(51, 51, 51, 0.4);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
 }
+
 #mensajeError{
+    text-align: center;
     color:red;
-}
-h1{
-  font-weight: normal;
-  font-family: Arial, Helvetica, sans-serif;
-  text-decoration: underline;
 }

@@ -7,23 +7,19 @@ package Entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Javier Ordoñez Martín
+ * @author  Javier Ordoñez Martín
  */
-@XmlRootElement
-public class Alumno {
+public class Asignatura {
 
     public String id;
     public String nombre;
-    public String apellidos;
-    public String dni;
-    public String idUsuario;
-    public List<String> idAsignaturas = new ArrayList<>();
+    public String idProfesor;
+    public List<String> idAlumnos = new ArrayList<>();
 
-    public Alumno() {
+    public Asignatura() {
 
     }
 

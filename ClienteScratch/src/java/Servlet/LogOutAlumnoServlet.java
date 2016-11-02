@@ -3,11 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-package loginServlet;
+package Servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Pulgy
+ * @author Javier Ordoñez Martín
  */
 @WebServlet(name = "LogOutAlumnoServlet", urlPatterns = {"/LogOutAlumnoServlet"})
 public class LogOutAlumnoServlet extends HttpServlet {
@@ -35,10 +33,12 @@ public class LogOutAlumnoServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession miSesion = request.getSession(true);
-        miSesion.invalidate();
+        HttpSession sesion = request.getSession(false);
+        if (sesion != null) {
+            sesion.invalidate();
+        }
 
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
         dispatcher.forward(request, response);
     }
 

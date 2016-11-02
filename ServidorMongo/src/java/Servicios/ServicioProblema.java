@@ -90,7 +90,7 @@ public class ServicioProblema {
         List<Asignatura> resAsignatura = MongoDB.find(where, Asignatura.class);
 
         for (Asignatura a : resAsignatura) {
-            where.clear();
+            where.clear(); 
             where.put("idAsignatura", a.id);
             res.addAll(MongoDB.find(where, Problema.class));
         }

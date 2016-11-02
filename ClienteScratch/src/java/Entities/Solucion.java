@@ -7,28 +7,25 @@ package Entities;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.xml.bind.annotation.XmlRootElement;
-
 /**
  *
  * @author Javier Ordoñez Martín
  */
-@XmlRootElement
-public class Problema {
+public class Solucion {
 
     public String id;
-    public String idProfesor;
-    public String idAsignatura;
-    public String nombreAsignatura;
-    public String titulo;
-    public String enunciado;
+    public String nota;
+    public String idAlumno;
+    public String idProblema;
+    public String nombre;
+    public String apellidos;
+    
     public ArrayList<Pieza> piezas = new ArrayList<>();
-    public ArrayList<Pieza> solucion = new ArrayList<>();
 
-    public Problema() {
+    public Solucion() {
 
     }
-
+    
     public String generarJSON(ArrayList<Pieza> piezas){
         String json = "[";
 
@@ -45,16 +42,12 @@ public class Problema {
 
         json = json.substring(0, json.length() - 1);
         json += "]";
-                   
+        
         return json;
     }
-    
-    public String generarJSONPiezas(){
-        return generarJSON(this.piezas);
-    }
-    
+        
     public String generarJSONSolucion(){
-        return generarJSON(this.solucion);
+        return generarJSON(this.piezas);
     }
     
 }

@@ -5,23 +5,16 @@
  */
 package Entities;
 
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Formatter;
 
 /**
  *
- * @author FranciscoJesús
+ * @author Javier Ordoñez Martín
  */
 public class Usuario {
     
     public String id;
-
-    public String usuario;
-
+    public String nombreUsuario;
     public String password;
-
     public int rol;
 
     public Usuario() {

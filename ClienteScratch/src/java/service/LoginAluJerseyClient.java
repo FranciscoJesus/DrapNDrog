@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package service;
 
 import javax.ws.rs.ClientErrorException;
@@ -20,9 +19,10 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author Pulgy
+ * @author Javier Ordoñez Martín
  */
 public class LoginAluJerseyClient {
+
     private WebTarget webTarget;
     private Client client;
     private static final String BASE_URI = "http://localhost:8080/ServidorMongo/API";
@@ -59,5 +59,5 @@ public class LoginAluJerseyClient {
     public void close() {
         client.close();
     }
-    
+
 }
